@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileWorker.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="NavigatorForm.cs">
       <SubType>Form</SubType>

@@ -11,59 +11,52 @@ namespace SuperNavigator
 {
     public class Navigator
     {
-        const string analyse_json = "nav-report.json";
-        const string nav_data_json = "nav-data.json";
-        const string maneuver_json = "maneuver.json";
-        const string targets_json = "target-data.json";
-        const string constraints_json = "constraints.json";
-        const string hydrometeo_json = "hmi-data.json";
-        const string route_json = "route-data.json";
-        const string settings_json = "settings.json";
-        const string predict_json = "target-maneuvers.json";
-        const string ongoing_json = "ongoing.json";
-
-        private string _appDirrectory;
-        private string _workingDirrectory;
-        private string _ktVizDirrectory;
-        private string _usvDirrectory;
-
-        public string AppDirrectory
+        public FileWorker FileWorker;
+        public string AppDirectory
         {
-            get => _appDirrectory;
+            get => FileWorker.AppDirectory; 
         }
-        public string WorkingDirrectory
+        public string WorkingDirectory
         {
-            get => _workingDirrectory;
-            set => _workingDirrectory = value;
+            get => FileWorker.WorkingDirectory;
+            set => FileWorker.WorkingDirectory = value;
         }
-        public string KtVizDirrectory
+        public string KtVizDirectory
         {
-            get => _ktVizDirrectory;
-            set => _ktVizDirrectory = value;
+            get => FileWorker.KtVizDirectory;
+            set => FileWorker.KtVizDirectory = value;
         }
-        public string UsvDirrectory
+        public string UsvDirectory
         {
-            get => _usvDirrectory;
-            set => _usvDirrectory = value;
+            get => FileWorker.UsvDirectory;
+            set => FileWorker.UsvDirectory = value;
         }
 
-        public Navigator(string appDirr)
+        public Navigator(string appDir)
         {
-            _appDirrectory = appDirr;
+            FileWorker = new FileWorker(appDir);
         }
 
+        /// <summary>
+        /// Запуск модуля оценки анализа обстановки для текущих данных, заданных в рабочей директории
+        /// </summary>
+        /// <returns>Информация о процессе</returns>
         public async Task<ProcessResult> Analyze()
         {
-            string command = UsvDirrectory + "\\USV.exe";
+            string command = UsvDirectory + "\\USV.exe";
 
-            string args = $"--targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}";
+            string args = $"--targets {WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {WorkingDirectory}\\{FileWorker.constraints_json} --route {WorkingDirectory}\\{FileWorker.route_json} --analyse {WorkingDirectory}\\{FileWorker.analyse_json}";
 
             return await ProcessAsyncHelper.ExecuteShellCommand(command, args);
         }
 
+        /// <summary>
+        /// По файлу анализа обстановки определяет, опасна ли ситуация
+        /// </summary>
+        /// <returns>true, если опасна</returns>
         public bool GetAnalyzeReportDangerous()
         {
-            var obj = JObject.Parse(File.ReadAllText(_workingDirrectory + "\\" + analyse_json));
+            var obj = JObject.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.analyse_json));
             var statuses = obj["target_statuses"];
 
             foreach (var status in statuses)
@@ -77,88 +70,55 @@ namespace SuperNavigator
             return false;
         }
 
+        /// <summary>
+        /// Запускает алгоритм построения маневра по файлам рабочей директории
+        /// </summary>
+        /// <returns>Код возврата</returns>
         public async Task<int> Maneuver()
         {
-            string command = UsvDirrectory + "\\USV.exe";
+            string command = UsvDirectory + "\\USV.exe";
 
-            string args = $"--maneuver {_workingDirrectory}\\{maneuver_json} --predict {_workingDirrectory}\\{predict_json} --targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}.json";
+            string args = $"--maneuver {WorkingDirectory}\\{FileWorker.maneuver_json} --predict {WorkingDirectory}\\{FileWorker.predict_json} --targets {WorkingDirectory}\\{FileWorker.targets_json} --settings {WorkingDirectory}\\{FileWorker.settings_json} --nav-data {WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {WorkingDirectory}\\{FileWorker.constraints_json} --route {WorkingDirectory}\\{FileWorker.route_json} --analyse {WorkingDirectory}\\{FileWorker.analyse_json}.json";
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
             return (int)result.ExitCode;
         }
 
+        /// <summary>
+        /// Запускает проверку актуальности ongoing маневра по файлам рабочей директории
+        /// </summary>
+        /// <returns>Код возврата</returns>
         public async Task<int> Actual()
         {
-            string command = UsvDirrectory + "\\USV.exe";
+            string command = UsvDirectory + "\\USV.exe";
 
-            string args = $"--ongoing {_workingDirrectory}\\{ongoing_json} --targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}.json";
+            string args = $"--ongoing {WorkingDirectory}\\{FileWorker.ongoing_json} --targets {WorkingDirectory}\\{FileWorker.targets_json} --settings {WorkingDirectory}\\{FileWorker.settings_json} --nav-data {WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {WorkingDirectory}\\{FileWorker.constraints_json} --route {WorkingDirectory}\\{FileWorker.route_json} --analyse {WorkingDirectory}\\{FileWorker.analyse_json}.json";
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
             return (int)result.ExitCode;
-        }
-
-        private void deleteBackup()
-        {
-            string targets_name = $"{_workingDirrectory}\\{targets_json}" + "_backup";
-            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}" + "_backup";
-
-            if (File.Exists(targets_name)) File.Delete(targets_name);
-            if (File.Exists(nav_data_name)) File.Delete(nav_data_name);
-        }
-
-        private void deleteInit()
-        {
-            string targets_name = $"{_workingDirrectory}\\{targets_json}" + "_init";
-            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}" + "_init";
-
-            if (File.Exists(targets_name)) File.Delete(targets_name);
-            if (File.Exists(nav_data_name)) File.Delete(nav_data_name);
         }
 
         public void SaveFilesAsInit()
         {
-            string targets_name = $"{_workingDirrectory}\\{targets_json}";
-            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}";
-
-            deleteInit();
-            File.Copy(targets_name, targets_name + "_init");
-            File.Copy(nav_data_name, nav_data_name + "_init");
+            FileWorker.SaveFilesAsInit();
         }
 
         public void ReturnFilesToInit()
         {
-            string targets_name = $"{_workingDirrectory}\\{targets_json}";
-            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}";
-
-            if (File.Exists(targets_name + "_init")
-             && File.Exists(nav_data_name + "_init"))
-            {
-                deleteBackup();
-                File.Replace(targets_name + "_init", targets_name, targets_name + "_backup");
-                File.Replace(nav_data_name + "_init", nav_data_name, nav_data_name + "_backup");
-            }
+            FileWorker.ReturnFilesToInit();
         }
 
+        /// <summary>
+        /// Модифицирует файлы рабочей директории, моделируя цели и свое судно на seconds времени вперед
+        /// Создает ongoing маневр согласно выбранной траектории
+        /// </summary>
+        /// <param name="seconds">Время</param>
+        /// <param name="prefer">Предпочитаемый алгоритм при наличии двух решений в maneuver файле</param>
         public void FollowManeuver(double seconds, AlgorithmPrefer prefer)
         {
-            var objArr = JArray.Parse(File.ReadAllText(_workingDirrectory + "\\" + maneuver_json));
-            Path path;
-            if (objArr.Count > 1) {
-                foreach (var solution in objArr)
-                {
-                    if ((solution["solver_name"].Value<string>() == "Main" && prefer == AlgorithmPrefer.PreferBase)
-                     || (solution["solver_name"].Value<string>() == "RVO" && prefer == AlgorithmPrefer.PreferRVO))
-                    {
-                        path = Path.ReadFromJson(solution["path"].ToObject<JObject>());
-                        break;
-                    }
-                }
-            }
-            else {
-                path = Path.ReadFromJson(objArr[0]["path"].ToObject<JObject>());
-            }
+            var path = FileWorker.ReadPath(prefer);
         }
     }
     public enum AlgorithmPrefer
