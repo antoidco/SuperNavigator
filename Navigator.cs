@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using static SuperNavigator.ProcessAsyncHelper;
 
 namespace SuperNavigator
 {
@@ -35,6 +37,13 @@ namespace SuperNavigator
         public Navigator(string appDirr)
         {
             _appDirrectory = appDirr;
+        }
+
+        public async Task<ProcessResult> Analyze()
+        {
+            string command = UsvDirrectory + "\\USV.exe";
+            string args = "";
+            return await ProcessAsyncHelper.ExecuteShellCommand(command, args, true);
         }
     }
 }

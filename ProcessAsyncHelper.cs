@@ -12,22 +12,19 @@ namespace SuperNavigator
 
     public static class ProcessAsyncHelper
     {
-        public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, int timeout)
+        public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, bool showWindow = true, int timeout = 1000000)
         {
             var result = new ProcessResult();
 
             using (var process = new Process())
             {
-                // If you run bash-script on Linux it is possible that ExitCode can be 255.
-                // To fix it you can try to add '#!/bin/bash' header to the script.
-
                 process.StartInfo.FileName = command;
                 process.StartInfo.Arguments = arguments;
                 process.StartInfo.UseShellExecute = false;
                 process.StartInfo.RedirectStandardInput = true;
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
-                process.StartInfo.CreateNoWindow = true;
+                process.StartInfo.CreateNoWindow = !showWindow;
 
                 var outputBuilder = new StringBuilder();
                 var outputCloseEvent = new TaskCompletionSource<bool>();
@@ -95,12 +92,7 @@ namespace SuperNavigator
                     {
                         result.Completed = true;
                         result.ExitCode = process.ExitCode;
-
-                        // Adds process output if it was completed with error
-                        if (process.ExitCode != 0)
-                        {
-                            result.Output = $"{outputBuilder}{errorBuilder}";
-                        }
+                        result.Output = $"{outputBuilder}{errorBuilder}";
                     }
                     else
                     {
@@ -125,6 +117,10 @@ namespace SuperNavigator
             return Task.Run(() => process.WaitForExit(timeout));
         }
 
+        static async void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        {
+            await Console.Out.WriteLineAsync(outLine.Data);
+        }
 
         public struct ProcessResult
         {
