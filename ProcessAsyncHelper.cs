@@ -110,11 +110,6 @@ namespace SuperNavigator
             return Task.Run(() => process.WaitForExit(timeout));
         }
 
-        static async void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
-        {
-            await Console.Out.WriteLineAsync(outLine.Data);
-        }
-
         public struct ProcessResult
         {
             public bool Completed;

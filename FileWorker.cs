@@ -65,11 +65,7 @@ namespace SuperNavigator
 
         public void ReturnFilesToInit()
         {
-            foreach (var item in BackupFiles)
-            {
-                string filename = $"{WorkingDirectory}\\{item}";
-                if (!File.Exists(filename)) return;
-            }
+            deletePostfix("");
             deleteBackup();
             foreach (var item in BackupFiles)
             {
