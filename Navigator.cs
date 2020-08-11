@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,15 @@ namespace SuperNavigator
 {
     public class Navigator
     {
+        const string analyse_json = "nav-report.json";
+        const string nav_data_json = "nav-data.json";
+        const string maneuver_json = "maneuver.json";
+        const string targets_json = "target-data.json";
+        const string constraints_json = "constraints.json";
+        const string hydrometeo_json = "hmi-data.json";
+        const string route_json = "route-data.json";
+        const string settings_json = "settings.json";
+
         private string _appDirrectory;
         private string _workingDirrectory;
         private string _ktVizDirrectory;
@@ -42,8 +53,28 @@ namespace SuperNavigator
         public async Task<ProcessResult> Analyze()
         {
             string command = UsvDirrectory + "\\USV.exe";
-            string args = "";
-            return await ProcessAsyncHelper.ExecuteShellCommand(command, args, true);
+
+            string args = $"--targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}.json";
+
+            return await ProcessAsyncHelper.ExecuteShellCommand(command, args);
+        }
+
+        public string GetAnalyzeReport()
+        {
+            var obj = JObject.Parse(File.ReadAllText(_workingDirrectory + "\\" + analyse_json));
+            var statuses = obj["target_statuses"];
+
+            bool dangerous = false;
+            foreach (var status in statuses)
+            {
+                if (status["danger_level"].Value<int>() == 2)
+                {
+                    dangerous = true;
+                    break;
+                }
+            }
+
+            return dangerous ? "Dangerous situation" : "Not dangerous situation";
         }
     }
 }

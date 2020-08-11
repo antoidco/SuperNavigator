@@ -44,7 +44,7 @@
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -52,7 +52,10 @@
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -69,11 +72,10 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.panel4);
-            this.splitContainer1.Panel2.Controls.Add(this.tb_output);
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Size = new System.Drawing.Size(465, 309);
-            this.splitContainer1.SplitterDistance = 171;
+            this.splitContainer1.Size = new System.Drawing.Size(418, 281);
+            this.splitContainer1.SplitterDistance = 153;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -82,9 +84,9 @@
             this.panel3.AutoSize = true;
             this.panel3.Controls.Add(this.btn_RunViz);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 284);
+            this.panel3.Location = new System.Drawing.Point(0, 256);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(169, 23);
+            this.panel3.Size = new System.Drawing.Size(151, 23);
             this.panel3.TabIndex = 3;
             // 
             // btn_RunViz
@@ -92,7 +94,7 @@
             this.btn_RunViz.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_RunViz.Location = new System.Drawing.Point(0, 0);
             this.btn_RunViz.Name = "btn_RunViz";
-            this.btn_RunViz.Size = new System.Drawing.Size(169, 23);
+            this.btn_RunViz.Size = new System.Drawing.Size(151, 23);
             this.btn_RunViz.TabIndex = 2;
             this.btn_RunViz.Text = "KTViz";
             this.btn_RunViz.UseVisualStyleBackColor = true;
@@ -106,7 +108,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(169, 69);
+            this.panel1.Size = new System.Drawing.Size(151, 69);
             this.panel1.TabIndex = 1;
             // 
             // btn_Set_KTViz_Directory
@@ -115,7 +117,7 @@
             this.btn_Set_KTViz_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_KTViz_Directory.Location = new System.Drawing.Point(0, 46);
             this.btn_Set_KTViz_Directory.Name = "btn_Set_KTViz_Directory";
-            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(169, 23);
+            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(151, 23);
             this.btn_Set_KTViz_Directory.TabIndex = 2;
             this.btn_Set_KTViz_Directory.Text = "Set KTViz Directory";
             this.btn_Set_KTViz_Directory.UseVisualStyleBackColor = true;
@@ -126,7 +128,7 @@
             this.btn_Set_Working_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_Working_Directory.Location = new System.Drawing.Point(0, 23);
             this.btn_Set_Working_Directory.Name = "btn_Set_Working_Directory";
-            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(169, 23);
+            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(151, 23);
             this.btn_Set_Working_Directory.TabIndex = 1;
             this.btn_Set_Working_Directory.Text = "Set Working Directory";
             this.btn_Set_Working_Directory.UseVisualStyleBackColor = true;
@@ -137,7 +139,7 @@
             this.btn_Set_USV_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_USV_Directory.Location = new System.Drawing.Point(0, 0);
             this.btn_Set_USV_Directory.Name = "btn_Set_USV_Directory";
-            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(169, 23);
+            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(151, 23);
             this.btn_Set_USV_Directory.TabIndex = 0;
             this.btn_Set_USV_Directory.Text = "Set USV Directory";
             this.btn_Set_USV_Directory.UseVisualStyleBackColor = true;
@@ -145,12 +147,13 @@
             // 
             // tb_output
             // 
+            this.tb_output.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_output.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tb_output.Location = new System.Drawing.Point(3, 74);
+            this.tb_output.Location = new System.Drawing.Point(0, 0);
             this.tb_output.Multiline = true;
             this.tb_output.Name = "tb_output";
             this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_output.Size = new System.Drawing.Size(278, 114);
+            this.tb_output.Size = new System.Drawing.Size(258, 144);
             this.tb_output.TabIndex = 8;
             // 
             // btn_analyze
@@ -180,7 +183,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(287, 69);
+            this.panel2.Size = new System.Drawing.Size(258, 69);
             this.panel2.TabIndex = 5;
             // 
             // tb_ktviz_dir
@@ -211,21 +214,30 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
-            // panel4
+            // splitContainer2
             // 
-            this.panel4.Controls.Add(this.btn_analyze);
-            this.panel4.Controls.Add(this.btn_predict);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 278);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(287, 29);
-            this.panel4.TabIndex = 9;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 69);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tb_output);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.btn_predict);
+            this.splitContainer2.Panel2.Controls.Add(this.btn_analyze);
+            this.splitContainer2.Size = new System.Drawing.Size(258, 210);
+            this.splitContainer2.SplitterDistance = 144;
+            this.splitContainer2.TabIndex = 10;
             // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(465, 309);
+            this.ClientSize = new System.Drawing.Size(418, 281);
             this.Controls.Add(this.splitContainer1);
             this.Name = "NavigatorForm";
             this.Text = "Navigator";
@@ -233,7 +245,6 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
@@ -241,7 +252,11 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel4.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -264,7 +279,7 @@
         private System.Windows.Forms.Button btn_analyze;
         private System.Windows.Forms.Button btn_predict;
         private System.Windows.Forms.TextBox tb_output;
-        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.SplitContainer splitContainer2;
     }
 }
 

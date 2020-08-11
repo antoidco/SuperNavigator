@@ -69,7 +69,7 @@ namespace SuperNavigator
         {
             string command = "python";
             string args = navigator.KtVizDirrectory + "\\" + app_py_filename;
-            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
+            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args, true);
             return result.ExitCode == 0;
         }
 
@@ -106,8 +106,14 @@ namespace SuperNavigator
 
         private async void btn_analyze_Click(object sender, EventArgs e)
         {
+            btn_analyze.Enabled = false;
+            // Analyze result
             var result = await navigator.Analyze();
-            if (result.Output != null) tb_output.AppendText(result.Output);
+            if (result.Output != null) tb_output.AppendText(result.Output + System.Environment.NewLine);
+
+            // Check analyze report
+            tb_output.AppendText(navigator.GetAnalyzeReport() + System.Environment.NewLine);
+            btn_analyze.Enabled = true;
         }
     }
 }

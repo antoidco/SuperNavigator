@@ -12,7 +12,7 @@ namespace SuperNavigator
 
     public static class ProcessAsyncHelper
     {
-        public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, bool showWindow = true, int timeout = 1000000)
+        public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, bool showWindow = false, int timeout = 1000000)
         {
             var result = new ProcessResult();
 
