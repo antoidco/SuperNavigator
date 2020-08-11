@@ -1,5 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using static SuperNavigator.ProcessAsyncHelper;
 
@@ -8,11 +12,6 @@ namespace SuperNavigator
     public class Navigator
     {
         public FileWorker FileWorker;
-        public string AppDirectory { get => FileWorker.AppDirectory; }
-        public string WorkingDirectory => FileWorker.WorkingDirectory;
-        public string KtVizDirectory => FileWorker.KtVizDirectory;
-        public string UsvDirectory => FileWorker.UsvDirectory;
-
         public Navigator(string appDir)
         {
             FileWorker = new FileWorker(appDir);
@@ -24,9 +23,9 @@ namespace SuperNavigator
         /// <returns>Информация о процессе</returns>
         public async Task<ProcessResult> Analyze()
         {
-            string command = UsvDirectory + "\\USV.exe";
+            string command = FileWorker.UsvDirectory + "\\USV.exe";
 
-            string args = $"--targets {WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {WorkingDirectory}\\{FileWorker.constraints_json} --route {WorkingDirectory}\\{FileWorker.route_json} --analyse {WorkingDirectory}\\{FileWorker.analyse_json}";
+            string args = $"--targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}";
 
             return await ProcessAsyncHelper.ExecuteShellCommand(command, args);
         }
@@ -37,7 +36,7 @@ namespace SuperNavigator
         /// <returns>true, если опасна</returns>
         public bool GetAnalyzeReportDangerous()
         {
-            var obj = JObject.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.analyse_json));
+            var obj = JObject.Parse(File.ReadAllText(FileWorker.WorkingDirectory + "\\" + FileWorker.analyse_json));
             var statuses = obj["target_statuses"];
 
             foreach (var status in statuses)
@@ -57,9 +56,9 @@ namespace SuperNavigator
         /// <returns>Код возврата</returns>
         public async Task<int> Maneuver()
         {
-            string command = UsvDirectory + "\\USV.exe";
+            string command = FileWorker.UsvDirectory + "\\USV.exe";
 
-            string args = $"--maneuver {WorkingDirectory}\\{FileWorker.maneuver_json} --predict {WorkingDirectory}\\{FileWorker.predict_json} --targets {WorkingDirectory}\\{FileWorker.targets_json} --settings {WorkingDirectory}\\{FileWorker.settings_json} --nav-data {WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {WorkingDirectory}\\{FileWorker.constraints_json} --route {WorkingDirectory}\\{FileWorker.route_json} --analyse {WorkingDirectory}\\{FileWorker.analyse_json}.json";
+            string args = $"--maneuver {FileWorker.WorkingDirectory}\\{FileWorker.maneuver_json} --predict {FileWorker.WorkingDirectory}\\{FileWorker.predict_json} --targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}.json";
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
@@ -72,9 +71,9 @@ namespace SuperNavigator
         /// <returns>Код возврата</returns>
         public async Task<int> Actual()
         {
-            string command = UsvDirectory + "\\USV.exe";
+            string command = FileWorker.UsvDirectory + "\\USV.exe";
 
-            string args = $"--ongoing {WorkingDirectory}\\{FileWorker.ongoing_json} --targets {WorkingDirectory}\\{FileWorker.targets_json} --settings {WorkingDirectory}\\{FileWorker.settings_json} --nav-data {WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {WorkingDirectory}\\{FileWorker.constraints_json} --route {WorkingDirectory}\\{FileWorker.route_json} --analyse {WorkingDirectory}\\{FileWorker.analyse_json}.json";
+            string args = $"--ongoing {FileWorker.WorkingDirectory}\\{FileWorker.ongoing_json} --targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}.json";
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
@@ -90,6 +89,62 @@ namespace SuperNavigator
         public void FollowManeuver(double seconds, AlgorithmPrefer prefer)
         {
             var path = FileWorker.ReadPath(prefer);
+
+            // update ship
+            updateShip(path, seconds);
+
+            // update goals (linearly)
+            updateGoalsLinearly(seconds);
+
+            // write ongoing maneuver
+            WriteOngoing(prefer);
+        }
+
+        public void WriteOngoing(AlgorithmPrefer prefer)
+        {
+            string maneuver_file = FileWorker.WorkingDirectory + "\\" + FileWorker.maneuver_json;
+            string ongoing_file = FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json;
+            var pathObj = FileWorker.ReadPathJson(prefer);
+            File.WriteAllText(ongoing_file, pathObj.ToString());
+        }
+
+        private void updateShip(Path path, double seconds)
+        {
+            var newShipPosition = path.position(path.start_time + seconds);
+            string ship_file = FileWorker.WorkingDirectory + "\\" + FileWorker.nav_data_json;
+            var obj = JObject.Parse(File.ReadAllText(ship_file));
+            obj["lat"] = newShipPosition.lat;
+            obj["lon"] = newShipPosition.lon;
+            obj["SOG"] = newShipPosition.speed * 3600;
+            obj["STW"] = newShipPosition.speed * 3600;
+            obj["COG"] = newShipPosition.course;
+            obj["heading"] = newShipPosition.course;
+            obj["timestamp"] = obj["timestamp"].Value<long>() + (long)seconds;
+            File.WriteAllText(ship_file, obj.ToString());
+        }
+
+        private void updateGoalsLinearly(double seconds)
+        {
+            string goals_file = FileWorker.WorkingDirectory + "\\" + FileWorker.targets_json;
+            var objArr = JArray.Parse(File.ReadAllText(goals_file));
+            foreach (var item in objArr)
+            {
+                var pos = new Position
+                {
+                    speed = item["SOG"].Value<double>() / 3600,
+                    course = item["COG"].Value<double>(),
+                    lat = item["lat"].Value<double>(),
+                    lon = item["lon"].Value<double>()
+                };
+                var newPos = Helpers.ExtrapolatePosition(pos, seconds);
+
+                item["lat"] = newPos.lat;
+                item["lon"] = newPos.lon;
+                item["SOG"] = newPos.speed * 3600;
+                item["COG"] = newPos.course;
+                item["timestamp"] = item["timestamp"].Value<long>() + (long)seconds;
+            }
+            File.WriteAllText(goals_file, objArr.ToString());
         }
 
         public void SaveFilesAsInit()

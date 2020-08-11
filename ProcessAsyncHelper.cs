@@ -96,9 +96,7 @@ namespace SuperNavigator
                             // Kill hung process
                             process.Kill();
                         }
-                        catch
-                        {
-                        }
+                        catch { }
                     }
                 }
             }

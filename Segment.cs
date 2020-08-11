@@ -10,7 +10,7 @@ namespace SuperNavigator
         public double duration;
         public double length;
         public double curve;
-        public double begin_angle;
+        public double begin_angle; // degrees
         public double lon;
         public double lat;
 

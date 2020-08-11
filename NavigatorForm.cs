@@ -31,20 +31,23 @@ namespace SuperNavigator
         {
             try
             {
-                JObject obj = JObject.Parse(File.ReadAllText(navigator.AppDirrectory + "\\" + settings_filename));
-                navigator.KtVizDirrectory = obj["KtVizDirrectory"].Value<string>();
-                navigator.UsvDirrectory = obj["UsvDirrectory"].Value<string>();
-                navigator.WorkingDirrectory = obj["WorkingDirrectory"].Value<string>();
+                JObject obj = JObject.Parse(File.ReadAllText(navigator.FileWorker.AppDirectory + "\\" + settings_filename));
+                navigator.FileWorker.KtVizDirectory = obj["KtVizDirectory"].Value<string>();
+                navigator.FileWorker.UsvDirectory = obj["UsvDirectory"].Value<string>();
+                navigator.FileWorker.WorkingDirectory = obj["WorkingDirectory"].Value<string>();
             }
-            catch { }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
         }
         private void SaveSettings()
         {
             JObject obj = new JObject();
-            obj.Add("KtVizDirrectory", navigator.KtVizDirrectory);
-            obj.Add("UsvDirrectory", navigator.UsvDirrectory);
-            obj.Add("WorkingDirrectory", navigator.WorkingDirrectory);
-            using (StreamWriter file = File.CreateText(navigator.AppDirrectory + "\\" + settings_filename))
+            obj.Add("KtVizDirectory", navigator.FileWorker.KtVizDirectory);
+            obj.Add("UsvDirectory", navigator.FileWorker.UsvDirectory);
+            obj.Add("WorkingDirectory", navigator.FileWorker.WorkingDirectory);
+            using (StreamWriter file = File.CreateText(navigator.FileWorker.AppDirectory + "\\" + settings_filename))
             {
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, obj);
@@ -52,9 +55,9 @@ namespace SuperNavigator
         }
         private void UpdateFields()
         {
-            tb_ktviz_dir.Text = navigator.KtVizDirrectory;
-            tb_usv_dir.Text = navigator.UsvDirrectory;
-            tb_working_dir.Text = navigator.WorkingDirrectory;
+            tb_ktviz_dir.Text = navigator.FileWorker.KtVizDirectory;
+            tb_usv_dir.Text = navigator.FileWorker.UsvDirectory;
+            tb_working_dir.Text = navigator.FileWorker.WorkingDirectory;
         }
 
         private string ChangeDirectory(string prevValue)
@@ -68,26 +71,26 @@ namespace SuperNavigator
         private async Task<bool> RunStartKtVizAsync()
         {
             string command = "python";
-            string args = navigator.KtVizDirrectory + "\\" + app_py_filename;
+            string args = navigator.FileWorker.KtVizDirectory + "\\" + app_py_filename;
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args, true);
             return result.ExitCode == 0;
         }
 
         private void btn_Set_USV_Directory_Click(object sender, EventArgs e)
         {
-            navigator.UsvDirrectory = ChangeDirectory(navigator.UsvDirrectory);
+            navigator.FileWorker.UsvDirectory = ChangeDirectory(navigator.FileWorker.UsvDirectory);
             UpdateFields();
         }
 
         private void btn_Set_Working_Directory_Click(object sender, EventArgs e)
         {
-            navigator.WorkingDirrectory = ChangeDirectory(navigator.WorkingDirrectory);
+            navigator.FileWorker.WorkingDirectory = ChangeDirectory(navigator.FileWorker.WorkingDirectory);
             UpdateFields();
         }
 
         private void btn_Set_KTViz_Directory_Click(object sender, EventArgs e)
         {
-            navigator.KtVizDirrectory = ChangeDirectory(navigator.KtVizDirrectory);
+            navigator.FileWorker.KtVizDirectory = ChangeDirectory(navigator.FileWorker.KtVizDirectory);
             UpdateFields();
         }
 

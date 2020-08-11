@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileWorker.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="NavigatorForm.cs">
       <SubType>Form</SubType>

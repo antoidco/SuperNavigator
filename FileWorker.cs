@@ -80,26 +80,28 @@ namespace SuperNavigator
 
         public Path ReadPath(AlgorithmPrefer prefer)
         {
+            return Path.ReadFromJson(ReadPathJson(prefer));
+        }
+
+        public JObject ReadPathJson(AlgorithmPrefer prefer)
+        {
             var objArr = JArray.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.maneuver_json));
             Path path = new Path();
             if (objArr.Count > 1)
             {
                 foreach (var solution in objArr)
                 {
-                    if ((solution["solver_name"].Value<string>() == "Main" && prefer == AlgorithmPrefer.PreferBase)
-                     || (solution["solver_name"].Value<string>() == "RVO" && prefer == AlgorithmPrefer.PreferRVO))
+                    if (Helpers.AlgorithmPreferToString(prefer) == solution["solver_name"].Value<string>())
                     {
-                        path = Path.ReadFromJson(solution["path"].ToObject<JObject>());
-                        break;
+                        return solution["path"].ToObject<JObject>();
                     }
                 }
+                return objArr[0]["path"].ToObject<JObject>();
             }
             else
             {
-                path = Path.ReadFromJson(objArr[0]["path"].ToObject<JObject>());
+                return objArr[0]["path"].ToObject<JObject>();
             }
-
-            return path;
         }
     }
 }
