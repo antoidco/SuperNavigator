@@ -35,27 +35,29 @@
             this.btn_Set_KTViz_Directory = new System.Windows.Forms.Button();
             this.btn_Set_Working_Directory = new System.Windows.Forms.Button();
             this.btn_Set_USV_Directory = new System.Windows.Forms.Button();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tb_output = new System.Windows.Forms.TextBox();
-            this.btn_analyze = new System.Windows.Forms.Button();
             this.btn_maneuver = new System.Windows.Forms.Button();
+            this.btn_analyze = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tb_ktviz_dir = new System.Windows.Forms.TextBox();
             this.tb_working_dir = new System.Windows.Forms.TextBox();
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.btn_backup = new System.Windows.Forms.Button();
+            this.btn_toInit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -82,17 +84,19 @@
             // panel3
             // 
             this.panel3.AutoSize = true;
+            this.panel3.Controls.Add(this.btn_toInit);
+            this.panel3.Controls.Add(this.btn_backup);
             this.panel3.Controls.Add(this.btn_RunViz);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 256);
+            this.panel3.Location = new System.Drawing.Point(0, 210);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(151, 23);
+            this.panel3.Size = new System.Drawing.Size(151, 69);
             this.panel3.TabIndex = 3;
             // 
             // btn_RunViz
             // 
             this.btn_RunViz.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_RunViz.Location = new System.Drawing.Point(0, 0);
+            this.btn_RunViz.Location = new System.Drawing.Point(0, 46);
             this.btn_RunViz.Name = "btn_RunViz";
             this.btn_RunViz.Size = new System.Drawing.Size(151, 23);
             this.btn_RunViz.TabIndex = 2;
@@ -145,6 +149,25 @@
             this.btn_Set_USV_Directory.UseVisualStyleBackColor = true;
             this.btn_Set_USV_Directory.Click += new System.EventHandler(this.btn_Set_USV_Directory_Click);
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 69);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tb_output);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.btn_maneuver);
+            this.splitContainer2.Panel2.Controls.Add(this.btn_analyze);
+            this.splitContainer2.Size = new System.Drawing.Size(258, 210);
+            this.splitContainer2.SplitterDistance = 144;
+            this.splitContainer2.TabIndex = 10;
+            // 
             // tb_output
             // 
             this.tb_output.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -156,16 +179,6 @@
             this.tb_output.Size = new System.Drawing.Size(258, 144);
             this.tb_output.TabIndex = 8;
             // 
-            // btn_analyze
-            // 
-            this.btn_analyze.Location = new System.Drawing.Point(3, 3);
-            this.btn_analyze.Name = "btn_analyze";
-            this.btn_analyze.Size = new System.Drawing.Size(75, 23);
-            this.btn_analyze.TabIndex = 7;
-            this.btn_analyze.Text = "analyze";
-            this.btn_analyze.UseVisualStyleBackColor = true;
-            this.btn_analyze.Click += new System.EventHandler(this.btn_analyze_Click);
-            // 
             // btn_maneuver
             // 
             this.btn_maneuver.Location = new System.Drawing.Point(84, 3);
@@ -175,6 +188,16 @@
             this.btn_maneuver.Text = "maneuver";
             this.btn_maneuver.UseVisualStyleBackColor = true;
             this.btn_maneuver.Click += new System.EventHandler(this.btn_maneuver_Click);
+            // 
+            // btn_analyze
+            // 
+            this.btn_analyze.Location = new System.Drawing.Point(3, 3);
+            this.btn_analyze.Name = "btn_analyze";
+            this.btn_analyze.Size = new System.Drawing.Size(75, 23);
+            this.btn_analyze.TabIndex = 7;
+            this.btn_analyze.Text = "analyze";
+            this.btn_analyze.UseVisualStyleBackColor = true;
+            this.btn_analyze.Click += new System.EventHandler(this.btn_analyze_Click);
             // 
             // panel2
             // 
@@ -215,24 +238,27 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
-            // splitContainer2
+            // btn_backup
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 69);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.btn_backup.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btn_backup.Location = new System.Drawing.Point(0, 23);
+            this.btn_backup.Name = "btn_backup";
+            this.btn_backup.Size = new System.Drawing.Size(151, 23);
+            this.btn_backup.TabIndex = 8;
+            this.btn_backup.Text = "Save Current as Init State";
+            this.btn_backup.UseVisualStyleBackColor = true;
+            this.btn_backup.Click += new System.EventHandler(this.btn_backup_Click);
             // 
-            // splitContainer2.Panel1
+            // btn_toInit
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.tb_output);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.btn_maneuver);
-            this.splitContainer2.Panel2.Controls.Add(this.btn_analyze);
-            this.splitContainer2.Size = new System.Drawing.Size(258, 210);
-            this.splitContainer2.SplitterDistance = 144;
-            this.splitContainer2.TabIndex = 10;
+            this.btn_toInit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btn_toInit.Location = new System.Drawing.Point(0, 0);
+            this.btn_toInit.Name = "btn_toInit";
+            this.btn_toInit.Size = new System.Drawing.Size(151, 23);
+            this.btn_toInit.TabIndex = 9;
+            this.btn_toInit.Text = "Return to Init State";
+            this.btn_toInit.UseVisualStyleBackColor = true;
+            this.btn_toInit.Click += new System.EventHandler(this.btn_toInit_Click);
             // 
             // NavigatorForm
             // 
@@ -251,13 +277,13 @@
             this.panel3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -281,6 +307,8 @@
         private System.Windows.Forms.Button btn_maneuver;
         private System.Windows.Forms.TextBox tb_output;
         private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.Button btn_toInit;
+        private System.Windows.Forms.Button btn_backup;
     }
 }
 

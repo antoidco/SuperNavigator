@@ -55,7 +55,7 @@ namespace SuperNavigator
         {
             string command = UsvDirrectory + "\\USV.exe";
 
-            string args = $"--targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}.json";
+            string args = $"--targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}";
 
             return await ProcessAsyncHelper.ExecuteShellCommand(command, args);
         }
@@ -85,6 +85,48 @@ namespace SuperNavigator
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
             return (int)result.ExitCode;
+        }
+
+        private void deleteBackup()
+        {
+            string targets_name = $"{_workingDirrectory}\\{targets_json}" + "_backup";
+            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}" + "_backup";
+
+            if (File.Exists(targets_name)) File.Delete(targets_name);
+            if (File.Exists(nav_data_name)) File.Delete(nav_data_name);
+        }
+
+        private void deleteInit()
+        {
+            string targets_name = $"{_workingDirrectory}\\{targets_json}" + "_init";
+            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}" + "_init";
+
+            if (File.Exists(targets_name)) File.Delete(targets_name);
+            if (File.Exists(nav_data_name)) File.Delete(nav_data_name);
+        }
+
+        public void SaveFilesAsInit()
+        {
+            string targets_name = $"{_workingDirrectory}\\{targets_json}";
+            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}";
+
+            deleteInit();
+            File.Copy(targets_name, targets_name + "_init");
+            File.Copy(nav_data_name, nav_data_name + "_init");
+        }
+
+        public void ReturnFilesToInit()
+        {
+            string targets_name = $"{_workingDirrectory}\\{targets_json}";
+            string nav_data_name = $"{_workingDirrectory}\\{nav_data_json}";
+
+            if (File.Exists(targets_name + "_init")
+             && File.Exists(nav_data_name + "_init"))
+            {
+                deleteBackup();
+                File.Replace(targets_name + "_init", targets_name, targets_name + "_backup");
+                File.Replace(nav_data_name + "_init", nav_data_name, nav_data_name + "_backup");
+            }
         }
     }
 }

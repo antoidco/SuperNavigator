@@ -126,5 +126,15 @@ namespace SuperNavigator
             tb_output.AppendText(System.Environment.NewLine + "EXIT CODE:" + result.ToString());
             btn_maneuver.Enabled = true;
         }
+
+        private void btn_backup_Click(object sender, EventArgs e)
+        {
+            navigator.SaveFilesAsInit();
+        }
+
+        private void btn_toInit_Click(object sender, EventArgs e)
+        {
+            navigator.ReturnFilesToInit();
+        }
     }
 }
