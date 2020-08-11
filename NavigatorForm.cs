@@ -112,7 +112,7 @@ namespace SuperNavigator
             if (result.Output != null) tb_output.AppendText(result.Output + System.Environment.NewLine);
 
             // Check analyze report
-            tb_output.AppendText(navigator.GetAnalyzeReport() + System.Environment.NewLine);
+            tb_output.AppendText(navigator.GetAnalyzeReportDangerous() ? "DANGER" : "SAFE" + System.Environment.NewLine);
             btn_analyze.Enabled = true;
         }
     }

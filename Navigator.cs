@@ -59,22 +59,20 @@ namespace SuperNavigator
             return await ProcessAsyncHelper.ExecuteShellCommand(command, args);
         }
 
-        public string GetAnalyzeReport()
+        public bool GetAnalyzeReportDangerous()
         {
             var obj = JObject.Parse(File.ReadAllText(_workingDirrectory + "\\" + analyse_json));
             var statuses = obj["target_statuses"];
 
-            bool dangerous = false;
             foreach (var status in statuses)
             {
                 if (status["danger_level"].Value<int>() == 2)
                 {
-                    dangerous = true;
-                    break;
+                    return true;
                 }
             }
 
-            return dangerous ? "Dangerous situation" : "Not dangerous situation";
+            return false;
         }
     }
 }
