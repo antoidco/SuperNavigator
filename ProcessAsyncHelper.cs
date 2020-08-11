@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SuperNavigator
 {
-    using System;
-    using System.Diagnostics;
-    using System.Text;
-    using System.Threading.Tasks;
-
     public static class ProcessAsyncHelper
     {
         public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, bool showWindow = false, int timeout = 1000000)

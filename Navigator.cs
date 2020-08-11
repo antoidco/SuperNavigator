@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static SuperNavigator.ProcessAsyncHelper;
 
@@ -12,25 +8,10 @@ namespace SuperNavigator
     public class Navigator
     {
         public FileWorker FileWorker;
-        public string AppDirectory
-        {
-            get => FileWorker.AppDirectory; 
-        }
-        public string WorkingDirectory
-        {
-            get => FileWorker.WorkingDirectory;
-            set => FileWorker.WorkingDirectory = value;
-        }
-        public string KtVizDirectory
-        {
-            get => FileWorker.KtVizDirectory;
-            set => FileWorker.KtVizDirectory = value;
-        }
-        public string UsvDirectory
-        {
-            get => FileWorker.UsvDirectory;
-            set => FileWorker.UsvDirectory = value;
-        }
+        public string AppDirectory { get => FileWorker.AppDirectory; }
+        public string WorkingDirectory => FileWorker.WorkingDirectory;
+        public string KtVizDirectory => FileWorker.KtVizDirectory;
+        public string UsvDirectory => FileWorker.UsvDirectory;
 
         public Navigator(string appDir)
         {
@@ -100,16 +81,6 @@ namespace SuperNavigator
             return (int)result.ExitCode;
         }
 
-        public void SaveFilesAsInit()
-        {
-            FileWorker.SaveFilesAsInit();
-        }
-
-        public void ReturnFilesToInit()
-        {
-            FileWorker.ReturnFilesToInit();
-        }
-
         /// <summary>
         /// Модифицирует файлы рабочей директории, моделируя цели и свое судно на seconds времени вперед
         /// Создает ongoing маневр согласно выбранной траектории
@@ -119,6 +90,16 @@ namespace SuperNavigator
         public void FollowManeuver(double seconds, AlgorithmPrefer prefer)
         {
             var path = FileWorker.ReadPath(prefer);
+        }
+
+        public void SaveFilesAsInit()
+        {
+            FileWorker.SaveFilesAsInit();
+        }
+
+        public void ReturnFilesToInit()
+        {
+            FileWorker.ReturnFilesToInit();
         }
     }
     public enum AlgorithmPrefer

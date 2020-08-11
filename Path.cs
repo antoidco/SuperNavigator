@@ -26,5 +26,22 @@ namespace SuperNavigator
             var result = JsonConvert.SerializeObject(this);
             File.WriteAllText(filename, result);
         }
+        /// <summary>
+        /// Вычисляет позицию на path в момент времени time
+        /// </summary>
+        /// <param name="time">Время</param>
+        /// <returns>Позиция на path</returns>
+        public Position position(double time)
+        {
+            time -= this.start_time;
+            if (time >= 0) {
+                foreach (var item in this.items) {
+                    if (time < item.duration)
+                        return item.position(time);
+                    time -= item.duration;
+                }
+            }
+            return new Position { lat = 0, lon = 0, course = 0, speed = 0 };
+        }
     }
 }
