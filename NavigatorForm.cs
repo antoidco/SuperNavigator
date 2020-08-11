@@ -109,11 +109,22 @@ namespace SuperNavigator
             btn_analyze.Enabled = false;
             // Analyze result
             var result = await navigator.Analyze();
-            if (result.Output != null) tb_output.AppendText(result.Output + System.Environment.NewLine);
+            if (result.Output != null) tb_output.AppendText(result.Output);
 
             // Check analyze report
-            tb_output.AppendText(navigator.GetAnalyzeReportDangerous() ? "DANGER" : "SAFE" + System.Environment.NewLine);
+            tb_output.AppendText(System.Environment.NewLine + (navigator.GetAnalyzeReportDangerous() ? "DANGER" : "SAFE"));
             btn_analyze.Enabled = true;
+        }
+
+        private async void btn_maneuver_Click(object sender, EventArgs e)
+        {
+            btn_maneuver.Enabled = false;
+            // Maneuver result
+            var result = await navigator.Maneuver();
+
+            // Check maneuver result
+            tb_output.AppendText(System.Environment.NewLine + "EXIT CODE:" + result.ToString());
+            btn_maneuver.Enabled = true;
         }
     }
 }

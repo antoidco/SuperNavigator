@@ -19,6 +19,7 @@ namespace SuperNavigator
         const string hydrometeo_json = "hmi-data.json";
         const string route_json = "route-data.json";
         const string settings_json = "settings.json";
+        const string predict_json = "target-maneuvers.json";
 
         private string _appDirrectory;
         private string _workingDirrectory;
@@ -73,6 +74,17 @@ namespace SuperNavigator
             }
 
             return false;
+        }
+
+        public async Task<int> Maneuver()
+        {
+            string command = UsvDirrectory + "\\USV.exe";
+
+            string args = $"--maneuver {_workingDirrectory}\\{maneuver_json} --predict {_workingDirrectory}\\{predict_json} --targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}.json";
+
+            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
+
+            return (int)result.ExitCode;
         }
     }
 }

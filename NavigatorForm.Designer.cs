@@ -37,7 +37,7 @@
             this.btn_Set_USV_Directory = new System.Windows.Forms.Button();
             this.tb_output = new System.Windows.Forms.TextBox();
             this.btn_analyze = new System.Windows.Forms.Button();
-            this.btn_predict = new System.Windows.Forms.Button();
+            this.btn_maneuver = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tb_ktviz_dir = new System.Windows.Forms.TextBox();
             this.tb_working_dir = new System.Windows.Forms.TextBox();
@@ -166,14 +166,15 @@
             this.btn_analyze.UseVisualStyleBackColor = true;
             this.btn_analyze.Click += new System.EventHandler(this.btn_analyze_Click);
             // 
-            // btn_predict
+            // btn_maneuver
             // 
-            this.btn_predict.Location = new System.Drawing.Point(84, 3);
-            this.btn_predict.Name = "btn_predict";
-            this.btn_predict.Size = new System.Drawing.Size(75, 23);
-            this.btn_predict.TabIndex = 6;
-            this.btn_predict.Text = "predict";
-            this.btn_predict.UseVisualStyleBackColor = true;
+            this.btn_maneuver.Location = new System.Drawing.Point(84, 3);
+            this.btn_maneuver.Name = "btn_maneuver";
+            this.btn_maneuver.Size = new System.Drawing.Size(75, 23);
+            this.btn_maneuver.TabIndex = 6;
+            this.btn_maneuver.Text = "maneuver";
+            this.btn_maneuver.UseVisualStyleBackColor = true;
+            this.btn_maneuver.Click += new System.EventHandler(this.btn_maneuver_Click);
             // 
             // panel2
             // 
@@ -227,7 +228,7 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.btn_predict);
+            this.splitContainer2.Panel2.Controls.Add(this.btn_maneuver);
             this.splitContainer2.Panel2.Controls.Add(this.btn_analyze);
             this.splitContainer2.Size = new System.Drawing.Size(258, 210);
             this.splitContainer2.SplitterDistance = 144;
@@ -277,7 +278,7 @@
         private System.Windows.Forms.Button btn_RunViz;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btn_analyze;
-        private System.Windows.Forms.Button btn_predict;
+        private System.Windows.Forms.Button btn_maneuver;
         private System.Windows.Forms.TextBox tb_output;
         private System.Windows.Forms.SplitContainer splitContainer2;
     }
