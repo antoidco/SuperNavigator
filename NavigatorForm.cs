@@ -155,7 +155,10 @@ namespace SuperNavigator
             {
                 navigator.FollowManeuver(Convert.ToDouble(tb_timeStep.Text), algorithmPrefer);
             }
-            catch { }
+            catch (Exception exception) 
+            { 
+                Console.WriteLine(exception.Message); 
+            }
         }
     }
 }

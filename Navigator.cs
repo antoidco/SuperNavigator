@@ -143,8 +143,22 @@ namespace SuperNavigator
 
         public void FollowManeuver(double seconds, AlgorithmPrefer prefer)
         {
-            var obj = JObject.Parse(File.ReadAllText(_workingDirrectory + "\\" + maneuver_json));
-            // to do
+            var objArr = JArray.Parse(File.ReadAllText(_workingDirrectory + "\\" + maneuver_json));
+            Path path;
+            if (objArr.Count > 1) {
+                foreach (var solution in objArr)
+                {
+                    if ((solution["solver_name"].Value<string>() == "Main" && prefer == AlgorithmPrefer.PreferBase)
+                     || (solution["solver_name"].Value<string>() == "RVO" && prefer == AlgorithmPrefer.PreferRVO))
+                    {
+                        path = Path.ReadFromJson(solution["path"].ToObject<JObject>());
+                        break;
+                    }
+                }
+            }
+            else {
+                path = Path.ReadFromJson(objArr[0]["path"].ToObject<JObject>());
+            }
         }
     }
     public enum AlgorithmPrefer
