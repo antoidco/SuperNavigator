@@ -127,6 +127,17 @@ namespace SuperNavigator
             btn_maneuver.Enabled = true;
         }
 
+        private async void btn_actual_Click(object sender, EventArgs e)
+        {
+            btn_actual.Enabled = false;
+            // Maneuver result
+            var result = await navigator.Actual();
+
+            // Check maneuver result
+            tb_output.AppendText(System.Environment.NewLine + "EXIT CODE:" + result.ToString());
+            btn_actual.Enabled = true;
+        }
+
         private void btn_backup_Click(object sender, EventArgs e)
         {
             navigator.SaveFilesAsInit();
@@ -135,6 +146,16 @@ namespace SuperNavigator
         private void btn_toInit_Click(object sender, EventArgs e)
         {
             navigator.ReturnFilesToInit();
+        }
+
+        private void btn_step_Click(object sender, EventArgs e)
+        {
+            AlgorithmPrefer algorithmPrefer = rb_base.Checked ? AlgorithmPrefer.PreferBase : AlgorithmPrefer.PreferRVO;
+            try
+            {
+                navigator.FollowManeuver(Convert.ToDouble(tb_timeStep.Text), algorithmPrefer);
+            }
+            catch { }
         }
     }
 }

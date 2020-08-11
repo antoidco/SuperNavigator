@@ -20,6 +20,7 @@ namespace SuperNavigator
         const string route_json = "route-data.json";
         const string settings_json = "settings.json";
         const string predict_json = "target-maneuvers.json";
+        const string ongoing_json = "ongoing.json";
 
         private string _appDirrectory;
         private string _workingDirrectory;
@@ -87,6 +88,17 @@ namespace SuperNavigator
             return (int)result.ExitCode;
         }
 
+        public async Task<int> Actual()
+        {
+            string command = UsvDirrectory + "\\USV.exe";
+
+            string args = $"--ongoing {_workingDirrectory}\\{ongoing_json} --targets {_workingDirrectory}\\{targets_json} --settings {_workingDirrectory}\\{settings_json} --nav-data {_workingDirrectory}\\{nav_data_json} --hydrometeo {_workingDirrectory}\\{hydrometeo_json} --constraints {_workingDirrectory}\\{constraints_json} --route {_workingDirrectory}\\{route_json} --analyse {_workingDirrectory}\\{analyse_json}.json";
+
+            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
+
+            return (int)result.ExitCode;
+        }
+
         private void deleteBackup()
         {
             string targets_name = $"{_workingDirrectory}\\{targets_json}" + "_backup";
@@ -128,5 +140,16 @@ namespace SuperNavigator
                 File.Replace(nav_data_name + "_init", nav_data_name, nav_data_name + "_backup");
             }
         }
+
+        public void FollowManeuver(double seconds, AlgorithmPrefer prefer)
+        {
+            var obj = JObject.Parse(File.ReadAllText(_workingDirrectory + "\\" + maneuver_json));
+            // to do
+        }
+    }
+    public enum AlgorithmPrefer
+    {
+        PreferBase,
+        PreferRVO
     }
 }

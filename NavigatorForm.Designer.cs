@@ -47,6 +47,14 @@
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.btn_backup = new System.Windows.Forms.Button();
             this.btn_toInit = new System.Windows.Forms.Button();
+            this.btn_step = new System.Windows.Forms.Button();
+            this.tb_timeStep = new System.Windows.Forms.TextBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.rb_rvo = new System.Windows.Forms.RadioButton();
+            this.rb_base = new System.Windows.Forms.RadioButton();
+            this.btn_actual = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -58,6 +66,8 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -76,8 +86,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Size = new System.Drawing.Size(418, 281);
-            this.splitContainer1.SplitterDistance = 153;
+            this.splitContainer1.Size = new System.Drawing.Size(560, 366);
+            this.splitContainer1.SplitterDistance = 204;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -88,9 +98,9 @@
             this.panel3.Controls.Add(this.btn_backup);
             this.panel3.Controls.Add(this.btn_RunViz);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 210);
+            this.panel3.Location = new System.Drawing.Point(0, 295);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(151, 69);
+            this.panel3.Size = new System.Drawing.Size(202, 69);
             this.panel3.TabIndex = 3;
             // 
             // btn_RunViz
@@ -98,7 +108,7 @@
             this.btn_RunViz.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_RunViz.Location = new System.Drawing.Point(0, 46);
             this.btn_RunViz.Name = "btn_RunViz";
-            this.btn_RunViz.Size = new System.Drawing.Size(151, 23);
+            this.btn_RunViz.Size = new System.Drawing.Size(202, 23);
             this.btn_RunViz.TabIndex = 2;
             this.btn_RunViz.Text = "KTViz";
             this.btn_RunViz.UseVisualStyleBackColor = true;
@@ -112,7 +122,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(151, 69);
+            this.panel1.Size = new System.Drawing.Size(202, 69);
             this.panel1.TabIndex = 1;
             // 
             // btn_Set_KTViz_Directory
@@ -121,7 +131,7 @@
             this.btn_Set_KTViz_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_KTViz_Directory.Location = new System.Drawing.Point(0, 46);
             this.btn_Set_KTViz_Directory.Name = "btn_Set_KTViz_Directory";
-            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(151, 23);
+            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(202, 23);
             this.btn_Set_KTViz_Directory.TabIndex = 2;
             this.btn_Set_KTViz_Directory.Text = "Set KTViz Directory";
             this.btn_Set_KTViz_Directory.UseVisualStyleBackColor = true;
@@ -132,7 +142,7 @@
             this.btn_Set_Working_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_Working_Directory.Location = new System.Drawing.Point(0, 23);
             this.btn_Set_Working_Directory.Name = "btn_Set_Working_Directory";
-            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(151, 23);
+            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(202, 23);
             this.btn_Set_Working_Directory.TabIndex = 1;
             this.btn_Set_Working_Directory.Text = "Set Working Directory";
             this.btn_Set_Working_Directory.UseVisualStyleBackColor = true;
@@ -143,7 +153,7 @@
             this.btn_Set_USV_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_USV_Directory.Location = new System.Drawing.Point(0, 0);
             this.btn_Set_USV_Directory.Name = "btn_Set_USV_Directory";
-            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(151, 23);
+            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(202, 23);
             this.btn_Set_USV_Directory.TabIndex = 0;
             this.btn_Set_USV_Directory.Text = "Set USV Directory";
             this.btn_Set_USV_Directory.UseVisualStyleBackColor = true;
@@ -162,10 +172,10 @@
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.btn_maneuver);
-            this.splitContainer2.Panel2.Controls.Add(this.btn_analyze);
-            this.splitContainer2.Size = new System.Drawing.Size(258, 210);
-            this.splitContainer2.SplitterDistance = 144;
+            this.splitContainer2.Panel2.Controls.Add(this.panel5);
+            this.splitContainer2.Panel2.Controls.Add(this.panel4);
+            this.splitContainer2.Size = new System.Drawing.Size(349, 295);
+            this.splitContainer2.SplitterDistance = 202;
             this.splitContainer2.TabIndex = 10;
             // 
             // tb_output
@@ -176,14 +186,15 @@
             this.tb_output.Multiline = true;
             this.tb_output.Name = "tb_output";
             this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_output.Size = new System.Drawing.Size(258, 144);
+            this.tb_output.Size = new System.Drawing.Size(349, 202);
             this.tb_output.TabIndex = 8;
             // 
             // btn_maneuver
             // 
-            this.btn_maneuver.Location = new System.Drawing.Point(84, 3);
+            this.btn_maneuver.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_maneuver.Location = new System.Drawing.Point(0, 0);
             this.btn_maneuver.Name = "btn_maneuver";
-            this.btn_maneuver.Size = new System.Drawing.Size(75, 23);
+            this.btn_maneuver.Size = new System.Drawing.Size(103, 23);
             this.btn_maneuver.TabIndex = 6;
             this.btn_maneuver.Text = "maneuver";
             this.btn_maneuver.UseVisualStyleBackColor = true;
@@ -191,9 +202,10 @@
             // 
             // btn_analyze
             // 
-            this.btn_analyze.Location = new System.Drawing.Point(3, 3);
+            this.btn_analyze.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_analyze.Location = new System.Drawing.Point(0, 23);
             this.btn_analyze.Name = "btn_analyze";
-            this.btn_analyze.Size = new System.Drawing.Size(75, 23);
+            this.btn_analyze.Size = new System.Drawing.Size(103, 23);
             this.btn_analyze.TabIndex = 7;
             this.btn_analyze.Text = "analyze";
             this.btn_analyze.UseVisualStyleBackColor = true;
@@ -207,7 +219,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(258, 69);
+            this.panel2.Size = new System.Drawing.Size(349, 69);
             this.panel2.TabIndex = 5;
             // 
             // tb_ktviz_dir
@@ -243,7 +255,7 @@
             this.btn_backup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_backup.Location = new System.Drawing.Point(0, 23);
             this.btn_backup.Name = "btn_backup";
-            this.btn_backup.Size = new System.Drawing.Size(151, 23);
+            this.btn_backup.Size = new System.Drawing.Size(202, 23);
             this.btn_backup.TabIndex = 8;
             this.btn_backup.Text = "Save Current as Init State";
             this.btn_backup.UseVisualStyleBackColor = true;
@@ -254,17 +266,103 @@
             this.btn_toInit.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_toInit.Location = new System.Drawing.Point(0, 0);
             this.btn_toInit.Name = "btn_toInit";
-            this.btn_toInit.Size = new System.Drawing.Size(151, 23);
+            this.btn_toInit.Size = new System.Drawing.Size(202, 23);
             this.btn_toInit.TabIndex = 9;
             this.btn_toInit.Text = "Return to Init State";
             this.btn_toInit.UseVisualStyleBackColor = true;
             this.btn_toInit.Click += new System.EventHandler(this.btn_toInit_Click);
             // 
+            // btn_step
+            // 
+            this.btn_step.Location = new System.Drawing.Point(94, 34);
+            this.btn_step.Name = "btn_step";
+            this.btn_step.Size = new System.Drawing.Size(75, 32);
+            this.btn_step.TabIndex = 8;
+            this.btn_step.Text = "step";
+            this.btn_step.UseVisualStyleBackColor = true;
+            this.btn_step.Click += new System.EventHandler(this.btn_step_Click);
+            // 
+            // tb_timeStep
+            // 
+            this.tb_timeStep.Location = new System.Drawing.Point(60, 8);
+            this.tb_timeStep.Name = "tb_timeStep";
+            this.tb_timeStep.Size = new System.Drawing.Size(75, 20);
+            this.tb_timeStep.TabIndex = 9;
+            this.tb_timeStep.Text = "60";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.rb_base);
+            this.panel4.Controls.Add(this.rb_rvo);
+            this.panel4.Controls.Add(this.label1);
+            this.panel4.Controls.Add(this.btn_step);
+            this.panel4.Controls.Add(this.tb_timeStep);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel4.Location = new System.Drawing.Point(103, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(246, 89);
+            this.panel4.TabIndex = 10;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btn_actual);
+            this.panel5.Controls.Add(this.btn_analyze);
+            this.panel5.Controls.Add(this.btn_maneuver);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(103, 89);
+            this.panel5.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "timeStep";
+            // 
+            // rb_rvo
+            // 
+            this.rb_rvo.AutoSize = true;
+            this.rb_rvo.Location = new System.Drawing.Point(9, 34);
+            this.rb_rvo.Name = "rb_rvo";
+            this.rb_rvo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rb_rvo.Size = new System.Drawing.Size(78, 17);
+            this.rb_rvo.TabIndex = 11;
+            this.rb_rvo.Text = "prefer RVO";
+            this.rb_rvo.UseVisualStyleBackColor = true;
+            // 
+            // rb_base
+            // 
+            this.rb_base.AutoSize = true;
+            this.rb_base.Checked = true;
+            this.rb_base.Location = new System.Drawing.Point(9, 49);
+            this.rb_base.Name = "rb_base";
+            this.rb_base.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rb_base.Size = new System.Drawing.Size(79, 17);
+            this.rb_base.TabIndex = 12;
+            this.rb_base.TabStop = true;
+            this.rb_base.Text = "prefer Base";
+            this.rb_base.UseVisualStyleBackColor = true;
+            // 
+            // btn_actual
+            // 
+            this.btn_actual.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_actual.Location = new System.Drawing.Point(0, 46);
+            this.btn_actual.Name = "btn_actual";
+            this.btn_actual.Size = new System.Drawing.Size(103, 23);
+            this.btn_actual.TabIndex = 8;
+            this.btn_actual.Text = "actual";
+            this.btn_actual.UseVisualStyleBackColor = true;
+            this.btn_actual.Click += new System.EventHandler(this.btn_actual_Click);
+            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 281);
+            this.ClientSize = new System.Drawing.Size(560, 366);
             this.Controls.Add(this.splitContainer1);
             this.Name = "NavigatorForm";
             this.Text = "Navigator";
@@ -284,6 +382,9 @@
             this.splitContainer2.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -309,6 +410,14 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.Button btn_toInit;
         private System.Windows.Forms.Button btn_backup;
+        private System.Windows.Forms.Button btn_step;
+        private System.Windows.Forms.TextBox tb_timeStep;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.RadioButton rb_base;
+        private System.Windows.Forms.RadioButton rb_rvo;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn_actual;
     }
 }
 
