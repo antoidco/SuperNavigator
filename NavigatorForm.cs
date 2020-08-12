@@ -151,17 +151,49 @@ namespace SuperNavigator
             navigator.ReturnFilesToInit();
         }
 
-        private void btn_step_Click(object sender, EventArgs e)
+        private void btn_followManeuver_Click(object sender, EventArgs e)
         {
-            AlgorithmPrefer algorithmPrefer = rb_base.Checked ? AlgorithmPrefer.PreferBase : AlgorithmPrefer.PreferRVO;
             try
             {
-                navigator.FollowManeuver(Convert.ToDouble(tb_timeStep.Text), algorithmPrefer);
+                navigator.FollowManeuver(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
             }
             catch (Exception exception) 
             { 
                 Console.WriteLine(exception.Message); 
             }
+        }
+
+        private void btn_follow_route_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                navigator.FollowRoute(Convert.ToDouble(tb_timeStep.Text));
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+        }
+
+        private async void btn_while_actual_Click(object sender, EventArgs e)
+        {
+            btn_while_actual.Enabled = false;
+            try
+            {
+                var result = await navigator.SimulateWhileActual(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
+                tb_output.AppendText(result);
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+                tb_output.AppendText("Got an exception" + exception.Message);
+            }
+            btn_while_actual.Enabled = true;
+        }
+
+        private AlgorithmPrefer rbToPrefer()
+        {
+            return rb_base.Checked ? AlgorithmPrefer.PreferBase : AlgorithmPrefer.PreferRVO;
         }
     }
 }

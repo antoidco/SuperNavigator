@@ -59,18 +59,19 @@ namespace SuperNavigator
             foreach (var item in BackupFiles)
             {
                 string filename = $"{WorkingDirectory}\\{item}";
-                File.Copy(filename, filename + _init);
+                if (File.Exists(filename))
+                    File.Copy(filename, filename + _init);
             }
         }
 
         public void ReturnFilesToInit()
         {
-            deletePostfix("");
             deleteBackup();
             foreach (var item in BackupFiles)
             {
                 string filename = $"{WorkingDirectory}\\{item}";
-                File.Replace(filename + _init, filename, filename + _backup);
+                if (File.Exists(filename + _init) && File.Exists(filename)) 
+                    File.Replace(filename + _init, filename, filename + _backup);
             }
         }
 
@@ -98,6 +99,11 @@ namespace SuperNavigator
             {
                 return objArr[0]["path"].ToObject<JObject>();
             }
+        }
+
+        public Path ReadRoute()
+        {
+            return Path.ReadFromJson(JObject.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.route_json)));
         }
     }
 }

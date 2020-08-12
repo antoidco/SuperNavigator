@@ -1,9 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using static SuperNavigator.ProcessAsyncHelper;
 
@@ -82,24 +78,47 @@ namespace SuperNavigator
 
         /// <summary>
         /// Модифицирует файлы рабочей директории, моделируя цели и свое судно на seconds времени вперед
-        /// Создает ongoing маневр согласно выбранной траектории
+        /// Свое судно движется по маневру
         /// </summary>
         /// <param name="seconds">Время</param>
         /// <param name="prefer">Предпочитаемый алгоритм при наличии двух решений в maneuver файле</param>
-        public void FollowManeuver(double seconds, AlgorithmPrefer prefer)
+        /// <returns>false, если маневр закончится через seconds</returns>
+        public bool FollowManeuver(double seconds, AlgorithmPrefer prefer)
         {
             var path = FileWorker.ReadPath(prefer);
 
             // update ship
-            updateShip(path, seconds);
+            var ship_time = updateShip(path, seconds);
 
             // update goals (linearly)
             updateGoalsLinearly(seconds);
 
-            // write ongoing maneuver
-            WriteOngoing(prefer);
+            return !path.IsEnding(ship_time + seconds);
         }
 
+        /// <summary>
+        /// Модифицирует файлы рабочей директории, моделируя цели и свое судно на seconds времени вперед
+        /// Свое судно движется по маршруту
+        /// </summary>
+        /// <param name="seconds">Время</param>
+        /// <returns>false, если маршрут закончится через seconds</returns>
+        public bool FollowRoute(double seconds)
+        {
+            var route = FileWorker.ReadRoute();
+
+            // update ship
+            var ship_time = updateShip(route, seconds);
+
+            // update goals (linearly)
+            updateGoalsLinearly(seconds);
+
+            return !route.IsEnding(ship_time + seconds);
+        }
+
+        /// <summary>
+        /// Создает ongoing файл с маневром согласно выбранной траектории
+        /// </summary>
+        /// <param name="prefer">Предпочитаемый алгоритм</param>
         public void WriteOngoing(AlgorithmPrefer prefer)
         {
             string maneuver_file = FileWorker.WorkingDirectory + "\\" + FileWorker.maneuver_json;
@@ -108,11 +127,65 @@ namespace SuperNavigator
             File.WriteAllText(ongoing_file, pathObj.ToString());
         }
 
-        private void updateShip(Path path, double seconds)
+        /// <summary>
+        /// Следовать по построенному маршруту до тех пор, пока он остается актуальным
+        /// Маневр при запуске перестроится автоматически
+        /// </summary>
+        /// <param name="time_step">Шаг по времени, секунды</param>
+        /// <param name="prefer">Предпочитаемый алгоритм</param>
+        public async Task<string> SimulateWhileActual(double time_step, AlgorithmPrefer prefer)
         {
-            var newShipPosition = path.position(path.start_time + seconds);
+            string nl = System.Environment.NewLine;
+            string result = "";
+            double time = 0;
+            // while situation is not dangerous we are following the route
+            await Analyze();
+            result += nl + (GetAnalyzeReportDangerous() ? "DANGER at the moment" : "NO DANGER at the moment");
+            while (!GetAnalyzeReportDangerous())
+            {
+                var follow_result = FollowRoute(time_step);
+                time += time_step;
+                if (!follow_result)
+                {
+                    result += nl + "REACHED end route point";
+                    return result;
+                }
+            }
+            // situation is dangerous now, so we are trying to find maneuver
+            result += nl + "DANGER at t = " + time.ToString();
+            if (await Maneuver() != 2)
+            {
+                result += nl + "Maneuver found. Saving it as ongoing ...";
+                WriteOngoing(prefer);
+                result += nl + "Success! Following it ...";
+                // following the maneuver while is actual
+                while (await Actual() == 0)
+                {
+                    result += nl + "Ongoing is actual at t = " + time.ToString();
+                    var follow_result = FollowManeuver(time_step, prefer);
+                    time += time_step;
+                    if (!follow_result)
+                    {
+                        result += nl + "REACHED end maneuver point";
+                        return result;
+                    }
+                }
+                result += nl + "Maneuver is not actual anymore!";
+                return result;
+            }
+            else
+            {
+                result = "Failed to find maneuver";
+            }
+
+            return result;
+        }
+
+        private double updateShip(Path path, double seconds)
+        {
             string ship_file = FileWorker.WorkingDirectory + "\\" + FileWorker.nav_data_json;
             var obj = JObject.Parse(File.ReadAllText(ship_file));
+            var newShipPosition = path.position(obj["timestamp"].Value<double>() + seconds);
             obj["lat"] = newShipPosition.lat;
             obj["lon"] = newShipPosition.lon;
             obj["SOG"] = newShipPosition.speed * 3600;
@@ -121,6 +194,8 @@ namespace SuperNavigator
             obj["heading"] = newShipPosition.course;
             obj["timestamp"] = obj["timestamp"].Value<long>() + (long)seconds;
             File.WriteAllText(ship_file, obj.ToString());
+
+            return obj["timestamp"].Value<double>();
         }
 
         private void updateGoalsLinearly(double seconds)

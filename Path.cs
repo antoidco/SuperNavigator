@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -41,7 +42,11 @@ namespace SuperNavigator
                     time -= item.duration;
                 }
             }
-            return new Position { lat = 0, lon = 0, course = 0, speed = 0 };
+            return new Position { lat = 0, lon = 0, course = 0, speed = -1 };
+        }
+        public bool IsEnding(double in_time)
+        {
+            return position(in_time).speed < 0;
         }
     }
 }
