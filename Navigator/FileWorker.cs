@@ -20,6 +20,7 @@ namespace SuperNavigator
         public const string settings_json = "settings.json";
         public const string predict_json = "target-maneuvers.json";
         public const string ongoing_json = "ongoing.json";
+        public const string real_target_maneuvers_json = "real-target-maneuvers.json";
 
         const string _backup = "_backup";
         const string _init = "_init";

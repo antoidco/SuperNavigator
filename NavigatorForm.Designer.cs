@@ -44,6 +44,7 @@
             this.btn_analyze = new System.Windows.Forms.Button();
             this.btn_maneuver = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btn_follow_route = new System.Windows.Forms.Button();
             this.btn_while_actual = new System.Windows.Forms.Button();
             this.rb_base = new System.Windows.Forms.RadioButton();
             this.rb_rvo = new System.Windows.Forms.RadioButton();
@@ -56,7 +57,7 @@
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.btn_follow_route = new System.Windows.Forms.Button();
+            this.btn_realTargets = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -88,8 +89,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Size = new System.Drawing.Size(606, 366);
-            this.splitContainer1.SplitterDistance = 220;
+            this.splitContainer1.Size = new System.Drawing.Size(632, 416);
+            this.splitContainer1.SplitterDistance = 229;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -100,9 +101,9 @@
             this.panel3.Controls.Add(this.btn_backup);
             this.panel3.Controls.Add(this.btn_RunViz);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 295);
+            this.panel3.Location = new System.Drawing.Point(0, 345);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(218, 69);
+            this.panel3.Size = new System.Drawing.Size(227, 69);
             this.panel3.TabIndex = 3;
             // 
             // btn_toInit
@@ -110,7 +111,7 @@
             this.btn_toInit.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_toInit.Location = new System.Drawing.Point(0, 0);
             this.btn_toInit.Name = "btn_toInit";
-            this.btn_toInit.Size = new System.Drawing.Size(218, 23);
+            this.btn_toInit.Size = new System.Drawing.Size(227, 23);
             this.btn_toInit.TabIndex = 9;
             this.btn_toInit.Text = "Return to Init State";
             this.btn_toInit.UseVisualStyleBackColor = true;
@@ -121,7 +122,7 @@
             this.btn_backup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_backup.Location = new System.Drawing.Point(0, 23);
             this.btn_backup.Name = "btn_backup";
-            this.btn_backup.Size = new System.Drawing.Size(218, 23);
+            this.btn_backup.Size = new System.Drawing.Size(227, 23);
             this.btn_backup.TabIndex = 8;
             this.btn_backup.Text = "Save Current as Init State";
             this.btn_backup.UseVisualStyleBackColor = true;
@@ -132,7 +133,7 @@
             this.btn_RunViz.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_RunViz.Location = new System.Drawing.Point(0, 46);
             this.btn_RunViz.Name = "btn_RunViz";
-            this.btn_RunViz.Size = new System.Drawing.Size(218, 23);
+            this.btn_RunViz.Size = new System.Drawing.Size(227, 23);
             this.btn_RunViz.TabIndex = 2;
             this.btn_RunViz.Text = "KTViz";
             this.btn_RunViz.UseVisualStyleBackColor = true;
@@ -146,7 +147,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(218, 69);
+            this.panel1.Size = new System.Drawing.Size(227, 69);
             this.panel1.TabIndex = 1;
             // 
             // btn_Set_KTViz_Directory
@@ -155,7 +156,7 @@
             this.btn_Set_KTViz_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_KTViz_Directory.Location = new System.Drawing.Point(0, 46);
             this.btn_Set_KTViz_Directory.Name = "btn_Set_KTViz_Directory";
-            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(218, 23);
+            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(227, 23);
             this.btn_Set_KTViz_Directory.TabIndex = 2;
             this.btn_Set_KTViz_Directory.Text = "Set KTViz Directory";
             this.btn_Set_KTViz_Directory.UseVisualStyleBackColor = true;
@@ -166,7 +167,7 @@
             this.btn_Set_Working_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_Working_Directory.Location = new System.Drawing.Point(0, 23);
             this.btn_Set_Working_Directory.Name = "btn_Set_Working_Directory";
-            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(218, 23);
+            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(227, 23);
             this.btn_Set_Working_Directory.TabIndex = 1;
             this.btn_Set_Working_Directory.Text = "Set Working Directory";
             this.btn_Set_Working_Directory.UseVisualStyleBackColor = true;
@@ -177,7 +178,7 @@
             this.btn_Set_USV_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_USV_Directory.Location = new System.Drawing.Point(0, 0);
             this.btn_Set_USV_Directory.Name = "btn_Set_USV_Directory";
-            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(218, 23);
+            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(227, 23);
             this.btn_Set_USV_Directory.TabIndex = 0;
             this.btn_Set_USV_Directory.Text = "Set USV Directory";
             this.btn_Set_USV_Directory.UseVisualStyleBackColor = true;
@@ -198,8 +199,8 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel5);
             this.splitContainer2.Panel2.Controls.Add(this.panel4);
-            this.splitContainer2.Size = new System.Drawing.Size(379, 295);
-            this.splitContainer2.SplitterDistance = 202;
+            this.splitContainer2.Size = new System.Drawing.Size(396, 345);
+            this.splitContainer2.SplitterDistance = 236;
             this.splitContainer2.TabIndex = 10;
             // 
             // tb_output
@@ -210,7 +211,7 @@
             this.tb_output.Multiline = true;
             this.tb_output.Name = "tb_output";
             this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_output.Size = new System.Drawing.Size(379, 202);
+            this.tb_output.Size = new System.Drawing.Size(396, 236);
             this.tb_output.TabIndex = 8;
             // 
             // panel5
@@ -221,7 +222,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(133, 89);
+            this.panel5.Size = new System.Drawing.Size(150, 105);
             this.panel5.TabIndex = 11;
             // 
             // btn_actual
@@ -229,7 +230,7 @@
             this.btn_actual.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_actual.Location = new System.Drawing.Point(0, 46);
             this.btn_actual.Name = "btn_actual";
-            this.btn_actual.Size = new System.Drawing.Size(133, 23);
+            this.btn_actual.Size = new System.Drawing.Size(150, 23);
             this.btn_actual.TabIndex = 8;
             this.btn_actual.Text = "actual";
             this.btn_actual.UseVisualStyleBackColor = true;
@@ -240,7 +241,7 @@
             this.btn_analyze.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_analyze.Location = new System.Drawing.Point(0, 23);
             this.btn_analyze.Name = "btn_analyze";
-            this.btn_analyze.Size = new System.Drawing.Size(133, 23);
+            this.btn_analyze.Size = new System.Drawing.Size(150, 23);
             this.btn_analyze.TabIndex = 7;
             this.btn_analyze.Text = "analyze";
             this.btn_analyze.UseVisualStyleBackColor = true;
@@ -251,7 +252,7 @@
             this.btn_maneuver.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_maneuver.Location = new System.Drawing.Point(0, 0);
             this.btn_maneuver.Name = "btn_maneuver";
-            this.btn_maneuver.Size = new System.Drawing.Size(133, 23);
+            this.btn_maneuver.Size = new System.Drawing.Size(150, 23);
             this.btn_maneuver.TabIndex = 6;
             this.btn_maneuver.Text = "maneuver";
             this.btn_maneuver.UseVisualStyleBackColor = true;
@@ -259,6 +260,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.btn_realTargets);
             this.panel4.Controls.Add(this.btn_follow_route);
             this.panel4.Controls.Add(this.btn_while_actual);
             this.panel4.Controls.Add(this.rb_base);
@@ -267,10 +269,20 @@
             this.panel4.Controls.Add(this.btn_follow_maneuver);
             this.panel4.Controls.Add(this.tb_timeStep);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel4.Location = new System.Drawing.Point(133, 0);
+            this.panel4.Location = new System.Drawing.Point(150, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(246, 89);
+            this.panel4.Size = new System.Drawing.Size(246, 105);
             this.panel4.TabIndex = 10;
+            // 
+            // btn_follow_route
+            // 
+            this.btn_follow_route.Location = new System.Drawing.Point(141, 34);
+            this.btn_follow_route.Name = "btn_follow_route";
+            this.btn_follow_route.Size = new System.Drawing.Size(94, 20);
+            this.btn_follow_route.TabIndex = 14;
+            this.btn_follow_route.Text = "follow route";
+            this.btn_follow_route.UseVisualStyleBackColor = true;
+            this.btn_follow_route.Click += new System.EventHandler(this.btn_follow_route_Click);
             // 
             // btn_while_actual
             // 
@@ -341,7 +353,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(379, 69);
+            this.panel2.Size = new System.Drawing.Size(396, 69);
             this.panel2.TabIndex = 5;
             // 
             // tb_ktviz_dir
@@ -372,21 +384,21 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
-            // btn_follow_route
+            // btn_realTargets
             // 
-            this.btn_follow_route.Location = new System.Drawing.Point(141, 34);
-            this.btn_follow_route.Name = "btn_follow_route";
-            this.btn_follow_route.Size = new System.Drawing.Size(94, 20);
-            this.btn_follow_route.TabIndex = 14;
-            this.btn_follow_route.Text = "follow route";
-            this.btn_follow_route.UseVisualStyleBackColor = true;
-            this.btn_follow_route.Click += new System.EventHandler(this.btn_follow_route_Click);
+            this.btn_realTargets.Location = new System.Drawing.Point(9, 75);
+            this.btn_realTargets.Name = "btn_realTargets";
+            this.btn_realTargets.Size = new System.Drawing.Size(110, 22);
+            this.btn_realTargets.TabIndex = 15;
+            this.btn_realTargets.Text = "create real targets";
+            this.btn_realTargets.UseVisualStyleBackColor = true;
+            this.btn_realTargets.Click += new System.EventHandler(this.btn_realTargets_Click);
             // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(606, 366);
+            this.ClientSize = new System.Drawing.Size(632, 416);
             this.Controls.Add(this.splitContainer1);
             this.Name = "NavigatorForm";
             this.Text = "Navigator";
@@ -444,6 +456,7 @@
         private System.Windows.Forms.Button btn_actual;
         private System.Windows.Forms.Button btn_while_actual;
         private System.Windows.Forms.Button btn_follow_route;
+        private System.Windows.Forms.Button btn_realTargets;
     }
 }
 

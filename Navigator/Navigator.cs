@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using static SuperNavigator.ProcessAsyncHelper;
@@ -180,6 +181,20 @@ namespace SuperNavigator
             }
 
             return result;
+        }
+        /// <summary>
+        /// Генерирует файл с реальными маневрами целей линейно экстраполируя текущие параметры движения
+        /// </summary>
+        /// <returns>ExitCode</returns>
+        public async Task<int> CreateLinearTargetsManeuvers()
+        {
+            string command = FileWorker.UsvDirectory + "\\USV.exe";
+
+            string args = $"--predict {FileWorker.WorkingDirectory}\\{FileWorker.real_target_maneuvers_json} --no-prediction --targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}.json";
+
+            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
+
+            return (int)result.ExitCode;
         }
 
         private double updateShip(Path path, double seconds)
