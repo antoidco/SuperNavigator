@@ -144,6 +144,7 @@ namespace SuperNavigator
             while (!GetAnalyzeReportDangerous())
             {
                 var follow_result = FollowRoute(time_step);
+                await Analyze();
                 time += time_step;
                 if (!follow_result)
                 {
@@ -175,7 +176,7 @@ namespace SuperNavigator
             }
             else
             {
-                result = "Failed to find maneuver";
+                result = nl + "Failed to find maneuver";
             }
 
             return result;
