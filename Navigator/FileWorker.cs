@@ -76,12 +76,12 @@ namespace SuperNavigator
             }
         }
 
-        public Path ReadPath(AlgorithmPrefer prefer)
+        public Path ReadManeuverPath(AlgorithmPrefer prefer)
         {
-            return Path.ReadFromJson(ReadPathJson(prefer));
+            return Path.ReadFromJson(ReadManueverPath(prefer));
         }
 
-        public JObject ReadPathJson(AlgorithmPrefer prefer)
+        public JObject ReadManueverPath(AlgorithmPrefer prefer)
         {
             var objArr = JArray.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.maneuver_json));
             Path path = new Path();

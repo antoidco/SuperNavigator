@@ -86,13 +86,13 @@ namespace SuperNavigator
         /// <returns>false, если маневр закончится через seconds</returns>
         public bool FollowManeuver(double seconds, AlgorithmPrefer prefer)
         {
-            var path = FileWorker.ReadPath(prefer);
+            var path = FileWorker.ReadManeuverPath(prefer);
 
             // update ship
             var ship_time = updateShip(path, seconds);
 
             // update goals (linearly)
-            updateGoalsLinearly(seconds);
+            updateGoals(seconds);
 
             return !path.IsEnding(ship_time + seconds);
         }
@@ -111,7 +111,7 @@ namespace SuperNavigator
             var ship_time = updateShip(route, seconds);
 
             // update goals (linearly)
-            updateGoalsLinearly(seconds);
+            updateGoals(seconds);
 
             return !route.IsEnding(ship_time + seconds);
         }
@@ -124,7 +124,7 @@ namespace SuperNavigator
         {
             string maneuver_file = FileWorker.WorkingDirectory + "\\" + FileWorker.maneuver_json;
             string ongoing_file = FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json;
-            var pathObj = FileWorker.ReadPathJson(prefer);
+            var pathObj = FileWorker.ReadManueverPath(prefer);
             File.WriteAllText(ongoing_file, pathObj.ToString());
         }
 
@@ -212,6 +212,34 @@ namespace SuperNavigator
             File.WriteAllText(ship_file, obj.ToString());
 
             return obj["timestamp"].Value<double>();
+        }
+        /// <summary>
+        /// Обновить target-data на seconds вперед согласно заведомо заданным реальным траеториям целей
+        /// </summary>
+        /// <param name="seconds">Время</param>
+        private void updateGoals(double seconds)
+        {
+            string goals_input_file = FileWorker.WorkingDirectory + "\\" + FileWorker.real_target_maneuvers_json;
+            string goals_output_file = FileWorker.WorkingDirectory + "\\" + FileWorker.targets_json;
+
+            var outputArr = JArray.Parse(File.ReadAllText(goals_output_file));
+            var inputArr = JArray.Parse(File.ReadAllText(goals_input_file));
+            for (int iObj = 0; iObj < inputArr.Count; ++iObj)
+            {
+                var inputObj = inputArr[iObj];
+                var outputObj = outputArr[iObj];
+                var goalPath = Path.ReadFromJson(inputObj.ToObject<JObject>());
+                var timestamp = outputObj["timestamp"].Value<double>();
+                var newShipPosition = goalPath.position(timestamp + seconds);
+                outputObj["lat"] = newShipPosition.lat;
+                outputObj["lon"] = newShipPosition.lon;
+                outputObj["SOG"] = newShipPosition.speed * 3600;
+                outputObj["STW"] = newShipPosition.speed * 3600;
+                outputObj["COG"] = newShipPosition.course;
+                outputObj["heading"] = newShipPosition.course;
+                outputObj["timestamp"] = (long)(timestamp + seconds);
+            }
+            File.WriteAllText(goals_output_file, outputArr.ToString());
         }
 
         private void updateGoalsLinearly(double seconds)
