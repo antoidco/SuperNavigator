@@ -145,6 +145,7 @@ namespace SuperNavigator
             while (!GetAnalyzeReportDangerous())
             {
                 var follow_result = FollowRoute(time_step);
+                result += nl + "Not danegorous at t = " + time.ToString();
                 await Analyze();
                 time += time_step;
                 if (!follow_result)
@@ -177,7 +178,7 @@ namespace SuperNavigator
             }
             else
             {
-                result = nl + "Failed to find maneuver";
+                result += nl + "Failed to find maneuver";
             }
 
             return result;
