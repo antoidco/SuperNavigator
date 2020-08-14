@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SuperNavigator
 {
@@ -76,12 +72,12 @@ namespace SuperNavigator
             }
         }
 
-        public Path ReadManeuverPath(AlgorithmPrefer prefer)
+        public Path GetManeuver(AlgorithmPrefer prefer)
         {
-            return Path.ReadFromJson(ReadManueverPath(prefer));
+            return Path.ReadFromJson(GetManuever(prefer));
         }
 
-        public JObject ReadManueverPath(AlgorithmPrefer prefer)
+        public JObject GetManuever(AlgorithmPrefer prefer)
         {
             var objArr = JArray.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.maneuver_json));
             Path path = new Path();
@@ -102,7 +98,7 @@ namespace SuperNavigator
             }
         }
 
-        public Path ReadRoute()
+        public Path GetRoute()
         {
             return Path.ReadFromJson(JObject.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.route_json)));
         }

@@ -156,6 +156,7 @@ namespace SuperNavigator
             try
             {
                 navigator.FollowManeuver(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
+                tb_output.AppendText(System.Environment.NewLine + "Follow maneuver end");
             }
             catch (Exception exception) 
             { 
@@ -168,6 +169,7 @@ namespace SuperNavigator
             try
             {
                 navigator.FollowRoute(Convert.ToDouble(tb_timeStep.Text));
+                tb_output.AppendText(System.Environment.NewLine + "Follow route end");
             }
             catch (Exception exception)
             {
@@ -181,12 +183,12 @@ namespace SuperNavigator
             try
             {
                 var result = await navigator.SimulateWhileActual(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
-                tb_output.AppendText(result);
+                tb_output.AppendText(System.Environment.NewLine + System.Environment.NewLine + result);
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
-                tb_output.AppendText("Got an exception" + exception.Message);
+                tb_output.AppendText(System.Environment.NewLine + "Got an exception" + exception.Message);
             }
             btn_while_actual.Enabled = true;
         }

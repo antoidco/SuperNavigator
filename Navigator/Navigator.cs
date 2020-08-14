@@ -86,7 +86,7 @@ namespace SuperNavigator
         /// <returns>false, если маневр закончится через seconds</returns>
         public bool FollowManeuver(double seconds, AlgorithmPrefer prefer)
         {
-            var path = FileWorker.ReadManeuverPath(prefer);
+            var path = FileWorker.GetManeuver(prefer);
 
             // update ship
             var ship_time = updateShip(path, seconds);
@@ -105,7 +105,7 @@ namespace SuperNavigator
         /// <returns>false, если маршрут закончится через seconds</returns>
         public bool FollowRoute(double seconds)
         {
-            var route = FileWorker.ReadRoute();
+            var route = FileWorker.GetRoute();
 
             // update ship
             var ship_time = updateShip(route, seconds);
@@ -124,7 +124,7 @@ namespace SuperNavigator
         {
             string maneuver_file = FileWorker.WorkingDirectory + "\\" + FileWorker.maneuver_json;
             string ongoing_file = FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json;
-            var pathObj = FileWorker.ReadManueverPath(prefer);
+            var pathObj = FileWorker.GetManuever(prefer);
             File.WriteAllText(ongoing_file, pathObj.ToString());
         }
 
@@ -164,6 +164,7 @@ namespace SuperNavigator
                 // following the maneuver while is actual
                 while (await Actual() == 0)
                 {
+                    
                     result += nl + "Ongoing is actual at t = " + time.ToString();
                     var follow_result = FollowManeuver(time_step, prefer);
                     time += time_step;
