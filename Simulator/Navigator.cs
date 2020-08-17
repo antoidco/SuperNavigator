@@ -122,8 +122,10 @@ namespace SuperNavigator.Simulator
         }
 
         /// <summary>
-        /// Следовать по построенному маршруту до тех пор, пока он остается актуальным
-        /// Маневр при запуске перестроится автоматически
+        /// Запуск полного цикла моделирования сценария.
+        /// При моделировании движения своего судна по маршруту/построенному маневру
+        /// и движения целей по заданным траекториям выполняется анализ ситуации и
+        /// принимается решение о будущих действиях своего судна.
         /// </summary>
         /// <param name="time_step">Шаг по времени, секунды</param>
         public async Task<string> Simulate(double time_step)
@@ -140,6 +142,8 @@ namespace SuperNavigator.Simulator
                 await Analyze();
                 var dangerous = GetAnalyzeReportDangerous();
                 result += nl + "Danger at t = " + time.ToString() + ": " + (dangerous ? "DANGER" : "SAFE");
+                // to do: check if own vehicle is on route
+                // if not, build maneuver
                 if (dangerous) followingRoute = false;
                 if (followingRoute)
                 {
@@ -162,7 +166,8 @@ namespace SuperNavigator.Simulator
                         {
                             result += nl + "end of ongoing reached!";
                             success = true;
-                            break;
+                            break; // to do : continue ?
+                            // find closest position to route
                         }
                     }
                     else
