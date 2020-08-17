@@ -18,6 +18,7 @@ namespace SuperNavigator
 
         /// <summary>
         /// Запуск модуля оценки анализа обстановки для текущих данных, заданных в рабочей директории
+        /// Если существует ongoing маневр - анализирует обстановку, учитывая его
         /// </summary>
         /// <returns>Информация о процессе</returns>
         public async Task<ProcessResult> Analyze()
@@ -25,6 +26,9 @@ namespace SuperNavigator
             string command = FileWorker.UsvDirectory + "\\USV.exe";
 
             string args = Key.AnalyseData;
+
+            if (File.Exists(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json))
+                args += Key.Ongoing;
 
             return await ProcessAsyncHelper.ExecuteShellCommand(command, args);
         }
@@ -65,30 +69,16 @@ namespace SuperNavigator
         }
 
         /// <summary>
-        /// Запускает проверку актуальности ongoing маневра по файлам рабочей директории
-        /// </summary>
-        /// <returns>Код возврата</returns>
-        public async Task<int> Actual()
-        {
-            string command = FileWorker.UsvDirectory + "\\USV.exe";
-
-            string args = $"--ongoing {FileWorker.WorkingDirectory}\\{FileWorker.ongoing_json} --predict {FileWorker.WorkingDirectory}\\{FileWorker.predict_json} --targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}";
-
-            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
-
-            return (int)result.ExitCode;
-        }
-
-        /// <summary>
         /// Модифицирует файлы рабочей директории, моделируя цели и свое судно на seconds времени вперед
-        /// Свое судно движется по маневру
+        /// Свое судно движется по ongoing маневру
         /// </summary>
         /// <param name="seconds">Время</param>
         /// <param name="prefer">Предпочитаемый алгоритм при наличии двух решений в maneuver файле</param>
         /// <returns>false, если маневр закончится через seconds</returns>
-        public bool FollowManeuver(double seconds, AlgorithmPrefer prefer)
+        public bool FollowOngoing(double seconds)
         {
-            var path = FileWorker.GetManeuver(prefer);
+            var jPath = JObject.Parse(File.ReadAllText(FileWorker.WorkingDirectory + "\\" + FileWorker.maneuver_json));
+            var path = Path.ReadFromJson(jPath);
 
             // update ship
             var ship_time = updateShip(path, seconds);
@@ -136,56 +126,76 @@ namespace SuperNavigator
         /// </summary>
         /// <param name="time_step">Шаг по времени, секунды</param>
         /// <param name="prefer">Предпочитаемый алгоритм</param>
-        public async Task<string> SimulateWhileActual(double time_step, AlgorithmPrefer prefer)
+        public async Task<string> Simulate(double time_step, AlgorithmPrefer prefer)
         {
+            FileWorker.ClearOngoing();
             string nl = System.Environment.NewLine;
             string result = "";
             double time = 0;
-            // while situation is not dangerous we are following the route
-            await Analyze();
-            result += nl + (GetAnalyzeReportDangerous() ? "DANGER at the moment" : "NO DANGER at the moment");
-            while (!GetAnalyzeReportDangerous())
+
+            bool success = false;
+            bool followingRoute = true;
+            while (true)
             {
-                var follow_result = FollowRoute(time_step);
-                result += nl + "Not danegorous at t = " + time.ToString();
                 await Analyze();
-                time += time_step;
-                if (!follow_result)
+                var dangerous = GetAnalyzeReportDangerous();
+                result += nl + "Danger at t = " + time.ToString() + ": " + (dangerous ? "DANGER" : "SAFE");
+                if (dangerous) followingRoute = false;
+                if (followingRoute)
                 {
-                    result += nl + "REACHED end route point";
-                    return result;
-                }
-            }
-            // situation is dangerous now, so we are trying to find maneuver
-            result += nl + "DANGER at t = " + time.ToString();
-            if (await Maneuver() != 2)
-            {
-                result += nl + "Maneuver found. Saving it as ongoing ...";
-                WriteOngoing(prefer);
-                result += nl + "Success! Following it ...";
-                // following the maneuver while is actual
-                while (await Actual() == 0)
-                {
-                    
-                    result += nl + "Ongoing is actual at t = " + time.ToString();
-                    var follow_result = FollowManeuver(time_step, prefer);
-                    time += time_step;
+                    result += nl + "following route...";
+                    var follow_result = FollowRoute(time_step);
                     if (!follow_result)
                     {
-                        result += nl + "REACHED end maneuver point";
-                        return result;
+                        result += nl + "end of route reached!";
+                        success = true;
+                        break;
                     }
                 }
-                result += nl + "Maneuver is not actual anymore!";
-                return result;
+                else // following ongoing
+                {
+                    if (File.Exists(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json))
+                    {
+                        result += nl + "following ongoing...";
+                        var follow_result = FollowOngoing(time_step);
+                        if (!follow_result)
+                        {
+                            result += nl + "end of ongoing reached!";
+                            success = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        result += nl + "no ongoing found: try to build new maneuver";
+                        if (await Maneuver() != 2)
+                        {
+                            result += nl + "maneuver found!";
+                            WriteOngoing(prefer);
+                            result += nl + "following ongoing (found)...";
+                            var follow_result = FollowOngoing(time_step);
+                            if (!follow_result)
+                            {
+                                result += nl + "end of ongoing reached!";
+                                success = true;
+                                break;
+                            }
+                        }
+                        else 
+                        {
+                            result += nl + "failed to find maneuver!";
+                            success = false;
+                            break;
+                        }
+                    }
+                }
+                time += time_step;
             }
-            else
-            {
-                result += nl + "Failed to find maneuver";
-            }
+            result += nl + (success ? "SUCCESS" : "FAIL");
 
             return result;
         }
+
         /// <summary>
         /// Генерирует файл с реальными маневрами целей линейно экстраполируя текущие параметры движения
         /// </summary>

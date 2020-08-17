@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -101,6 +102,14 @@ namespace SuperNavigator
             {
                 string filename = $"{WorkingDirectory}\\{item}" + postfix;
                 if (File.Exists(filename)) File.Delete(filename);
+            }
+        }
+
+        public void ClearOngoing()
+        {
+            if (File.Exists(WorkingDirectory + "\\" + ongoing_json))
+            {
+                File.Delete(WorkingDirectory + "\\" + ongoing_json);
             }
         }
     }

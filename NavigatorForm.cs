@@ -130,17 +130,6 @@ namespace SuperNavigator
             btn_maneuver.Enabled = true;
         }
 
-        private async void btn_actual_Click(object sender, EventArgs e)
-        {
-            btn_actual.Enabled = false;
-            // Maneuver result
-            var result = await navigator.Actual();
-
-            // Check maneuver result
-            tb_output.AppendText(System.Environment.NewLine + "EXIT CODE:" + result.ToString());
-            btn_actual.Enabled = true;
-        }
-
         private void btn_backup_Click(object sender, EventArgs e)
         {
             navigator.SaveFilesAsInit();
@@ -151,11 +140,11 @@ namespace SuperNavigator
             navigator.ReturnFilesToInit();
         }
 
-        private void btn_followManeuver_Click(object sender, EventArgs e)
+        private void btn_followOngoing_Click(object sender, EventArgs e)
         {
             try
             {
-                navigator.FollowManeuver(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
+                navigator.FollowOngoing(Convert.ToDouble(tb_timeStep.Text));
                 tb_output.AppendText(System.Environment.NewLine + "Follow maneuver end");
             }
             catch (Exception exception) 
@@ -177,12 +166,12 @@ namespace SuperNavigator
             }
         }
 
-        private async void btn_while_actual_Click(object sender, EventArgs e)
+        private async void btn_simulate_Click(object sender, EventArgs e)
         {
-            btn_while_actual.Enabled = false;
+            btn_Simulate.Enabled = false;
             try
             {
-                var result = await navigator.SimulateWhileActual(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
+                var result = await navigator.Simulate(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
                 tb_output.AppendText(System.Environment.NewLine + result);
             }
             catch (Exception exception)
@@ -190,7 +179,7 @@ namespace SuperNavigator
                 Console.WriteLine(exception.Message);
                 tb_output.AppendText(System.Environment.NewLine + "Got an exception" + exception.Message);
             }
-            btn_while_actual.Enabled = true;
+            btn_Simulate.Enabled = true;
         }
 
         private AlgorithmPrefer rbToPrefer()
