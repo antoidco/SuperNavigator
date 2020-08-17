@@ -1,5 +1,5 @@
 ﻿
-namespace SuperNavigator
+namespace SuperNavigator.Simulator
 {
     public class Key
     {

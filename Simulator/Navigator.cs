@@ -2,18 +2,20 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using static SuperNavigator.ProcessAsyncHelper;
+using static SuperNavigator.Simulator.ProcessAsyncHelper;
 
-namespace SuperNavigator
+namespace SuperNavigator.Simulator
 {
     public class Navigator
     {
         public FileWorker FileWorker;
         public Key Key;
+        public Settings Settings;
         public Navigator(string appDir)
         {
             FileWorker = new FileWorker(appDir);
             Key = new Key(FileWorker);
+            Settings = new Settings();
         }
 
         /// <summary>
@@ -62,6 +64,7 @@ namespace SuperNavigator
             string command = FileWorker.UsvDirectory + "\\USV.exe";
 
             string args = Key.ManeuverData;
+            if (Settings.PredictionType == PredictionType.Linear) args += Key.Noprediction;
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
@@ -73,7 +76,6 @@ namespace SuperNavigator
         /// Свое судно движется по ongoing маневру
         /// </summary>
         /// <param name="seconds">Время</param>
-        /// <param name="prefer">Предпочитаемый алгоритм при наличии двух решений в maneuver файле</param>
         /// <returns>false, если маневр закончится через seconds</returns>
         public bool FollowOngoing(double seconds)
         {
@@ -111,12 +113,11 @@ namespace SuperNavigator
         /// <summary>
         /// Создает ongoing файл с маневром согласно выбранной траектории
         /// </summary>
-        /// <param name="prefer">Предпочитаемый алгоритм</param>
-        public void WriteOngoing(AlgorithmPrefer prefer)
+        public void WriteOngoing()
         {
             string maneuver_file = FileWorker.WorkingDirectory + "\\" + FileWorker.maneuver_json;
             string ongoing_file = FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json;
-            var pathObj = FileWorker.GetManuever(prefer);
+            var pathObj = FileWorker.GetManuever(Settings.AlgorithmPrefer);
             File.WriteAllText(ongoing_file, pathObj.ToString());
         }
 
@@ -125,8 +126,7 @@ namespace SuperNavigator
         /// Маневр при запуске перестроится автоматически
         /// </summary>
         /// <param name="time_step">Шаг по времени, секунды</param>
-        /// <param name="prefer">Предпочитаемый алгоритм</param>
-        public async Task<string> Simulate(double time_step, AlgorithmPrefer prefer)
+        public async Task<string> Simulate(double time_step)
         {
             FileWorker.ClearOngoing();
             string nl = System.Environment.NewLine;
@@ -171,7 +171,7 @@ namespace SuperNavigator
                         if (await Maneuver() != 2)
                         {
                             result += nl + "maneuver found!";
-                            WriteOngoing(prefer);
+                            WriteOngoing();
                             result += nl + "following ongoing (found)...";
                             var follow_result = FollowOngoing(time_step);
                             if (!follow_result)
@@ -289,10 +289,5 @@ namespace SuperNavigator
         {
             FileWorker.ReturnFilesToInit();
         }
-    }
-    public enum AlgorithmPrefer
-    {
-        PreferBase,
-        PreferRVO
     }
 }

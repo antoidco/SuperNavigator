@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace SuperNavigator
+namespace SuperNavigator.Simulator
 {
     public class Path
     {

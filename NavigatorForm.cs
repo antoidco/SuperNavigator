@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SuperNavigator.Simulator;
 using System;
 using System.Drawing;
 using System.IO;
@@ -171,7 +172,7 @@ namespace SuperNavigator
             btn_Simulate.Enabled = false;
             try
             {
-                var result = await navigator.Simulate(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
+                var result = await navigator.Simulate(Convert.ToDouble(tb_timeStep.Text));
                 tb_output.AppendText(System.Environment.NewLine + result);
             }
             catch (Exception exception)
@@ -190,6 +191,18 @@ namespace SuperNavigator
         private async void btn_realTargets_Click(object sender, EventArgs e)
         {
             await navigator.CreateLinearTargetsManeuvers();
+        }
+
+        private void cb_noPrediction_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cb_noPrediction.Checked) navigator.Settings.PredictionType = PredictionType.Linear;
+            else navigator.Settings.PredictionType = PredictionType.Full;
+        }
+
+        private void rb_prefer_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rb_base.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferBase;
+            if (rb_rvo.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferRVO;
         }
     }
 }

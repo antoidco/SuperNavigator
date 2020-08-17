@@ -60,16 +60,17 @@
     <Compile Include="NavigatorForm.Designer.cs">
       <DependentUpon>NavigatorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Navigator\FileWorker.cs" />
-    <Compile Include="Navigator\Helpers.cs" />
-    <Compile Include="Navigator\Key.cs" />
-    <Compile Include="Navigator\Navigator.cs" />
-    <Compile Include="Navigator\Path.cs" />
-    <Compile Include="Navigator\Position.cs" />
-    <Compile Include="Navigator\ProcessAsyncHelper.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Navigator\Segment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Simulator\FileWorker.cs" />
+    <Compile Include="Simulator\Helpers.cs" />
+    <Compile Include="Simulator\Key.cs" />
+    <Compile Include="Simulator\Navigator.cs" />
+    <Compile Include="Simulator\Path.cs" />
+    <Compile Include="Simulator\Position.cs" />
+    <Compile Include="Simulator\ProcessAsyncHelper.cs" />
+    <Compile Include="Simulator\Segment.cs" />
+    <Compile Include="Simulator\Settings.cs" />
     <EmbeddedResource Include="NavigatorForm.resx">
       <DependentUpon>NavigatorForm.cs</DependentUpon>
     </EmbeddedResource>

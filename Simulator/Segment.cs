@@ -1,7 +1,7 @@
 ﻿using GeographicLib;
 using System;
 
-namespace SuperNavigator
+namespace SuperNavigator.Simulator
 {
     public class Segment
     {

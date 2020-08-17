@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperNavigator
+namespace SuperNavigator.Simulator
 {
     public static class ProcessAsyncHelper
     {

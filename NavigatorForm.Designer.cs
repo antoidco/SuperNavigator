@@ -43,6 +43,7 @@
             this.btn_analyze = new System.Windows.Forms.Button();
             this.btn_maneuver = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.cb_noPrediction = new System.Windows.Forms.CheckBox();
             this.btn_realTargets = new System.Windows.Forms.Button();
             this.btn_follow_route = new System.Windows.Forms.Button();
             this.btn_Simulate = new System.Windows.Forms.Button();
@@ -199,7 +200,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.panel5);
             this.splitContainer2.Panel2.Controls.Add(this.panel4);
             this.splitContainer2.Size = new System.Drawing.Size(398, 345);
-            this.splitContainer2.SplitterDistance = 235;
+            this.splitContainer2.SplitterDistance = 210;
             this.splitContainer2.TabIndex = 10;
             // 
             // tb_output
@@ -210,7 +211,7 @@
             this.tb_output.Multiline = true;
             this.tb_output.Name = "tb_output";
             this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_output.Size = new System.Drawing.Size(398, 235);
+            this.tb_output.Size = new System.Drawing.Size(398, 210);
             this.tb_output.TabIndex = 8;
             // 
             // panel5
@@ -220,7 +221,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(152, 106);
+            this.panel5.Size = new System.Drawing.Size(152, 131);
             this.panel5.TabIndex = 11;
             // 
             // btn_analyze
@@ -247,6 +248,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.cb_noPrediction);
             this.panel4.Controls.Add(this.btn_realTargets);
             this.panel4.Controls.Add(this.btn_follow_route);
             this.panel4.Controls.Add(this.btn_Simulate);
@@ -258,16 +260,29 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel4.Location = new System.Drawing.Point(152, 0);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(246, 106);
+            this.panel4.Size = new System.Drawing.Size(246, 131);
             this.panel4.TabIndex = 10;
+            // 
+            // cb_noPrediction
+            // 
+            this.cb_noPrediction.AutoSize = true;
+            this.cb_noPrediction.Checked = true;
+            this.cb_noPrediction.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_noPrediction.Location = new System.Drawing.Point(9, 68);
+            this.cb_noPrediction.Name = "cb_noPrediction";
+            this.cb_noPrediction.Size = new System.Drawing.Size(93, 17);
+            this.cb_noPrediction.TabIndex = 16;
+            this.cb_noPrediction.Text = "--no-prediction";
+            this.cb_noPrediction.UseVisualStyleBackColor = true;
+            this.cb_noPrediction.CheckedChanged += new System.EventHandler(this.cb_noPrediction_CheckedChanged);
             // 
             // btn_realTargets
             // 
-            this.btn_realTargets.Location = new System.Drawing.Point(9, 75);
+            this.btn_realTargets.Location = new System.Drawing.Point(141, 60);
             this.btn_realTargets.Name = "btn_realTargets";
-            this.btn_realTargets.Size = new System.Drawing.Size(110, 22);
+            this.btn_realTargets.Size = new System.Drawing.Size(94, 20);
             this.btn_realTargets.TabIndex = 15;
-            this.btn_realTargets.Text = "create real targets";
+            this.btn_realTargets.Text = "real targets";
             this.btn_realTargets.UseVisualStyleBackColor = true;
             this.btn_realTargets.Click += new System.EventHandler(this.btn_realTargets_Click);
             // 
@@ -283,9 +298,9 @@
             // 
             // btn_Simulate
             // 
-            this.btn_Simulate.Location = new System.Drawing.Point(141, 60);
+            this.btn_Simulate.Location = new System.Drawing.Point(9, 96);
             this.btn_Simulate.Name = "btn_Simulate";
-            this.btn_Simulate.Size = new System.Drawing.Size(94, 20);
+            this.btn_Simulate.Size = new System.Drawing.Size(226, 24);
             this.btn_Simulate.TabIndex = 13;
             this.btn_Simulate.Text = "simulate";
             this.btn_Simulate.UseVisualStyleBackColor = true;
@@ -303,6 +318,7 @@
             this.rb_base.TabStop = true;
             this.rb_base.Text = "prefer Base";
             this.rb_base.UseVisualStyleBackColor = true;
+            this.rb_base.CheckedChanged += new System.EventHandler(this.rb_prefer_CheckedChanged);
             // 
             // rb_rvo
             // 
@@ -314,6 +330,7 @@
             this.rb_rvo.TabIndex = 11;
             this.rb_rvo.Text = "prefer RVO";
             this.rb_rvo.UseVisualStyleBackColor = true;
+            this.rb_rvo.Click += new System.EventHandler(this.rb_prefer_CheckedChanged);
             // 
             // label1
             // 
@@ -443,6 +460,7 @@
         private System.Windows.Forms.Button btn_Simulate;
         private System.Windows.Forms.Button btn_follow_route;
         private System.Windows.Forms.Button btn_realTargets;
+        private System.Windows.Forms.CheckBox cb_noPrediction;
     }
 }
 

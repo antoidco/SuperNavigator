@@ -1,4 +1,4 @@
-﻿namespace SuperNavigator
+﻿namespace SuperNavigator.Simulator
 {
     public struct Position
     {
