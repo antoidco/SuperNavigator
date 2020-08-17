@@ -183,7 +183,7 @@ namespace SuperNavigator
             try
             {
                 var result = await navigator.SimulateWhileActual(Convert.ToDouble(tb_timeStep.Text), rbToPrefer());
-                tb_output.AppendText(System.Environment.NewLine + System.Environment.NewLine + result);
+                tb_output.AppendText(System.Environment.NewLine + result);
             }
             catch (Exception exception)
             {

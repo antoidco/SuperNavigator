@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="Navigator\FileWorker.cs" />
     <Compile Include="Navigator\Helpers.cs" />
+    <Compile Include="Navigator\Key.cs" />
     <Compile Include="Navigator\Navigator.cs" />
     <Compile Include="Navigator\Path.cs" />
     <Compile Include="Navigator\Position.cs" />

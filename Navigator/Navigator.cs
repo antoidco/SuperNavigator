@@ -9,9 +9,11 @@ namespace SuperNavigator
     public class Navigator
     {
         public FileWorker FileWorker;
+        public Key Key;
         public Navigator(string appDir)
         {
             FileWorker = new FileWorker(appDir);
+            Key = new Key(FileWorker);
         }
 
         /// <summary>
@@ -22,7 +24,7 @@ namespace SuperNavigator
         {
             string command = FileWorker.UsvDirectory + "\\USV.exe";
 
-            string args = $"--targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}";
+            string args = Key.AnalyseData;
 
             return await ProcessAsyncHelper.ExecuteShellCommand(command, args);
         }
@@ -55,7 +57,7 @@ namespace SuperNavigator
         {
             string command = FileWorker.UsvDirectory + "\\USV.exe";
 
-            string args = $"--maneuver {FileWorker.WorkingDirectory}\\{FileWorker.maneuver_json} --predict {FileWorker.WorkingDirectory}\\{FileWorker.predict_json} --targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}";
+            string args = Key.ManeuverData;
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
@@ -192,7 +194,7 @@ namespace SuperNavigator
         {
             string command = FileWorker.UsvDirectory + "\\USV.exe";
 
-            string args = $"--predict {FileWorker.WorkingDirectory}\\{FileWorker.real_target_maneuvers_json} --no-prediction --targets {FileWorker.WorkingDirectory}\\{FileWorker.targets_json} --settings {FileWorker.WorkingDirectory}\\{FileWorker.settings_json} --nav-data {FileWorker.WorkingDirectory}\\{FileWorker.nav_data_json} --hydrometeo {FileWorker.WorkingDirectory}\\{FileWorker.hydrometeo_json} --constraints {FileWorker.WorkingDirectory}\\{FileWorker.constraints_json} --route {FileWorker.WorkingDirectory}\\{FileWorker.route_json} --analyse {FileWorker.WorkingDirectory}\\{FileWorker.analyse_json}";
+            string args = Key.Predict + Key.Noprediction + Key.Data;
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 

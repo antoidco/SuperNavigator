@@ -32,23 +32,6 @@ namespace SuperNavigator
             AppDirectory = appDir;
             BackupFiles = new List<string> { targets_json, nav_data_json };
         }
-        private void deleteBackup()
-        {
-            deletePostfix(_backup);
-        }
-        private void deleteInit()
-        {
-            deletePostfix(_init);
-        }
-
-        private void deletePostfix(string postfix)
-        {
-            foreach (var item in BackupFiles)
-            {
-                string filename = $"{WorkingDirectory}\\{item}" + postfix;
-                if (File.Exists(filename)) File.Delete(filename);
-            }
-        }
 
         public void SaveFilesAsInit()
         {
@@ -101,6 +84,24 @@ namespace SuperNavigator
         public Path GetRoute()
         {
             return Path.ReadFromJson(JObject.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.route_json)));
+        }
+
+        private void deleteBackup()
+        {
+            deletePostfix(_backup);
+        }
+        private void deleteInit()
+        {
+            deletePostfix(_init);
+        }
+
+        private void deletePostfix(string postfix)
+        {
+            foreach (var item in BackupFiles)
+            {
+                string filename = $"{WorkingDirectory}\\{item}" + postfix;
+                if (File.Exists(filename)) File.Delete(filename);
+            }
         }
     }
 }
