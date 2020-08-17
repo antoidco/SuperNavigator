@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace SuperNavigator.Simulator
 {
+    /// <summary>
+    /// Модифицированный класс-помощник для запуска команд командной строки
+    /// https://gist.github.com/AlexMAS/276eed492bc989e13dcce7c78b9e179d
+    /// </summary>
     public static class ProcessAsyncHelper
     {
         public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, bool showWindow = false, int timeout = 1000000)

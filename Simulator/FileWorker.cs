@@ -21,9 +21,21 @@ namespace SuperNavigator.Simulator
         const string _backup = "_backup";
         const string _init = "_init";
 
+        /// <summary>
+        /// Директория запускаемого приложения
+        /// </summary>
         public string AppDirectory { get; }
+        /// <summary>
+        /// Рабочая директория навигатора
+        /// </summary>
         public string WorkingDirectory { get; set; }
+        /// <summary>
+        /// Путь к визуализатору KTViz: https://github.com/Dostoyewski/KTViz
+        /// </summary>
         public string KtVizDirectory { get; set; }
+        /// <summary>
+        /// Путь к USV.exe: https://github.com/mangoozt/BKS/
+        /// </summary>
         public string UsvDirectory { get; set; }
         public List<string> BackupFiles { get; }
 
@@ -60,6 +72,11 @@ namespace SuperNavigator.Simulator
             return Path.ReadFromJson(GetManuever(prefer));
         }
 
+        /// <summary>
+        /// Получить маневр (Path) из файла построенных решений-маневров рабочей директории
+        /// </summary>
+        /// <param name="prefer">Предпочитаемый маневр по типу решателя</param>
+        /// <returns>(JObject) Маневр как Path</returns>
         public JObject GetManuever(AlgorithmPrefer prefer)
         {
             var objArr = JArray.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.maneuver_json));
@@ -81,9 +98,24 @@ namespace SuperNavigator.Simulator
             }
         }
 
+        /// <summary>
+        /// Получить маршрут (Path) из файла машрута рабочей директории
+        /// </summary>
+        /// <returns>Маршрут как Path</returns>
         public Path GetRoute()
         {
             return Path.ReadFromJson(JObject.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.route_json)));
+        }
+
+        /// <summary>
+        /// Удалить файл акутального маневра, если он существует
+        /// </summary>
+        public void ClearOngoing()
+        {
+            if (File.Exists(WorkingDirectory + "\\" + ongoing_json))
+            {
+                File.Delete(WorkingDirectory + "\\" + ongoing_json);
+            }
         }
 
         private void deleteBackup()
@@ -101,14 +133,6 @@ namespace SuperNavigator.Simulator
             {
                 string filename = $"{WorkingDirectory}\\{item}" + postfix;
                 if (File.Exists(filename)) File.Delete(filename);
-            }
-        }
-
-        public void ClearOngoing()
-        {
-            if (File.Exists(WorkingDirectory + "\\" + ongoing_json))
-            {
-                File.Delete(WorkingDirectory + "\\" + ongoing_json);
             }
         }
     }
