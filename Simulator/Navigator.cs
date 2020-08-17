@@ -256,30 +256,6 @@ namespace SuperNavigator.Simulator
             File.WriteAllText(goals_output_file, outputArr.ToString());
         }
 
-        private void updateGoalsLinearly(double seconds)
-        {
-            string goals_file = FileWorker.WorkingDirectory + "\\" + FileWorker.targets_json;
-            var objArr = JArray.Parse(File.ReadAllText(goals_file));
-            foreach (var item in objArr)
-            {
-                var pos = new Position
-                {
-                    speed = item["SOG"].Value<double>() / 3600,
-                    course = item["COG"].Value<double>(),
-                    lat = item["lat"].Value<double>(),
-                    lon = item["lon"].Value<double>()
-                };
-                var newPos = Helpers.ExtrapolatePosition(pos, seconds);
-
-                item["lat"] = newPos.lat;
-                item["lon"] = newPos.lon;
-                item["SOG"] = newPos.speed * 3600;
-                item["COG"] = newPos.course;
-                item["timestamp"] = item["timestamp"].Value<long>() + (long)seconds;
-            }
-            File.WriteAllText(goals_file, objArr.ToString());
-        }
-
         public void SaveFilesAsInit()
         {
             FileWorker.SaveFilesAsInit();

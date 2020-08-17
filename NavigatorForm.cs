@@ -183,11 +183,6 @@ namespace SuperNavigator
             btn_Simulate.Enabled = true;
         }
 
-        private AlgorithmPrefer rbToPrefer()
-        {
-            return rb_base.Checked ? AlgorithmPrefer.PreferBase : AlgorithmPrefer.PreferRVO;
-        }
-
         private async void btn_realTargets_Click(object sender, EventArgs e)
         {
             await navigator.CreateLinearTargetsManeuvers();
