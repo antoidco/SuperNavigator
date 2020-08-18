@@ -185,7 +185,8 @@ namespace SuperNavigator
 
         private async void btn_realTargets_Click(object sender, EventArgs e)
         {
-            await navigator.CreateLinearTargetsManeuvers();
+            var result = await navigator.CreateLinearTargetsManeuvers();
+            tb_output.AppendText(System.Environment.NewLine + "Exit code: " + result.ToString());
         }
 
         private void cb_noPrediction_CheckedChanged(object sender, EventArgs e)

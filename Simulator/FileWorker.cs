@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -15,6 +16,7 @@ namespace SuperNavigator.Simulator
         public const string route_json = "route-data.json";
         public const string settings_json = "settings.json";
         public const string predict_json = "target-maneuvers.json";
+        public const string predict_real_json = "real-target-maneuvers.json";
         public const string ongoing_json = "ongoing.json";
         public const string real_target_maneuvers_json = "real-target-maneuvers.json";
 

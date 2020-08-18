@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Numerics;
 using System.Threading.Tasks;
 using static SuperNavigator.Simulator.ProcessAsyncHelper;
 
@@ -79,7 +80,7 @@ namespace SuperNavigator.Simulator
         /// <returns>false, если маневр закончится через seconds</returns>
         public bool FollowOngoing(double seconds)
         {
-            var jPath = JObject.Parse(File.ReadAllText(FileWorker.WorkingDirectory + "\\" + FileWorker.maneuver_json));
+            var jPath = JObject.Parse(File.ReadAllText(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json));
             var path = Path.ReadFromJson(jPath);
 
             // update ship
@@ -120,7 +121,23 @@ namespace SuperNavigator.Simulator
             var pathObj = FileWorker.GetManuever(Settings.AlgorithmPrefer);
             File.WriteAllText(ongoing_file, pathObj.ToString());
         }
-
+        /// <summary>
+        /// Следовать ongoing, если он существует
+        /// В ином случае следовать маршруту
+        /// </summary>
+        /// <param name="time_step">Шаг по времени, секунды</param>
+        /// <returns>False, если маневр закончится через time_step</returns>
+        public bool Follow(double time_step)
+        {
+            if (File.Exists(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json))
+            {
+                return FollowOngoing(time_step);
+            }
+            else
+            {
+                return FollowRoute(time_step);
+            }
+        }
         /// <summary>
         /// Запуск полного цикла моделирования сценария.
         /// При моделировании движения своего судна по маршруту/построенному маневру
@@ -128,6 +145,7 @@ namespace SuperNavigator.Simulator
         /// принимается решение о будущих действиях своего судна.
         /// </summary>
         /// <param name="time_step">Шаг по времени, секунды</param>
+        /// <returns>Строка с отчетом</returns>
         public async Task<string> Simulate(double time_step)
         {
             FileWorker.ClearOngoing();
@@ -135,68 +153,31 @@ namespace SuperNavigator.Simulator
             string result = "";
             double time = 0;
 
-            bool success = false;
-            bool followingRoute = true;
             while (true)
             {
                 await Analyze();
                 var dangerous = GetAnalyzeReportDangerous();
-                result += nl + "Danger at t = " + time.ToString() + ": " + (dangerous ? "DANGER" : "SAFE");
-                // to do: check if own vehicle is on route
-                // if not, build maneuver
-                if (dangerous) followingRoute = false;
-                if (followingRoute)
+                result += $"{nl}danger at t = {time} is: {dangerous}";
+                if (dangerous)
                 {
-                    result += nl + "following route...";
-                    var follow_result = FollowRoute(time_step);
-                    if (!follow_result)
+                    if (await Maneuver() != 2)
                     {
-                        result += nl + "end of route reached!";
-                        success = true;
-                        break;
-                    }
-                }
-                else // following ongoing
-                {
-                    if (File.Exists(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json))
-                    {
-                        result += nl + "following ongoing...";
-                        var follow_result = FollowOngoing(time_step);
-                        if (!follow_result)
-                        {
-                            result += nl + "end of ongoing reached!";
-                            success = true;
-                            break; // to do : continue ?
-                            // find closest position to route
-                        }
+                        result += $"{nl}maneuver found!";
+                        WriteOngoing();
                     }
                     else
                     {
-                        result += nl + "no ongoing found: try to build new maneuver";
-                        if (await Maneuver() != 2)
-                        {
-                            result += nl + "maneuver found!";
-                            WriteOngoing();
-                            result += nl + "following ongoing (found)...";
-                            var follow_result = FollowOngoing(time_step);
-                            if (!follow_result)
-                            {
-                                result += nl + "end of ongoing reached!";
-                                success = true;
-                                break;
-                            }
-                        }
-                        else 
-                        {
-                            result += nl + "failed to find maneuver!";
-                            success = false;
-                            break;
-                        }
+                        result += $"{nl}maneuver not found!{nl}FAILED";
+                        break;
                     }
+                }
+                result += $"{nl}following...";
+                if (!Follow(time_step))
+                {
+                    result += $"{nl}finished{nl}SUCCESS";
                 }
                 time += time_step;
             }
-            result += nl + (success ? "SUCCESS" : "FAIL");
 
             return result;
         }
@@ -209,11 +190,26 @@ namespace SuperNavigator.Simulator
         {
             string command = FileWorker.UsvDirectory + "\\USV.exe";
 
-            string args = Key.Predict + Key.Noprediction + Key.Data;
+            string args = Key.PredictReal + Key.Noprediction + Key.Data;
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
             return (int)result.ExitCode;
+        }
+
+        /// <summary>
+        /// Проверить, соответствует ли nav-data какой либо точке на route
+        /// </summary>
+        public bool OnRoute()
+        {
+            var path = FileWorker.GetRoute();
+            string ship_file = FileWorker.WorkingDirectory + "\\" + FileWorker.nav_data_json;
+            var obj = JObject.Parse(File.ReadAllText(ship_file));
+            var lat = obj["lat"].Value<double>();
+            var lon = obj["lon"].Value<double>();
+            // not implemented:
+            //return path.distance(new Vector2((float)lat, (float)lon));
+            return true;
         }
 
         private double updateShip(Path path, double seconds)

@@ -21,6 +21,7 @@ namespace SuperNavigator.Simulator
         }
         public string Analyse => $"{analyseKey}{_fw.WorkingDirectory}\\{FileWorker.analyse_json} ";
         public string Predict => $"{predictKey}{_fw.WorkingDirectory}\\{FileWorker.predict_json} ";
+        public string PredictReal => $"{predictKey}{_fw.WorkingDirectory}\\{FileWorker.predict_real_json} ";
         public string Manuever => $"{maneuverKey}{_fw.WorkingDirectory}\\{FileWorker.maneuver_json} ";
         public string Hmi => $"{hmiKey}{_fw.WorkingDirectory}\\{FileWorker.hydrometeo_json} ";
         public string Targets => $"{targetsKey}{_fw.WorkingDirectory}\\{FileWorker.targets_json} ";

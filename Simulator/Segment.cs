@@ -1,5 +1,6 @@
 ﻿using GeographicLib;
 using System;
+using System.Numerics;
 
 namespace SuperNavigator.Simulator
 {
@@ -16,6 +17,7 @@ namespace SuperNavigator.Simulator
 
         /// <summary>
         /// Вычисляет позицию на сегменте в момент времени time
+        /// Переведено с python (KTViz)
         /// </summary>
         /// <param name="time">Время</param>
         /// <returns>Позиция на сегменте</returns>
@@ -48,6 +50,16 @@ namespace SuperNavigator.Simulator
                 var direct = Geodesic.WGS84.Direct(this.lat, this.lon,  180 / Math.PI * (azi1), dist * 1852);
                 return new Position { lat = direct.lat2, lon = direct.lon2, course = this.begin_angle + sign * 180 / Math.PI * (dangle), speed = speed };
             }
+        }
+
+        /// <summary>
+        /// Вычисляет дистанцию до сегмента от точки C
+        /// </summary>
+        /// <param name="C">Положение точки C</param>
+        /// <returns>Дистанция (морские мили)</returns>
+        public double distance(Vector2 C)
+        {
+            throw new NotImplementedException();
         }
     }
 }
