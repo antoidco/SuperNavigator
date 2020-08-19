@@ -72,7 +72,7 @@ namespace SuperNavigator
         private async Task<bool> RunStartKtVizAsync()
         {
             string command = "python";
-            string args = navigator.FileWorker.KtVizDirectory + "\\" + app_py_filename;
+            string args = $"\"{navigator.FileWorker.KtVizDirectory}\\{app_py_filename}\"";
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args, true);
             return result.ExitCode == 0;
         }

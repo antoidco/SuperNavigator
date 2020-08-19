@@ -20,18 +20,18 @@ namespace SuperNavigator.Simulator
         {
             _fw = fileWorker;
         }
-        public string Analyse => $"{analyseKey}{_fw.WorkingDirectory}\\{FileWorker.analyse_json} ";
-        public string Predict => $"{predictKey}{_fw.WorkingDirectory}\\{FileWorker.predict_json} ";
-        public string PredictReal => $"{predictKey}{_fw.WorkingDirectory}\\{FileWorker.predict_real_json} ";
-        public string Manuever => $"{maneuverKey}{_fw.WorkingDirectory}\\{FileWorker.maneuver_json} ";
-        public string Hmi => $"{hmiKey}{_fw.WorkingDirectory}\\{FileWorker.hydrometeo_json} ";
-        public string Targets => $"{targetsKey}{_fw.WorkingDirectory}\\{FileWorker.targets_json} ";
-        public string Settings => $"{settingsKey}{_fw.WorkingDirectory}\\{FileWorker.settings_json} ";
-        public string Navdata => $"{navdataKey}{_fw.WorkingDirectory}\\{FileWorker.nav_data_json} ";
-        public string Constraints => $"{constraintsKey}{_fw.WorkingDirectory}\\{FileWorker.constraints_json} ";
-        public string Route => $"{routeKey}{_fw.WorkingDirectory}\\{FileWorker.route_json} ";
-        public string Ongoing => $"{ongoingKey}{_fw.WorkingDirectory}\\{FileWorker.ongoing_json} ";
-        public string OngoingRoute => $"{ongoingKey}{_fw.WorkingDirectory}\\{FileWorker.route_json} ";
+        public string Analyse => $"{analyseKey}\"{_fw.WorkingDirectory}\\{FileWorker.analyse_json}\" ";
+        public string Predict => $"{predictKey}\"{_fw.WorkingDirectory}\\{FileWorker.predict_json}\" ";
+        public string PredictReal => $"{predictKey}\"{_fw.WorkingDirectory}\\{FileWorker.predict_real_json}\" ";
+        public string Manuever => $"{maneuverKey}\"{_fw.WorkingDirectory}\\{FileWorker.maneuver_json}\" ";
+        public string Hmi => $"{hmiKey}\"{_fw.WorkingDirectory}\\{FileWorker.hydrometeo_json}\" ";
+        public string Targets => $"{targetsKey}\"{_fw.WorkingDirectory}\\{FileWorker.targets_json}\" ";
+        public string Settings => $"{settingsKey}\"{_fw.WorkingDirectory}\\{FileWorker.settings_json}\" ";
+        public string Navdata => $"{navdataKey}\"{_fw.WorkingDirectory}\\{FileWorker.nav_data_json}\" ";
+        public string Constraints => $"{constraintsKey}\"{_fw.WorkingDirectory}\\{FileWorker.constraints_json}\" ";
+        public string Route => $"{routeKey}\"{_fw.WorkingDirectory}\\{FileWorker.route_json}\" ";
+        public string Ongoing => $"{ongoingKey}\"{_fw.WorkingDirectory}\\{FileWorker.ongoing_json}\" ";
+        public string OngoingRoute => $"{ongoingKey}\"{_fw.WorkingDirectory}\\{FileWorker.route_json}\" ";
         public string Noprediction => nopredictionKey;
 
         public string Data => $"{Hmi}{Targets}{Settings}{Navdata}{Constraints}{Route}";
