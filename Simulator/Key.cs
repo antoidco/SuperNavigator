@@ -12,6 +12,7 @@ namespace SuperNavigator.Simulator
         private const string navdataKey = "--nav-data ";
         private const string constraintsKey = "--constraints ";
         private const string routeKey = "--route ";
+        private const string ongoingKey = "--ongoing ";
         private const string nopredictionKey = "--no-prediction ";
 
         private FileWorker _fw;
@@ -29,7 +30,8 @@ namespace SuperNavigator.Simulator
         public string Navdata => $"{navdataKey}{_fw.WorkingDirectory}\\{FileWorker.nav_data_json} ";
         public string Constraints => $"{constraintsKey}{_fw.WorkingDirectory}\\{FileWorker.constraints_json} ";
         public string Route => $"{routeKey}{_fw.WorkingDirectory}\\{FileWorker.route_json} ";
-        public string Ongoing => $"{routeKey}{_fw.WorkingDirectory}\\{FileWorker.route_json} ";
+        public string Ongoing => $"{ongoingKey}{_fw.WorkingDirectory}\\{FileWorker.ongoing_json} ";
+        public string OngoingRoute => $"{ongoingKey}{_fw.WorkingDirectory}\\{FileWorker.route_json} ";
         public string Noprediction => nopredictionKey;
 
         public string Data => $"{Hmi}{Targets}{Settings}{Navdata}{Constraints}{Route}";

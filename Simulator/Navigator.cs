@@ -67,6 +67,11 @@ namespace SuperNavigator.Simulator
             string args = Key.ManeuverData;
             if (Settings.PredictionType == PredictionType.Linear) args += Key.Noprediction;
 
+            if (File.Exists(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json))
+                args += Key.Ongoing;
+            else
+                args += Key.OngoingRoute;
+
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
             return (int)result.ExitCode;
@@ -160,13 +165,20 @@ namespace SuperNavigator.Simulator
                 result += $"{nl}danger at t = {time} is: {dangerous}";
                 if (dangerous)
                 {
-                    if (await Maneuver() != 2)
+                    var maneuver_result = await Maneuver();
+                    if (maneuver_result == 5)
                     {
+                        result += $"{nl}ongoing maneuver/route is OK";
+                    }
+                    else if (maneuver_result != 2)
+                    {
+                        result += $"{nl}ongoing maneuver/route is not OK";
                         result += $"{nl}maneuver found!";
                         WriteOngoing();
                     }
                     else
                     {
+                        result += $"{nl}ongoing maneuver/route is not OK";
                         result += $"{nl}maneuver not found!{nl}FAILED";
                         break;
                     }
@@ -175,6 +187,7 @@ namespace SuperNavigator.Simulator
                 if (!Follow(time_step))
                 {
                     result += $"{nl}finished{nl}SUCCESS";
+                    break;
                 }
                 time += time_step;
             }
