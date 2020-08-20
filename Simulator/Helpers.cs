@@ -1,5 +1,7 @@
 ﻿using GeographicLib;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SuperNavigator.Simulator
 {
@@ -16,6 +18,22 @@ namespace SuperNavigator.Simulator
             if (prefer == AlgorithmPrefer.PreferBase) return "Main";
             if (prefer == AlgorithmPrefer.PreferRVO) return "RVO";
             throw new Exception();
+        }
+        public Tuple<Position, Position> FindBorders(List<Trajectory> trajectories)
+        {
+            Position minLatLon = new Position { course = 0, lat = 999, lon = 999, speed = 0 };
+            Position maxLatLon = new Position { course = 0, lat = -999, lon = -999, speed = 0 };
+            foreach (var traj in trajectories)
+            {
+                foreach (var pos in traj)
+                {
+                    if (pos.lat > maxLatLon.lat) maxLatLon.lat = pos.lat;
+                    if (pos.lon > maxLatLon.lon) maxLatLon.lon = pos.lon;
+                    if (pos.lat < minLatLon.lat) minLatLon.lat = pos.lat;
+                    if (pos.lon < minLatLon.lon) minLatLon.lon = pos.lon;
+                }
+            }
+            return new Tuple<Position, Position>(minLatLon, maxLatLon);
         }
     }
 }
