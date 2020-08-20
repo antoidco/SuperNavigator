@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace SuperNavigator.Simulator
 {
     /// <summary>
-    /// Траектория для визуализации
+    /// Состояние симулятора для визуализации
     /// </summary>
-    public class Trajectory : List<Position> { }
+    public class State : List<Position> {
+        public double Time { get; set; }
+    }
 }

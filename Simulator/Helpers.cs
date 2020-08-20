@@ -19,13 +19,13 @@ namespace SuperNavigator.Simulator
             if (prefer == AlgorithmPrefer.PreferRVO) return "RVO";
             throw new Exception();
         }
-        public Tuple<Position, Position> FindBorders(List<Trajectory> trajectories)
+        public Tuple<Position, Position> FindBorders(List<State> states)
         {
             Position minLatLon = new Position { course = 0, lat = 999, lon = 999, speed = 0 };
             Position maxLatLon = new Position { course = 0, lat = -999, lon = -999, speed = 0 };
-            foreach (var traj in trajectories)
+            foreach (var state in states)
             {
-                foreach (var pos in traj)
+                foreach (var pos in state)
                 {
                     if (pos.lat > maxLatLon.lat) maxLatLon.lat = pos.lat;
                     if (pos.lon > maxLatLon.lon) maxLatLon.lon = pos.lon;
