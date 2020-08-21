@@ -58,6 +58,12 @@
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.pb_Viz = new System.Windows.Forms.PictureBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.btn_ClearViz = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -71,6 +77,11 @@
             this.panel5.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).BeginInit();
+            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -193,7 +204,7 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.tb_output);
+            this.splitContainer2.Panel1.Controls.Add(this.tabControl);
             // 
             // splitContainer2.Panel2
             // 
@@ -207,11 +218,11 @@
             // 
             this.tb_output.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tb_output.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.tb_output.Location = new System.Drawing.Point(0, 0);
+            this.tb_output.Location = new System.Drawing.Point(3, 3);
             this.tb_output.Multiline = true;
             this.tb_output.Name = "tb_output";
             this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_output.Size = new System.Drawing.Size(398, 210);
+            this.tb_output.Size = new System.Drawing.Size(384, 178);
             this.tb_output.TabIndex = 8;
             // 
             // panel5
@@ -398,6 +409,68 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(398, 210);
+            this.tabControl.TabIndex = 9;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.tb_output);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(390, 184);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Output";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.panel6);
+            this.tabPage2.Controls.Add(this.pb_Viz);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(390, 184);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Viz";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // pb_Viz
+            // 
+            this.pb_Viz.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pb_Viz.Location = new System.Drawing.Point(3, 3);
+            this.pb_Viz.Name = "pb_Viz";
+            this.pb_Viz.Size = new System.Drawing.Size(384, 178);
+            this.pb_Viz.TabIndex = 0;
+            this.pb_Viz.TabStop = false;
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.btn_ClearViz);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel6.Location = new System.Drawing.Point(3, 158);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(384, 23);
+            this.panel6.TabIndex = 1;
+            // 
+            // btn_ClearViz
+            // 
+            this.btn_ClearViz.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_ClearViz.Location = new System.Drawing.Point(0, 0);
+            this.btn_ClearViz.Name = "btn_ClearViz";
+            this.btn_ClearViz.Size = new System.Drawing.Size(384, 23);
+            this.btn_ClearViz.TabIndex = 0;
+            this.btn_ClearViz.Text = "Clear";
+            this.btn_ClearViz.UseVisualStyleBackColor = true;
+            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -416,7 +489,6 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
@@ -425,6 +497,12 @@
             this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).EndInit();
+            this.panel6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -461,6 +539,12 @@
         private System.Windows.Forms.Button btn_follow_route;
         private System.Windows.Forms.Button btn_realTargets;
         private System.Windows.Forms.CheckBox cb_noPrediction;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Button btn_ClearViz;
+        private System.Windows.Forms.PictureBox pb_Viz;
     }
 }
 
