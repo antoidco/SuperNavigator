@@ -154,9 +154,18 @@ namespace SuperNavigator.Simulator
         public async Task<string> Simulate(double time_step)
         {
             FileWorker.ClearOngoing();
+
             string nl = System.Environment.NewLine;
             string result = "";
             double time = 0;
+
+            // if real targets maneuvers do not exist, create them
+            if (!File.Exists($"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}"))
+            {
+                result += nl + "real maneuvers do not exist, create them...";
+                result += nl + "Exit code (-1 expected from USV for some reason): ";
+                result += (await CreateLinearTargetsManeuvers()).ToString();
+            }
 
             while (true)
             {

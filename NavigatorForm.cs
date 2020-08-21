@@ -174,7 +174,6 @@ namespace SuperNavigator
 
         private async void btn_simulate_Click(object sender, EventArgs e)
         {
-            
             btn_Simulate.Enabled = false;
             try
             {
@@ -192,7 +191,7 @@ namespace SuperNavigator
         private async void btn_realTargets_Click(object sender, EventArgs e)
         {
             var result = await navigator.CreateLinearTargetsManeuvers();
-            tb_output.AppendText(System.Environment.NewLine + "Exit code: " + result.ToString());
+            tb_output.AppendText(System.Environment.NewLine + "Exit code (-1 expected from USV for some reason): " + result.ToString());
         }
 
         private void cb_noPrediction_CheckedChanged(object sender, EventArgs e)
