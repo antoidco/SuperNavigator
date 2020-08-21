@@ -247,7 +247,7 @@ namespace SuperNavigator.Simulator
         /// <param name="seconds">Время</param>
         private void updateGoals(double seconds)
         {
-            string goals_input_file = FileWorker.WorkingDirectory + "\\" + FileWorker.real_target_maneuvers_json;
+            string goals_input_file = FileWorker.WorkingDirectory + "\\" + FileWorker.predict_real_json;
             string goals_output_file = FileWorker.WorkingDirectory + "\\" + FileWorker.targets_json;
 
             var outputArr = JArray.Parse(File.ReadAllText(goals_output_file));

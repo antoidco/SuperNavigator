@@ -38,7 +38,7 @@ namespace SuperNavigator
                 JObject obj = JObject.Parse(File.ReadAllText(navigator.FileWorker.AppDirectory + "\\" + settings_filename));
                 navigator.FileWorker.KtVizDirectory = obj["KtVizDirectory"].Value<string>();
                 navigator.FileWorker.UsvDirectory = obj["UsvDirectory"].Value<string>();
-                navigator.FileWorker.WorkingDirectory = obj["WorkingDirectory"].Value<string>();
+                navigator.FileWorker.WorkInitPath = obj["WorkingDirectory"].Value<string>();
             }
             catch (Exception exception)
             {
@@ -50,7 +50,7 @@ namespace SuperNavigator
             JObject obj = new JObject();
             obj.Add("KtVizDirectory", navigator.FileWorker.KtVizDirectory);
             obj.Add("UsvDirectory", navigator.FileWorker.UsvDirectory);
-            obj.Add("WorkingDirectory", navigator.FileWorker.WorkingDirectory);
+            obj.Add("WorkingDirectory", navigator.FileWorker.WorkInitPath);
             using (StreamWriter file = File.CreateText(navigator.FileWorker.AppDirectory + "\\" + settings_filename))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -61,7 +61,7 @@ namespace SuperNavigator
         {
             tb_ktviz_dir.Text = navigator.FileWorker.KtVizDirectory;
             tb_usv_dir.Text = navigator.FileWorker.UsvDirectory;
-            tb_working_dir.Text = navigator.FileWorker.WorkingDirectory;
+            tb_working_dir.Text = navigator.FileWorker.WorkInitPath;
         }
 
         private string ChangeDirectory(string prevValue)
@@ -88,7 +88,7 @@ namespace SuperNavigator
 
         private void btn_Set_Working_Directory_Click(object sender, EventArgs e)
         {
-            navigator.FileWorker.WorkingDirectory = ChangeDirectory(navigator.FileWorker.WorkingDirectory);
+            navigator.FileWorker.WorkInitPath = ChangeDirectory(navigator.FileWorker.WorkInitPath);
             UpdateFields();
         }
 
@@ -172,6 +172,7 @@ namespace SuperNavigator
 
         private async void btn_simulate_Click(object sender, EventArgs e)
         {
+            if (!navigator.FileWorker.WorkStarted) btn_WorkStart.PerformClick(); // xd lol
             btn_Simulate.Enabled = false;
             try
             {
@@ -210,6 +211,12 @@ namespace SuperNavigator
         {
             if (rb_base.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferBase;
             if (rb_rvo.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferRVO;
+        }
+
+        private void btn_WorkStart_Click(object sender, EventArgs e)
+        {
+            navigator.FileWorker.Start();
+            tb_output.AppendText(System.Environment.NewLine + "Work started, new folder created");
         }
     }
 }

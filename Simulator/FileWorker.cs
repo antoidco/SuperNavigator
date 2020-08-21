@@ -18,19 +18,29 @@ namespace SuperNavigator.Simulator
         public const string predict_json = "target-maneuvers.json";
         public const string predict_real_json = "real-target-maneuvers.json";
         public const string ongoing_json = "ongoing.json";
-        public const string real_target_maneuvers_json = "real-target-maneuvers.json";
+
 
         const string _backup = "_backup";
         const string _init = "_init";
+        private bool _workStarted;
+        private string _workInitPath;
 
         /// <summary>
         /// Директория запускаемого приложения
         /// </summary>
         public string AppDirectory { get; }
         /// <summary>
-        /// Рабочая директория навигатора
+        /// Директория с исходными данными для проекта
         /// </summary>
-        public string WorkingDirectory { get; set; }
+        public string WorkInitPath
+        {
+            get => _workInitPath;
+            set { _workInitPath = value; _workStarted = false; }
+        }
+        /// <summary>
+        /// Рабочая директория навигатора (с результатами расчета)
+        /// </summary>
+        public string WorkingDirectory { get; private set; }
         /// <summary>
         /// Путь к визуализатору KTViz: https://github.com/Dostoyewski/KTViz
         /// </summary>
@@ -41,12 +51,35 @@ namespace SuperNavigator.Simulator
         public string UsvDirectory { get; set; }
         public List<string> BackupFiles { get; }
 
+        public bool WorkStarted => _workStarted;
+       
+
         public FileWorker(string appDir)
         {
             AppDirectory = appDir;
             BackupFiles = new List<string> { targets_json, nav_data_json };
         }
 
+        public void Start()
+        {
+            if (_workStarted) return;
+            try
+            {
+                WorkingDirectory = WorkInitPath + $"\\{System.DateTime.Now.ToString("yyyy_dd_M_HH_mm_ss")}";
+                System.IO.Directory.CreateDirectory(WorkingDirectory);
+                File.Copy($"{WorkInitPath}\\{nav_data_json}", $"{WorkingDirectory}\\{nav_data_json}");
+                File.Copy($"{WorkInitPath}\\{targets_json}", $"{WorkingDirectory}\\{targets_json}");
+                File.Copy($"{WorkInitPath}\\{hydrometeo_json}", $"{WorkingDirectory}\\{hydrometeo_json}");
+                File.Copy($"{WorkInitPath}\\{route_json}", $"{WorkingDirectory}\\{route_json}");
+                File.Copy($"{WorkInitPath}\\{settings_json}", $"{WorkingDirectory}\\{settings_json}");
+                File.Copy($"{WorkInitPath}\\{constraints_json}", $"{WorkingDirectory}\\{constraints_json}");
+            }
+            catch (FileNotFoundException e)
+            {
+                throw new FileNotFoundException("Not enough data in initial working directory: " + e.Message);
+            }
+            _workStarted = true;
+        }
         public void SaveFilesAsInit()
         {
             deleteInit();
