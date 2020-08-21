@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SuperNavigator.Visuals;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -151,6 +152,29 @@ namespace SuperNavigator.Simulator
             {
                 File.Delete(WorkingDirectory + "\\" + ongoing_json);
             }
+        }
+
+        /// <summary>
+        /// Сохранить результаты рассчитанного маневра в новую папку внутри рабочей директории
+        /// Их можно открыть в KTViz, или скриптом сгенерировать изображение ситуации
+        /// </summary>
+        /// <param name="result">Результат для визуализации</param>
+        public void SaveManuever(ref Result result)
+        {
+            string saveDirectory = $"{WorkInitPath}\\{result.ManeuverPathes.Count.ToString()}";
+            System.IO.Directory.CreateDirectory(saveDirectory);
+            // copy data
+            File.Copy($"{WorkingDirectory}\\{nav_data_json}", $"{saveDirectory}\\{nav_data_json}");
+            File.Copy($"{WorkingDirectory}\\{targets_json}", $"{saveDirectory}\\{targets_json}");
+            File.Copy($"{WorkingDirectory}\\{hydrometeo_json}", $"{saveDirectory}\\{hydrometeo_json}");
+            File.Copy($"{WorkingDirectory}\\{route_json}", $"{saveDirectory}\\{route_json}");
+            File.Copy($"{WorkingDirectory}\\{settings_json}", $"{saveDirectory}\\{settings_json}");
+            File.Copy($"{WorkingDirectory}\\{constraints_json}", $"{saveDirectory}\\{constraints_json}");
+            // copy results
+            File.Copy($"{WorkingDirectory}\\{maneuver_json}", $"{saveDirectory}\\{maneuver_json}");
+            File.Copy($"{WorkingDirectory}\\{predict_json}", $"{saveDirectory}\\{predict_json}");
+            File.Copy($"{WorkingDirectory}\\{predict_real_json}", $"{saveDirectory}\\{predict_real_json}");
+            result.ManeuverPathes.Add(saveDirectory);
         }
 
         private void deleteBackup()

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SuperNavigator.Visuals;
 using System;
 using System.IO;
 using System.Numerics;
@@ -150,52 +151,54 @@ namespace SuperNavigator.Simulator
         /// принимается решение о будущих действиях своего судна.
         /// </summary>
         /// <param name="time_step">Шаг по времени, секунды</param>
-        /// <returns>Строка с отчетом</returns>
-        public async Task<string> Simulate(double time_step)
+        /// <returns>Результат для визуализации</returns>
+        public async Task<Result> Simulate(double time_step)
         {
+            var result = new Result();
             FileWorker.ClearOngoing();
 
+            result.Output = "";
             string nl = System.Environment.NewLine;
-            string result = "";
             double time = 0;
 
             // if real targets maneuvers do not exist, create them
             if (!File.Exists($"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}"))
             {
-                result += nl + "real maneuvers do not exist, create them...";
-                result += nl + "Exit code (-1 expected from USV for some reason): ";
-                result += (await CreateLinearTargetsManeuvers()).ToString();
+                result.Output += nl + "real maneuvers do not exist, create them...";
+                result.Output += nl + "Exit code (-1 expected from USV for some reason): ";
+                result.Output += (await CreateLinearTargetsManeuvers()).ToString();
             }
 
             while (true)
             {
                 await Analyze();
                 var dangerous = GetAnalyzeReportDangerous();
-                result += $"{nl}danger at t = {time} is: {dangerous}";
+                result.Output += $"{nl}danger at t = {time} is: {dangerous}";
                 if (dangerous)
                 {
                     var maneuver_result = await Maneuver();
                     if (maneuver_result == 5)
                     {
-                        result += $"{nl}ongoing maneuver/route is OK";
+                        result.Output += $"{nl}ongoing maneuver/route is OK";
                     }
                     else if (maneuver_result != 2)
                     {
-                        result += $"{nl}ongoing maneuver/route is not OK";
-                        result += $"{nl}maneuver found!";
+                        result.Output += $"{nl}ongoing maneuver/route is not OK";
+                        result.Output += $"{nl}maneuver found!";
                         WriteOngoing();
+                        FileWorker.SaveManuever(ref result);
                     }
                     else
                     {
-                        result += $"{nl}ongoing maneuver/route is not OK";
-                        result += $"{nl}maneuver not found!{nl}FAILED";
+                        result.Output += $"{nl}ongoing maneuver/route is not OK";
+                        result.Output += $"{nl}maneuver not found!{nl}FAILED";
                         break;
                     }
                 }
-                result += $"{nl}following...";
+                result.Output += $"{nl}following...";
                 if (!Follow(time_step))
                 {
-                    result += $"{nl}finished{nl}SUCCESS";
+                    result.Output += $"{nl}finished{nl}SUCCESS";
                     break;
                 }
                 time += time_step;

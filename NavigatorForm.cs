@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SuperNavigator.Simulator;
+using SuperNavigator.Visuals;
 using System;
 using System.Drawing;
 using System.IO;
@@ -13,7 +14,9 @@ namespace SuperNavigator
     {
         const string settings_filename = "settings.json";
         const string app_py_filename = "app.py";
+        const string bks_pic_py_filename = "bks-pic.py";
         Navigator navigator;
+        KTVizPicture kTVizPicture;
         public NavigatorForm()
         {
             InitializeComponent();
@@ -30,6 +33,8 @@ namespace SuperNavigator
 
             SetPrediction();
             SetPrefer();
+
+            kTVizPicture = new KTVizPicture(navigator.FileWorker.KtVizDirectory + "\\" + bks_pic_py_filename);
         }
         private void LoadSettings()
         {
@@ -97,6 +102,7 @@ namespace SuperNavigator
         private void btn_Set_KTViz_Directory_Click(object sender, EventArgs e)
         {
             navigator.FileWorker.KtVizDirectory = ChangeDirectory(navigator.FileWorker.KtVizDirectory);
+            kTVizPicture = new KTVizPicture(navigator.FileWorker.KtVizDirectory + "\\" + bks_pic_py_filename);
             UpdateFields();
         }
 

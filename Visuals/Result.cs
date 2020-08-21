@@ -9,7 +9,8 @@ namespace SuperNavigator.Visuals
 {
     public class Result
     {
-        private List<State> _states;
-        
+        public const string result_filename_png = "result.png";
+        public string Output { get; set; }
+        public List<string> ManeuverPathes { get; set; } = new List<string>();
     }
 }
