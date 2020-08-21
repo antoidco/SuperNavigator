@@ -27,6 +27,9 @@ namespace SuperNavigator
 
             // update fields
             UpdateFields();
+
+            SetPrediction();
+            SetPrefer();
         }
         private void LoadSettings()
         {
@@ -191,11 +194,19 @@ namespace SuperNavigator
 
         private void cb_noPrediction_CheckedChanged(object sender, EventArgs e)
         {
-            if (cb_noPrediction.Checked) navigator.Settings.PredictionType = PredictionType.Linear;
-            else navigator.Settings.PredictionType = PredictionType.Full;
+            SetPrediction();
         }
 
         private void rb_prefer_CheckedChanged(object sender, EventArgs e)
+        {
+            SetPrefer();
+        }
+        private void SetPrediction()
+        {
+            if (cb_noPrediction.Checked) navigator.Settings.PredictionType = PredictionType.Linear;
+            else navigator.Settings.PredictionType = PredictionType.Full;
+        }
+        private void SetPrefer()
         {
             if (rb_base.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferBase;
             if (rb_rvo.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferRVO;
