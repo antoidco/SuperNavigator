@@ -43,21 +43,22 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tb_output = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.track_images = new System.Windows.Forms.TrackBar();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.btn_ClearViz = new System.Windows.Forms.Button();
+            this.btn_GenerateBitmaps = new System.Windows.Forms.Button();
             this.pb_Viz = new System.Windows.Forms.PictureBox();
             this.panel_debug = new System.Windows.Forms.Panel();
             this.btn_analyze = new System.Windows.Forms.Button();
+            this.btn_realTargets = new System.Windows.Forms.Button();
             this.btn_maneuver = new System.Windows.Forms.Button();
+            this.btn_follow_route = new System.Windows.Forms.Button();
+            this.btn_follow_ongoing = new System.Windows.Forms.Button();
             this.panel_simulate = new System.Windows.Forms.Panel();
             this.cb_noPrediction = new System.Windows.Forms.CheckBox();
-            this.btn_realTargets = new System.Windows.Forms.Button();
-            this.btn_follow_route = new System.Windows.Forms.Button();
             this.btn_Simulate = new System.Windows.Forms.Button();
             this.rb_base = new System.Windows.Forms.RadioButton();
             this.rb_rvo = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn_follow_ongoing = new System.Windows.Forms.Button();
             this.tb_timeStep = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tb_ktviz_dir = new System.Windows.Forms.TextBox();
@@ -65,6 +66,7 @@
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.panel4 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -78,17 +80,21 @@
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.track_images)).BeginInit();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).BeginInit();
             this.panel_debug.SuspendLayout();
             this.panel_simulate.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -101,8 +107,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Size = new System.Drawing.Size(632, 416);
-            this.splitContainer1.SplitterDistance = 227;
+            this.splitContainer1.Size = new System.Drawing.Size(632, 441);
+            this.splitContainer1.SplitterDistance = 180;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -114,9 +120,9 @@
             this.panel3.Controls.Add(this.btn_backup);
             this.panel3.Controls.Add(this.btn_RunViz);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 322);
+            this.panel3.Location = new System.Drawing.Point(0, 347);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(225, 92);
+            this.panel3.Size = new System.Drawing.Size(178, 92);
             this.panel3.TabIndex = 3;
             // 
             // btn_WorkStart
@@ -124,7 +130,7 @@
             this.btn_WorkStart.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_WorkStart.Location = new System.Drawing.Point(0, 0);
             this.btn_WorkStart.Name = "btn_WorkStart";
-            this.btn_WorkStart.Size = new System.Drawing.Size(225, 23);
+            this.btn_WorkStart.Size = new System.Drawing.Size(178, 23);
             this.btn_WorkStart.TabIndex = 10;
             this.btn_WorkStart.Text = "Work Start";
             this.btn_WorkStart.UseVisualStyleBackColor = true;
@@ -136,7 +142,7 @@
             this.btn_toInit.Enabled = false;
             this.btn_toInit.Location = new System.Drawing.Point(0, 23);
             this.btn_toInit.Name = "btn_toInit";
-            this.btn_toInit.Size = new System.Drawing.Size(225, 23);
+            this.btn_toInit.Size = new System.Drawing.Size(178, 23);
             this.btn_toInit.TabIndex = 9;
             this.btn_toInit.Text = "Return to Init State";
             this.btn_toInit.UseVisualStyleBackColor = true;
@@ -148,7 +154,7 @@
             this.btn_backup.Enabled = false;
             this.btn_backup.Location = new System.Drawing.Point(0, 46);
             this.btn_backup.Name = "btn_backup";
-            this.btn_backup.Size = new System.Drawing.Size(225, 23);
+            this.btn_backup.Size = new System.Drawing.Size(178, 23);
             this.btn_backup.TabIndex = 8;
             this.btn_backup.Text = "Save Current as Init State";
             this.btn_backup.UseVisualStyleBackColor = true;
@@ -159,7 +165,7 @@
             this.btn_RunViz.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_RunViz.Location = new System.Drawing.Point(0, 69);
             this.btn_RunViz.Name = "btn_RunViz";
-            this.btn_RunViz.Size = new System.Drawing.Size(225, 23);
+            this.btn_RunViz.Size = new System.Drawing.Size(178, 23);
             this.btn_RunViz.TabIndex = 2;
             this.btn_RunViz.Text = "KTViz";
             this.btn_RunViz.UseVisualStyleBackColor = true;
@@ -173,7 +179,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(225, 69);
+            this.panel1.Size = new System.Drawing.Size(178, 69);
             this.panel1.TabIndex = 1;
             // 
             // btn_Set_KTViz_Directory
@@ -182,7 +188,7 @@
             this.btn_Set_KTViz_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_KTViz_Directory.Location = new System.Drawing.Point(0, 46);
             this.btn_Set_KTViz_Directory.Name = "btn_Set_KTViz_Directory";
-            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(225, 23);
+            this.btn_Set_KTViz_Directory.Size = new System.Drawing.Size(178, 23);
             this.btn_Set_KTViz_Directory.TabIndex = 2;
             this.btn_Set_KTViz_Directory.Text = "Set KTViz Directory";
             this.btn_Set_KTViz_Directory.UseVisualStyleBackColor = true;
@@ -193,7 +199,7 @@
             this.btn_Set_Working_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_Working_Directory.Location = new System.Drawing.Point(0, 23);
             this.btn_Set_Working_Directory.Name = "btn_Set_Working_Directory";
-            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(225, 23);
+            this.btn_Set_Working_Directory.Size = new System.Drawing.Size(178, 23);
             this.btn_Set_Working_Directory.TabIndex = 1;
             this.btn_Set_Working_Directory.Text = "Set Working Directory";
             this.btn_Set_Working_Directory.UseVisualStyleBackColor = true;
@@ -204,7 +210,7 @@
             this.btn_Set_USV_Directory.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_Set_USV_Directory.Location = new System.Drawing.Point(0, 0);
             this.btn_Set_USV_Directory.Name = "btn_Set_USV_Directory";
-            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(225, 23);
+            this.btn_Set_USV_Directory.Size = new System.Drawing.Size(178, 23);
             this.btn_Set_USV_Directory.TabIndex = 0;
             this.btn_Set_USV_Directory.Text = "Set USV Directory";
             this.btn_Set_USV_Directory.UseVisualStyleBackColor = true;
@@ -213,6 +219,8 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 69);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -220,13 +228,15 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.tabControl);
+            this.splitContainer2.Panel1MinSize = 150;
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.panel_debug);
             this.splitContainer2.Panel2.Controls.Add(this.panel_simulate);
-            this.splitContainer2.Size = new System.Drawing.Size(398, 345);
-            this.splitContainer2.SplitterDistance = 210;
+            this.splitContainer2.Panel2MinSize = 100;
+            this.splitContainer2.Size = new System.Drawing.Size(445, 370);
+            this.splitContainer2.SplitterDistance = 265;
             this.splitContainer2.TabIndex = 10;
             // 
             // tabControl
@@ -237,7 +247,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(398, 210);
+            this.tabControl.Size = new System.Drawing.Size(445, 265);
             this.tabControl.TabIndex = 9;
             // 
             // tabPage1
@@ -264,43 +274,57 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.panel4);
             this.tabPage2.Controls.Add(this.panel6);
-            this.tabPage2.Controls.Add(this.pb_Viz);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(390, 184);
+            this.tabPage2.Size = new System.Drawing.Size(437, 239);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Viz";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // track_images
+            // 
+            this.track_images.AutoSize = false;
+            this.track_images.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.track_images.Location = new System.Drawing.Point(0, 5);
+            this.track_images.Maximum = 0;
+            this.track_images.Name = "track_images";
+            this.track_images.Size = new System.Drawing.Size(431, 27);
+            this.track_images.TabIndex = 2;
+            this.track_images.Scroll += new System.EventHandler(this.track_images_Scroll);
+            // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.btn_ClearViz);
+            this.panel6.Controls.Add(this.track_images);
+            this.panel6.Controls.Add(this.btn_GenerateBitmaps);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel6.Location = new System.Drawing.Point(3, 158);
+            this.panel6.Location = new System.Drawing.Point(3, 181);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(384, 23);
+            this.panel6.Size = new System.Drawing.Size(431, 55);
             this.panel6.TabIndex = 1;
             // 
-            // btn_ClearViz
+            // btn_GenerateBitmaps
             // 
-            this.btn_ClearViz.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btn_ClearViz.Location = new System.Drawing.Point(0, 0);
-            this.btn_ClearViz.Name = "btn_ClearViz";
-            this.btn_ClearViz.Size = new System.Drawing.Size(384, 23);
-            this.btn_ClearViz.TabIndex = 0;
-            this.btn_ClearViz.Text = "Clear";
-            this.btn_ClearViz.UseVisualStyleBackColor = true;
+            this.btn_GenerateBitmaps.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btn_GenerateBitmaps.Location = new System.Drawing.Point(0, 32);
+            this.btn_GenerateBitmaps.Name = "btn_GenerateBitmaps";
+            this.btn_GenerateBitmaps.Size = new System.Drawing.Size(431, 23);
+            this.btn_GenerateBitmaps.TabIndex = 0;
+            this.btn_GenerateBitmaps.Text = "Generate";
+            this.btn_GenerateBitmaps.UseVisualStyleBackColor = true;
+            this.btn_GenerateBitmaps.Click += new System.EventHandler(this.btn_GenerateBitmaps_Click);
             // 
             // pb_Viz
             // 
             this.pb_Viz.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pb_Viz.Location = new System.Drawing.Point(3, 3);
+            this.pb_Viz.Location = new System.Drawing.Point(0, 0);
             this.pb_Viz.Name = "pb_Viz";
-            this.pb_Viz.Size = new System.Drawing.Size(384, 178);
+            this.pb_Viz.Size = new System.Drawing.Size(431, 178);
             this.pb_Viz.TabIndex = 0;
             this.pb_Viz.TabStop = false;
+            this.pb_Viz.SizeChanged += new System.EventHandler(this.pb_Viz_SizeChanged);
             // 
             // panel_debug
             // 
@@ -313,7 +337,7 @@
             this.panel_debug.Enabled = false;
             this.panel_debug.Location = new System.Drawing.Point(0, 0);
             this.panel_debug.Name = "panel_debug";
-            this.panel_debug.Size = new System.Drawing.Size(152, 131);
+            this.panel_debug.Size = new System.Drawing.Size(199, 101);
             this.panel_debug.TabIndex = 11;
             // 
             // btn_analyze
@@ -321,22 +345,55 @@
             this.btn_analyze.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_analyze.Location = new System.Drawing.Point(0, 80);
             this.btn_analyze.Name = "btn_analyze";
-            this.btn_analyze.Size = new System.Drawing.Size(152, 20);
+            this.btn_analyze.Size = new System.Drawing.Size(199, 20);
             this.btn_analyze.TabIndex = 7;
             this.btn_analyze.Text = "analyze";
             this.btn_analyze.UseVisualStyleBackColor = true;
             this.btn_analyze.Click += new System.EventHandler(this.btn_analyze_Click);
+            // 
+            // btn_realTargets
+            // 
+            this.btn_realTargets.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_realTargets.Location = new System.Drawing.Point(0, 60);
+            this.btn_realTargets.Name = "btn_realTargets";
+            this.btn_realTargets.Size = new System.Drawing.Size(199, 20);
+            this.btn_realTargets.TabIndex = 15;
+            this.btn_realTargets.Text = "real targets";
+            this.btn_realTargets.UseVisualStyleBackColor = true;
+            this.btn_realTargets.Click += new System.EventHandler(this.btn_realTargets_Click);
             // 
             // btn_maneuver
             // 
             this.btn_maneuver.Dock = System.Windows.Forms.DockStyle.Top;
             this.btn_maneuver.Location = new System.Drawing.Point(0, 40);
             this.btn_maneuver.Name = "btn_maneuver";
-            this.btn_maneuver.Size = new System.Drawing.Size(152, 20);
+            this.btn_maneuver.Size = new System.Drawing.Size(199, 20);
             this.btn_maneuver.TabIndex = 6;
             this.btn_maneuver.Text = "maneuver";
             this.btn_maneuver.UseVisualStyleBackColor = true;
             this.btn_maneuver.Click += new System.EventHandler(this.btn_maneuver_Click);
+            // 
+            // btn_follow_route
+            // 
+            this.btn_follow_route.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_follow_route.Location = new System.Drawing.Point(0, 20);
+            this.btn_follow_route.Name = "btn_follow_route";
+            this.btn_follow_route.Size = new System.Drawing.Size(199, 20);
+            this.btn_follow_route.TabIndex = 14;
+            this.btn_follow_route.Text = "follow route";
+            this.btn_follow_route.UseVisualStyleBackColor = true;
+            this.btn_follow_route.Click += new System.EventHandler(this.btn_follow_route_Click);
+            // 
+            // btn_follow_ongoing
+            // 
+            this.btn_follow_ongoing.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_follow_ongoing.Location = new System.Drawing.Point(0, 0);
+            this.btn_follow_ongoing.Name = "btn_follow_ongoing";
+            this.btn_follow_ongoing.Size = new System.Drawing.Size(199, 20);
+            this.btn_follow_ongoing.TabIndex = 8;
+            this.btn_follow_ongoing.Text = "follow actual";
+            this.btn_follow_ongoing.UseVisualStyleBackColor = true;
+            this.btn_follow_ongoing.Click += new System.EventHandler(this.btn_followOngoing_Click);
             // 
             // panel_simulate
             // 
@@ -348,9 +405,9 @@
             this.panel_simulate.Controls.Add(this.tb_timeStep);
             this.panel_simulate.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel_simulate.Enabled = false;
-            this.panel_simulate.Location = new System.Drawing.Point(152, 0);
+            this.panel_simulate.Location = new System.Drawing.Point(199, 0);
             this.panel_simulate.Name = "panel_simulate";
-            this.panel_simulate.Size = new System.Drawing.Size(246, 131);
+            this.panel_simulate.Size = new System.Drawing.Size(246, 101);
             this.panel_simulate.TabIndex = 10;
             // 
             // cb_noPrediction
@@ -366,33 +423,11 @@
             this.cb_noPrediction.UseVisualStyleBackColor = true;
             this.cb_noPrediction.CheckedChanged += new System.EventHandler(this.cb_noPrediction_CheckedChanged);
             // 
-            // btn_realTargets
-            // 
-            this.btn_realTargets.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_realTargets.Location = new System.Drawing.Point(0, 60);
-            this.btn_realTargets.Name = "btn_realTargets";
-            this.btn_realTargets.Size = new System.Drawing.Size(152, 20);
-            this.btn_realTargets.TabIndex = 15;
-            this.btn_realTargets.Text = "real targets";
-            this.btn_realTargets.UseVisualStyleBackColor = true;
-            this.btn_realTargets.Click += new System.EventHandler(this.btn_realTargets_Click);
-            // 
-            // btn_follow_route
-            // 
-            this.btn_follow_route.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_follow_route.Location = new System.Drawing.Point(0, 20);
-            this.btn_follow_route.Name = "btn_follow_route";
-            this.btn_follow_route.Size = new System.Drawing.Size(152, 20);
-            this.btn_follow_route.TabIndex = 14;
-            this.btn_follow_route.Text = "follow route";
-            this.btn_follow_route.UseVisualStyleBackColor = true;
-            this.btn_follow_route.Click += new System.EventHandler(this.btn_follow_route_Click);
-            // 
             // btn_Simulate
             // 
-            this.btn_Simulate.Location = new System.Drawing.Point(9, 96);
+            this.btn_Simulate.Location = new System.Drawing.Point(113, 42);
             this.btn_Simulate.Name = "btn_Simulate";
-            this.btn_Simulate.Size = new System.Drawing.Size(126, 24);
+            this.btn_Simulate.Size = new System.Drawing.Size(98, 24);
             this.btn_Simulate.TabIndex = 13;
             this.btn_Simulate.Text = "simulate";
             this.btn_Simulate.UseVisualStyleBackColor = true;
@@ -433,17 +468,6 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "timeStep";
             // 
-            // btn_follow_ongoing
-            // 
-            this.btn_follow_ongoing.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_follow_ongoing.Location = new System.Drawing.Point(0, 0);
-            this.btn_follow_ongoing.Name = "btn_follow_ongoing";
-            this.btn_follow_ongoing.Size = new System.Drawing.Size(152, 20);
-            this.btn_follow_ongoing.TabIndex = 8;
-            this.btn_follow_ongoing.Text = "follow actual";
-            this.btn_follow_ongoing.UseVisualStyleBackColor = true;
-            this.btn_follow_ongoing.Click += new System.EventHandler(this.btn_followOngoing_Click);
-            // 
             // tb_timeStep
             // 
             this.tb_timeStep.Location = new System.Drawing.Point(60, 8);
@@ -460,7 +484,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(398, 69);
+            this.panel2.Size = new System.Drawing.Size(445, 69);
             this.panel2.TabIndex = 5;
             // 
             // tb_ktviz_dir
@@ -491,12 +515,22 @@
             // 
             this.openFileDialog.FileName = "openFileDialog1";
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.pb_Viz);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(431, 178);
+            this.panel4.TabIndex = 2;
+            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 416);
+            this.ClientSize = new System.Drawing.Size(632, 441);
             this.Controls.Add(this.splitContainer1);
+            this.MinimumSize = new System.Drawing.Size(640, 480);
             this.Name = "NavigatorForm";
             this.Text = "Navigator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NavigatorForm_FormClosing);
@@ -516,6 +550,7 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.track_images)).EndInit();
             this.panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).EndInit();
             this.panel_debug.ResumeLayout(false);
@@ -523,6 +558,7 @@
             this.panel_simulate.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -563,9 +599,11 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.Button btn_ClearViz;
+        private System.Windows.Forms.Button btn_GenerateBitmaps;
         private System.Windows.Forms.PictureBox pb_Viz;
         private System.Windows.Forms.Button btn_WorkStart;
+        private System.Windows.Forms.TrackBar track_images;
+        private System.Windows.Forms.Panel panel4;
     }
 }
 

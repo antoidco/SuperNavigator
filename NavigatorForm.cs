@@ -15,8 +15,10 @@ namespace SuperNavigator
         const string settings_filename = "settings.json";
         const string app_py_filename = "app.py";
         const string bks_pic_py_filename = "bks-pic.py";
-        Navigator navigator;
-        KTVizPicture kTVizPicture;
+        private Navigator navigator;
+        private KTVizPicture kTVizPicture;
+        private Result _currentResult;
+        private Image _showingImage;
         public NavigatorForm()
         {
             InitializeComponent();
@@ -34,7 +36,9 @@ namespace SuperNavigator
             SetPrediction();
             SetPrefer();
 
-            kTVizPicture = new KTVizPicture(navigator.FileWorker.KtVizDirectory + "\\" + bks_pic_py_filename);
+            kTVizPicture = new KTVizPicture(navigator.FileWorker.KtVizDirectory + "\\" + bks_pic_py_filename,
+                FileWorker.maneuver_json);
+            _currentResult = new Result();
         }
         private void LoadSettings()
         {
@@ -102,7 +106,8 @@ namespace SuperNavigator
         private void btn_Set_KTViz_Directory_Click(object sender, EventArgs e)
         {
             navigator.FileWorker.KtVizDirectory = ChangeDirectory(navigator.FileWorker.KtVizDirectory);
-            kTVizPicture = new KTVizPicture(navigator.FileWorker.KtVizDirectory + "\\" + bks_pic_py_filename);
+            kTVizPicture = new KTVizPicture(navigator.FileWorker.KtVizDirectory + "\\" + bks_pic_py_filename,
+                FileWorker.maneuver_json);
             UpdateFields();
         }
 
@@ -184,7 +189,8 @@ namespace SuperNavigator
             try
             {
                 var result = await navigator.Simulate(Convert.ToDouble(tb_timeStep.Text));
-                tb_output.AppendText(System.Environment.NewLine + result);
+                tb_output.AppendText(System.Environment.NewLine + result.Output);
+                _currentResult = result;
             }
             catch (Exception exception)
             {
@@ -228,6 +234,38 @@ namespace SuperNavigator
                 panel_simulate.Enabled = true;
                 panel_debug.Enabled = true;
                 tb_output.AppendText(System.Environment.NewLine + "Work started, new folder created");
+            }
+        }
+
+        private async void btn_GenerateBitmaps_Click(object sender, EventArgs e)
+        {
+            track_images.Value = 0;
+            tb_output.AppendText(System.Environment.NewLine + await kTVizPicture.CreatePictures(_currentResult));
+            track_images.Maximum = Math.Max(0, kTVizPicture.Images.Count);
+        }
+
+        private void track_images_Scroll(object sender, EventArgs e)
+        {
+            if (track_images.Value > 0)
+            {
+                var img = kTVizPicture.Images[track_images.Value - 1];
+                try
+                {
+                    pb_Viz.Image = Helpers.ResizeImage(img, pb_Viz.Width, pb_Viz.Height);
+                } catch (Exception) { }
+                _showingImage = new Bitmap(img);
+            }
+        }
+
+        private void pb_Viz_SizeChanged(object sender, EventArgs e)
+        {
+            if (_showingImage != null)
+            {
+                try
+                {
+                    pb_Viz.Image = Helpers.ResizeImage(_showingImage, pb_Viz.Width, pb_Viz.Height);
+                }
+                catch (Exception) { }
             }
         }
     }

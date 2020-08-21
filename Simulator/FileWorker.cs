@@ -161,7 +161,7 @@ namespace SuperNavigator.Simulator
         /// <param name="result">Результат для визуализации</param>
         public void SaveManuever(ref Result result)
         {
-            string saveDirectory = $"{WorkInitPath}\\{result.ManeuverPathes.Count.ToString()}";
+            string saveDirectory = $"{WorkingDirectory}\\{result.ManeuverPathes.Count.ToString()}";
             System.IO.Directory.CreateDirectory(saveDirectory);
             // copy data
             File.Copy($"{WorkingDirectory}\\{nav_data_json}", $"{saveDirectory}\\{nav_data_json}");
