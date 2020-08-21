@@ -64,7 +64,6 @@
             this.tb_ktviz_dir = new System.Windows.Forms.TextBox();
             this.tb_working_dir = new System.Windows.Forms.TextBox();
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.panel4 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -511,10 +510,6 @@
             this.tb_usv_dir.Size = new System.Drawing.Size(386, 20);
             this.tb_usv_dir.TabIndex = 0;
             // 
-            // openFileDialog
-            // 
-            this.openFileDialog.FileName = "openFileDialog1";
-            // 
             // panel4
             // 
             this.panel4.Controls.Add(this.pb_Viz);
@@ -574,7 +569,6 @@
         private System.Windows.Forms.TextBox tb_ktviz_dir;
         private System.Windows.Forms.TextBox tb_working_dir;
         private System.Windows.Forms.TextBox tb_usv_dir;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Button btn_RunViz;
         private System.Windows.Forms.Panel panel3;
