@@ -89,6 +89,8 @@ namespace SuperNavigator
         private void btn_Set_Working_Directory_Click(object sender, EventArgs e)
         {
             navigator.FileWorker.WorkInitPath = ChangeDirectory(navigator.FileWorker.WorkInitPath);
+            panel_debug.Enabled = false;
+            panel_simulate.Enabled = false;
             UpdateFields();
         }
 
@@ -172,7 +174,7 @@ namespace SuperNavigator
 
         private async void btn_simulate_Click(object sender, EventArgs e)
         {
-            if (!navigator.FileWorker.WorkStarted) btn_WorkStart.PerformClick(); // xd lol
+            
             btn_Simulate.Enabled = false;
             try
             {
@@ -213,10 +215,15 @@ namespace SuperNavigator
             if (rb_rvo.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferRVO;
         }
 
-        private void btn_WorkStart_Click(object sender, EventArgs e)
+        private void startFileWorker(object sender, EventArgs e)
         {
             navigator.FileWorker.Start();
-            tb_output.AppendText(System.Environment.NewLine + "Work started, new folder created");
+            if (navigator.FileWorker.WorkStarted)
+            {
+                panel_simulate.Enabled = true;
+                panel_debug.Enabled = true;
+                tb_output.AppendText(System.Environment.NewLine + "Work started, new folder created");
+            }
         }
     }
 }
