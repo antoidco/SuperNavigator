@@ -13,11 +13,13 @@ namespace SuperNavigator.Simulator
         public FileWorker FileWorker;
         public Key Key;
         public Settings Settings;
+        private Path _superManeuver;
         public Navigator(string appDir)
         {
             FileWorker = new FileWorker(appDir);
             Key = new Key(FileWorker);
             Settings = new Settings();
+            _superManeuver = new Path();
         }
 
         /// <summary>
@@ -157,6 +159,9 @@ namespace SuperNavigator.Simulator
             var result = new Result();
             FileWorker.ClearOngoing();
 
+            _superManeuver = new Path();
+            _superManeuver.start_time = (long)getCurrentTime();
+
             result.Output = "";
             string nl = System.Environment.NewLine;
             double time = 0;
@@ -204,6 +209,7 @@ namespace SuperNavigator.Simulator
                 time += time_step;
             }
 
+            _superManeuver.WriteToFileAsSolution($"{FileWorker.WorkInitPath}\\{FileWorker.maneuver_json}");
             return result;
         }
 
@@ -237,10 +243,38 @@ namespace SuperNavigator.Simulator
             return true;
         }
 
+        private double getCurrentTime()
+        {
+            string ship_file = FileWorker.WorkingDirectory + "\\" + FileWorker.nav_data_json;
+            var obj = JObject.Parse(File.ReadAllText(ship_file));
+            return obj["timestamp"].Value<double>();
+        }
+
         private double updateShip(Path path, double seconds)
         {
             string ship_file = FileWorker.WorkingDirectory + "\\" + FileWorker.nav_data_json;
             var obj = JObject.Parse(File.ReadAllText(ship_file));
+
+            // update super maneuver
+            var shipPosition = new Position();
+            shipPosition.course = obj["COG"].Value<double>();
+            shipPosition.lat = obj["lat"].Value<double>();
+            shipPosition.lon = obj["lon"].Value<double>();
+            shipPosition.speed = obj["SOG"].Value<double>();
+            _superManeuver.items.Add(
+                new Segment
+                {
+                    begin_angle = shipPosition.course,
+                    duration = seconds,
+                    curve = 0,
+                    lat = shipPosition.lat,
+                    lon = shipPosition.lon,
+                    length = shipPosition.speed * seconds / 3600,
+                    starboard_dev = 0,
+                    port_dev = 0
+                });
+
+            // update nav-data
             var newShipPosition = path.position(obj["timestamp"].Value<double>() + seconds);
             obj["lat"] = newShipPosition.lat;
             obj["lon"] = newShipPosition.lon;

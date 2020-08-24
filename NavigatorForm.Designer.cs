@@ -486,7 +486,7 @@
             this.tb_timeStep.Name = "tb_timeStep";
             this.tb_timeStep.Size = new System.Drawing.Size(75, 20);
             this.tb_timeStep.TabIndex = 9;
-            this.tb_timeStep.Text = "600";
+            this.tb_timeStep.Text = "300";
             // 
             // panel2
             // 

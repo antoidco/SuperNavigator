@@ -53,10 +53,10 @@ namespace SuperNavigator.Simulator
         }
 
         /// <summary>
-        /// Вычисляет дистанцию до сегмента от точки C
+        /// Вычисляет эффективную дистанцию до сегмента от точки C
         /// </summary>
         /// <param name="C">Положение точки C</param>
-        /// <returns>Дистанция (морские мили)</returns>
+        /// <returns>Дистанция (эффективная, в градусах)</returns>
         public double distance(Vector2 C)
         {
             throw new NotImplementedException();

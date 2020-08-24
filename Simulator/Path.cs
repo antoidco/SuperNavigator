@@ -10,7 +10,10 @@ namespace SuperNavigator.Simulator
     {
         public List<Segment> items;
         public long start_time;
-
+        public Path()
+        {
+            items = new List<Segment>();
+        }
         public static Path ReadFromJson(JObject json)
         {
             var jsonText = json.ToString();
@@ -26,6 +29,12 @@ namespace SuperNavigator.Simulator
         {
             var result = JsonConvert.SerializeObject(this);
             File.WriteAllText(filename, result);
+        }
+        public void WriteToFileAsSolution(string filename)
+        {
+            var result = JsonConvert.SerializeObject(this);
+            File.WriteAllText(filename, "[{\"solution_type\":0,\"path\":" + result +
+                 ",\"msg\":\"\", \"solver_name\":\"\"}]");
         }
         /// <summary>
         /// Вычисляет позицию на path в момент времени time
