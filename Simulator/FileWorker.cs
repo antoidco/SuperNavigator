@@ -81,6 +81,10 @@ namespace SuperNavigator.Simulator
             }
             _workStarted = true;
         }
+        public void Stop()
+        {
+            _workStarted = false;
+        }
         public void SaveFilesAsInit()
         {
             deleteInit();

@@ -236,6 +236,16 @@ namespace SuperNavigator
                 tb_output.AppendText(System.Environment.NewLine + "Work started, new folder created");
             }
         }
+        private void btn_Work_Stop_Click(object sender, EventArgs e)
+        {
+            navigator.FileWorker.Stop();
+            if (!navigator.FileWorker.WorkStarted)
+            {
+                panel_simulate.Enabled = false;
+                panel_debug.Enabled = false;
+                tb_output.AppendText(System.Environment.NewLine + "Work stopped");
+            }
+        }
 
         private async void btn_GenerateBitmaps_Click(object sender, EventArgs e)
         {

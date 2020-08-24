@@ -43,10 +43,11 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tb_output = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.track_images = new System.Windows.Forms.TrackBar();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.btn_GenerateBitmaps = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.pb_Viz = new System.Windows.Forms.PictureBox();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.track_images = new System.Windows.Forms.TrackBar();
+            this.btn_GenerateBitmaps = new System.Windows.Forms.Button();
             this.panel_debug = new System.Windows.Forms.Panel();
             this.btn_analyze = new System.Windows.Forms.Button();
             this.btn_realTargets = new System.Windows.Forms.Button();
@@ -65,7 +66,7 @@
             this.tb_working_dir = new System.Windows.Forms.TextBox();
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this.btn_Work_Stop = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -79,13 +80,13 @@
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.track_images)).BeginInit();
-            this.panel6.SuspendLayout();
+            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).BeginInit();
+            this.panel6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.track_images)).BeginInit();
             this.panel_debug.SuspendLayout();
             this.panel_simulate.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -114,20 +115,21 @@
             // panel3
             // 
             this.panel3.AutoSize = true;
+            this.panel3.Controls.Add(this.btn_Work_Stop);
             this.panel3.Controls.Add(this.btn_WorkStart);
             this.panel3.Controls.Add(this.btn_toInit);
             this.panel3.Controls.Add(this.btn_backup);
             this.panel3.Controls.Add(this.btn_RunViz);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 347);
+            this.panel3.Location = new System.Drawing.Point(0, 324);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(178, 92);
+            this.panel3.Size = new System.Drawing.Size(178, 115);
             this.panel3.TabIndex = 3;
             // 
             // btn_WorkStart
             // 
             this.btn_WorkStart.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_WorkStart.Location = new System.Drawing.Point(0, 0);
+            this.btn_WorkStart.Location = new System.Drawing.Point(0, 23);
             this.btn_WorkStart.Name = "btn_WorkStart";
             this.btn_WorkStart.Size = new System.Drawing.Size(178, 23);
             this.btn_WorkStart.TabIndex = 10;
@@ -139,7 +141,7 @@
             // 
             this.btn_toInit.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_toInit.Enabled = false;
-            this.btn_toInit.Location = new System.Drawing.Point(0, 23);
+            this.btn_toInit.Location = new System.Drawing.Point(0, 46);
             this.btn_toInit.Name = "btn_toInit";
             this.btn_toInit.Size = new System.Drawing.Size(178, 23);
             this.btn_toInit.TabIndex = 9;
@@ -151,7 +153,7 @@
             // 
             this.btn_backup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btn_backup.Enabled = false;
-            this.btn_backup.Location = new System.Drawing.Point(0, 46);
+            this.btn_backup.Location = new System.Drawing.Point(0, 69);
             this.btn_backup.Name = "btn_backup";
             this.btn_backup.Size = new System.Drawing.Size(178, 23);
             this.btn_backup.TabIndex = 8;
@@ -162,7 +164,7 @@
             // btn_RunViz
             // 
             this.btn_RunViz.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_RunViz.Location = new System.Drawing.Point(0, 69);
+            this.btn_RunViz.Location = new System.Drawing.Point(0, 92);
             this.btn_RunViz.Name = "btn_RunViz";
             this.btn_RunViz.Size = new System.Drawing.Size(178, 23);
             this.btn_RunViz.TabIndex = 2;
@@ -255,7 +257,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(390, 184);
+            this.tabPage1.Size = new System.Drawing.Size(437, 239);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Output";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -268,7 +270,7 @@
             this.tb_output.Multiline = true;
             this.tb_output.Name = "tb_output";
             this.tb_output.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tb_output.Size = new System.Drawing.Size(384, 178);
+            this.tb_output.Size = new System.Drawing.Size(431, 233);
             this.tb_output.TabIndex = 8;
             // 
             // tabPage2
@@ -283,16 +285,24 @@
             this.tabPage2.Text = "Viz";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // track_images
+            // panel4
             // 
-            this.track_images.AutoSize = false;
-            this.track_images.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.track_images.Location = new System.Drawing.Point(0, 5);
-            this.track_images.Maximum = 0;
-            this.track_images.Name = "track_images";
-            this.track_images.Size = new System.Drawing.Size(431, 27);
-            this.track_images.TabIndex = 2;
-            this.track_images.Scroll += new System.EventHandler(this.track_images_Scroll);
+            this.panel4.Controls.Add(this.pb_Viz);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(431, 178);
+            this.panel4.TabIndex = 2;
+            // 
+            // pb_Viz
+            // 
+            this.pb_Viz.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pb_Viz.Location = new System.Drawing.Point(0, 0);
+            this.pb_Viz.Name = "pb_Viz";
+            this.pb_Viz.Size = new System.Drawing.Size(431, 178);
+            this.pb_Viz.TabIndex = 0;
+            this.pb_Viz.TabStop = false;
+            this.pb_Viz.SizeChanged += new System.EventHandler(this.pb_Viz_SizeChanged);
             // 
             // panel6
             // 
@@ -304,6 +314,17 @@
             this.panel6.Size = new System.Drawing.Size(431, 55);
             this.panel6.TabIndex = 1;
             // 
+            // track_images
+            // 
+            this.track_images.AutoSize = false;
+            this.track_images.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.track_images.Location = new System.Drawing.Point(0, 5);
+            this.track_images.Maximum = 0;
+            this.track_images.Name = "track_images";
+            this.track_images.Size = new System.Drawing.Size(431, 27);
+            this.track_images.TabIndex = 2;
+            this.track_images.Scroll += new System.EventHandler(this.track_images_Scroll);
+            // 
             // btn_GenerateBitmaps
             // 
             this.btn_GenerateBitmaps.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -314,16 +335,6 @@
             this.btn_GenerateBitmaps.Text = "Generate";
             this.btn_GenerateBitmaps.UseVisualStyleBackColor = true;
             this.btn_GenerateBitmaps.Click += new System.EventHandler(this.btn_GenerateBitmaps_Click);
-            // 
-            // pb_Viz
-            // 
-            this.pb_Viz.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pb_Viz.Location = new System.Drawing.Point(0, 0);
-            this.pb_Viz.Name = "pb_Viz";
-            this.pb_Viz.Size = new System.Drawing.Size(431, 178);
-            this.pb_Viz.TabIndex = 0;
-            this.pb_Viz.TabStop = false;
-            this.pb_Viz.SizeChanged += new System.EventHandler(this.pb_Viz_SizeChanged);
             // 
             // panel_debug
             // 
@@ -510,14 +521,16 @@
             this.tb_usv_dir.Size = new System.Drawing.Size(386, 20);
             this.tb_usv_dir.TabIndex = 0;
             // 
-            // panel4
+            // btn_Work_Stop
             // 
-            this.panel4.Controls.Add(this.pb_Viz);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(431, 178);
-            this.panel4.TabIndex = 2;
+            this.btn_Work_Stop.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btn_Work_Stop.Location = new System.Drawing.Point(0, 0);
+            this.btn_Work_Stop.Name = "btn_Work_Stop";
+            this.btn_Work_Stop.Size = new System.Drawing.Size(178, 23);
+            this.btn_Work_Stop.TabIndex = 11;
+            this.btn_Work_Stop.Text = "Work Stop";
+            this.btn_Work_Stop.UseVisualStyleBackColor = true;
+            this.btn_Work_Stop.Click += new System.EventHandler(this.btn_Work_Stop_Click);
             // 
             // NavigatorForm
             // 
@@ -545,15 +558,15 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.track_images)).EndInit();
-            this.panel6.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).EndInit();
+            this.panel6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.track_images)).EndInit();
             this.panel_debug.ResumeLayout(false);
             this.panel_simulate.ResumeLayout(false);
             this.panel_simulate.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -598,6 +611,7 @@
         private System.Windows.Forms.Button btn_WorkStart;
         private System.Windows.Forms.TrackBar track_images;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Button btn_Work_Stop;
     }
 }
 
