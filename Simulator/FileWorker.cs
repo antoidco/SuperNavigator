@@ -66,7 +66,7 @@ namespace SuperNavigator.Simulator
             if (_workStarted) return;
             try
             {
-                WorkingDirectory = WorkInitPath + $"\\{System.DateTime.Now.ToString("yyyy_dd_M_HH_mm_ss")}";
+                WorkingDirectory = WorkInitPath + $"\\{System.DateTime.Now.ToString("yyyy_dd_MM_HH_mm_ss")}";
                 System.IO.Directory.CreateDirectory(WorkingDirectory);
                 File.Copy($"{WorkInitPath}\\{nav_data_json}", $"{WorkingDirectory}\\{nav_data_json}");
                 File.Copy($"{WorkInitPath}\\{targets_json}", $"{WorkingDirectory}\\{targets_json}");
