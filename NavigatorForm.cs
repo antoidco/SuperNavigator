@@ -278,5 +278,19 @@ namespace SuperNavigator
                 catch (Exception) { }
             }
         }
+
+        private void btn_copy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                File.Copy(navigator.FileWorker.WorkInitPath + "\\" + FileWorker.predict_real_json,
+                    navigator.FileWorker.WorkingDirectory + "\\" + FileWorker.predict_real_json);
+                tb_output.AppendText(System.Environment.NewLine + "copy real targets success");
+            }
+            catch (Exception exc)
+            {
+                tb_output.AppendText(System.Environment.NewLine + "copy real targets failed " + exc.Message);
+            }
+        }
     }
 }

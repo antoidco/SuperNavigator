@@ -67,6 +67,7 @@
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.btn_Work_Stop = new System.Windows.Forms.Button();
+            this.btn_copy = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -407,6 +408,7 @@
             // 
             // panel_simulate
             // 
+            this.panel_simulate.Controls.Add(this.btn_copy);
             this.panel_simulate.Controls.Add(this.cb_noPrediction);
             this.panel_simulate.Controls.Add(this.btn_Simulate);
             this.panel_simulate.Controls.Add(this.rb_base);
@@ -532,6 +534,16 @@
             this.btn_Work_Stop.UseVisualStyleBackColor = true;
             this.btn_Work_Stop.Click += new System.EventHandler(this.btn_Work_Stop_Click);
             // 
+            // btn_copy
+            // 
+            this.btn_copy.Location = new System.Drawing.Point(113, 68);
+            this.btn_copy.Name = "btn_copy";
+            this.btn_copy.Size = new System.Drawing.Size(98, 23);
+            this.btn_copy.TabIndex = 17;
+            this.btn_copy.Text = "copy real targets";
+            this.btn_copy.UseVisualStyleBackColor = true;
+            this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
+            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -612,6 +624,7 @@
         private System.Windows.Forms.TrackBar track_images;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btn_Work_Stop;
+        private System.Windows.Forms.Button btn_copy;
     }
 }
 
