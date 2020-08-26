@@ -175,6 +175,7 @@ namespace SuperNavigator.Simulator
             }
 
             bool onRoute = OnRoute();
+            result.Output += $"{nl}{(onRoute ? "On route" : "Not on route")}";
             while (true)
             {
                 await Analyze();
