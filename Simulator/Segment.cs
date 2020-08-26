@@ -53,13 +53,59 @@ namespace SuperNavigator.Simulator
         }
 
         /// <summary>
-        /// Вычисляет эффективную дистанцию до сегмента от точки C
+        /// Вычисляет приблизительную дистанцию до сегмента от точки C
         /// </summary>
         /// <param name="C">Положение точки C</param>
-        /// <returns>Дистанция (эффективная, в градусах)</returns>
+        /// <returns>Дистанция (с погрешностью)</returns>
         public double distance(Vector2 C)
         {
-            throw new NotImplementedException();
+            if (0.0000001 > Math.Abs(curve))
+            {
+                var start_point = new Vector2((float)lat, (float)lon);
+                var A = start_point;
+                var B = start_point + 
+                    new Vector2((float)(length * Math.Cos(begin_angle)), (float)(length * Math.Sin(begin_angle)));
+                // Straight
+                /*
+                                     AC * AB
+                                r = ---------
+                                      |AC|
+                    r has the following meaning:
+                    1)
+                        r = 0: P = A
+                        r < 0: P is on the backward extension of AB
+                    2)
+                        r = |AB|: P = B
+                        r > |AB|: P is on the forward extension of AB
+                    3)
+                        0 < r < |AB|: P is interior to AB
+                */
+                var AB = B - A;
+                var AC = C - A;
+                var ABabs = AB.Length();
+                var r = Vector2.Dot(AC, AB) / ABabs;
+                // 1)
+                if (r <= 0.0)
+                {
+                    return AC.Length() * 57;
+                }
+                // 2)
+                if (r >= length)
+                {
+                    return (C - B).Length() * 57;
+                }
+                /*
+                    3)
+                                    |AB^AC|
+                        distance = ---------
+                                       L
+                */
+                return (AB.X * AC.Y - AB.Y * AC.X) / length * 57;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
