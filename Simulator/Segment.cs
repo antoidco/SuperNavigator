@@ -100,7 +100,7 @@ namespace SuperNavigator.Simulator
                         distance = ---------
                                        L
                 */
-                return (AB.X * AC.Y - AB.Y * AC.X) / length * 57;
+                return Math.Abs(AB.X * AC.Y - AB.Y * AC.X) / length * 57;
             }
             else
             {

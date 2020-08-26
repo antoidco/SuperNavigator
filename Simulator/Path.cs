@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Numerics;
 
 namespace SuperNavigator.Simulator
 {
@@ -56,6 +57,18 @@ namespace SuperNavigator.Simulator
         public bool IsEnding(double in_time)
         {
             return position(in_time).speed < 0;
+        }
+
+        public double distance(Vector2 vector2)
+        {
+            double result = double.MaxValue;
+            foreach (var item in items)
+            {
+                var dist = item.distance(vector2);
+                if (result > dist)
+                    result = dist;
+            }
+            return result;
         }
     }
 }
