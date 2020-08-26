@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace SuperNavigator
 {
@@ -19,6 +20,7 @@ namespace SuperNavigator
         private KTVizPicture kTVizPicture;
         private Result _currentResult;
         private Image _showingImage;
+        private CommonOpenFileDialog _folderOpenDialog;
         public NavigatorForm()
         {
             InitializeComponent();
@@ -35,6 +37,20 @@ namespace SuperNavigator
 
             SetPrediction();
             SetPrefer();
+
+            _folderOpenDialog = new CommonOpenFileDialog
+            {
+                Title = "Select Folder",
+                IsFolderPicker = true,
+                AddToMostRecentlyUsedList = false,
+                AllowNonFileSystemItems = false,
+                EnsureFileExists = true,
+                EnsurePathExists = true,
+                EnsureReadOnly = false,
+                EnsureValidNames = true,
+                Multiselect = false,
+                ShowPlacesList = true
+            };
 
             kTVizPicture = new KTVizPicture(navigator.FileWorker.KtVizDirectory + "\\" + bks_pic_py_filename,
                 FileWorker.maneuver_json);
@@ -75,9 +91,12 @@ namespace SuperNavigator
 
         private string ChangeDirectory(string prevValue)
         {
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            _folderOpenDialog.InitialDirectory = prevValue;
+            _folderOpenDialog.DefaultDirectory = prevValue;
+
+            if (_folderOpenDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                return folderBrowserDialog.SelectedPath;
+                return _folderOpenDialog.FileName;
             }
             return prevValue;
         }
@@ -293,6 +312,11 @@ namespace SuperNavigator
             {
                 tb_output.AppendText(System.Environment.NewLine + "copy real targets failed " + exc.Message);
             }
+        }
+
+        private void btnOpenWorkDir_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(navigator.FileWorker.WorkInitPath);
         }
     }
 }
