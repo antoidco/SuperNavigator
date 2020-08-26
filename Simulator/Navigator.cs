@@ -239,8 +239,7 @@ namespace SuperNavigator.Simulator
             var lat = obj["lat"].Value<double>();
             var lon = obj["lon"].Value<double>();
             // not implemented:
-            //return path.distance(new Vector2((float)lat, (float)lon));
-            return true;
+            return Math.Abs(path.distance(new Vector2((float)lat, (float)lon))) < 0.2;
         }
 
         private double getCurrentTime()
