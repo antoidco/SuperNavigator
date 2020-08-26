@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace SuperNavigator.Visuals
@@ -22,9 +21,13 @@ namespace SuperNavigator.Visuals
         }
         public async Task<string> CreateOne(string maneuverPath)
         {
-            string command = "python";
-            string args = $"\"{_picGenerationPy}\" \"{maneuverPath}\" \"{maneuverPath}\\{_maneuverFileName}\" \"{maneuverPath}\\{pngName}\"";
-            return (await ProcessAsyncHelper.ExecuteShellCommand(command, args, true)).Output;
+            if (!File.Exists($"{maneuverPath}\\{pngName}"))
+            {
+                string command = "python";
+                string args = $"\"{_picGenerationPy}\" \"{maneuverPath}\" \"{maneuverPath}\\{_maneuverFileName}\" \"{maneuverPath}\\{pngName}\"";
+                return (await ProcessAsyncHelper.ExecuteShellCommand(command, args, false)).Output;
+            }
+            return "";
         }
         /// <summary>
         /// Создает набор png файлов, соответствующий набору выполненных маневров

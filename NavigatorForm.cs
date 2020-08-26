@@ -271,18 +271,11 @@ namespace SuperNavigator
             }
         }
 
-        private async void btn_GenerateBitmaps_Click(object sender, EventArgs e)
+        private void changeImage(int index)
         {
-            track_images.Value = 0;
-            tb_output.AppendText(System.Environment.NewLine + await kTVizPicture.CreatePictures(_currentResult));
-            track_images.Maximum = Math.Max(0, kTVizPicture.Images.Count);
-        }
-
-        private void track_images_Scroll(object sender, EventArgs e)
-        {
-            if (track_images.Value > 0)
+            if (index < kTVizPicture.Images.Count)
             {
-                var img = kTVizPicture.Images[track_images.Value - 1];
+                var img = kTVizPicture.Images[index];
                 try
                 {
                     pb_Viz.Image = img;
@@ -290,6 +283,11 @@ namespace SuperNavigator
                 catch (Exception) { }
                 _showingImage = new Bitmap(img);
             }
+        }
+
+        private void track_images_ValueChanged(object sender, EventArgs e)
+        {
+            changeImage(track_images.Value);
         }
 
         private void btn_copy_Click(object sender, EventArgs e)
@@ -310,5 +308,29 @@ namespace SuperNavigator
         {
             System.Diagnostics.Process.Start(navigator.FileWorker.WorkInitPath);
         }
+
+        private async void tabControl_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage == tabPageViz && _currentResult.ManeuverPathes.Count != 0)
+            {
+                progressBarViz.Visible = true;
+                progressBarViz.Style = ProgressBarStyle.Marquee;
+                tb_output.AppendText(System.Environment.NewLine + await kTVizPicture.CreatePictures(_currentResult));
+                track_images.Maximum = Math.Max(0, kTVizPicture.Images.Count - 1);
+                track_images.Value = 0;
+                changeImage(0);
+                if (kTVizPicture.Images.Count != 0)
+                {
+                    progressBarViz.Style = ProgressBarStyle.Continuous;
+                    progressBarViz.Visible = false;
+                    if (kTVizPicture.Images.Count > 1)
+                    {
+                        track_images.Visible = true;
+                    }
+                }
+
+            }
+        }
+
     }
 }
