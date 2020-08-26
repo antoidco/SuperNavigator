@@ -307,10 +307,9 @@
             this.pb_Viz.Location = new System.Drawing.Point(0, 0);
             this.pb_Viz.Name = "pb_Viz";
             this.pb_Viz.Size = new System.Drawing.Size(471, 194);
-            this.pb_Viz.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pb_Viz.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_Viz.TabIndex = 0;
             this.pb_Viz.TabStop = false;
-            this.pb_Viz.SizeChanged += new System.EventHandler(this.pb_Viz_SizeChanged);
             // 
             // panel6
             // 
@@ -632,7 +631,6 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).EndInit();
             this.panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.track_images)).EndInit();

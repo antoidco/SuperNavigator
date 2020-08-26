@@ -138,7 +138,7 @@ namespace SuperNavigator
         {
             btn_RunViz.Enabled = false;
             var result = await RunStartKtVizAsync();
-            if(!result)
+            if (!result)
                 btn_RunViz.BackColor = Color.RosyBrown;
             btn_RunViz.Enabled = true;
         }
@@ -285,22 +285,10 @@ namespace SuperNavigator
                 var img = kTVizPicture.Images[track_images.Value - 1];
                 try
                 {
-                    pb_Viz.Image = Helpers.ResizeImage(img, pb_Viz.Width, pb_Viz.Height);
+                    pb_Viz.Image = img;
                 }
                 catch (Exception) { }
                 _showingImage = new Bitmap(img);
-            }
-        }
-
-        private void pb_Viz_SizeChanged(object sender, EventArgs e)
-        {
-            if (_showingImage != null)
-            {
-                try
-                {
-                    pb_Viz.Image = Helpers.ResizeImage(_showingImage, pb_Viz.Width, pb_Viz.Height);
-                }
-                catch (Exception) { }
             }
         }
 
