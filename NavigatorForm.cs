@@ -46,7 +46,7 @@ namespace SuperNavigator
             {
                 JObject obj = JObject.Parse(File.ReadAllText(navigator.FileWorker.AppDirectory + "\\" + settings_filename));
                 navigator.FileWorker.KtVizDirectory = obj["KtVizDirectory"].Value<string>();
-                navigator.FileWorker.UsvDirectory = obj["UsvDirectory"].Value<string>();
+                navigator.FileWorker.UsvExec = obj["UsvExec"].Value<string>();
                 navigator.FileWorker.WorkInitPath = obj["WorkingDirectory"].Value<string>();
             }
             catch (Exception exception)
@@ -58,7 +58,7 @@ namespace SuperNavigator
         {
             JObject obj = new JObject();
             obj.Add("KtVizDirectory", navigator.FileWorker.KtVizDirectory);
-            obj.Add("UsvDirectory", navigator.FileWorker.UsvDirectory);
+            obj.Add("UsvExec", navigator.FileWorker.UsvExec);
             obj.Add("WorkingDirectory", navigator.FileWorker.WorkInitPath);
             using (StreamWriter file = File.CreateText(navigator.FileWorker.AppDirectory + "\\" + settings_filename))
             {
@@ -69,7 +69,7 @@ namespace SuperNavigator
         private void UpdateFields()
         {
             tb_ktviz_dir.Text = navigator.FileWorker.KtVizDirectory;
-            tb_usv_dir.Text = navigator.FileWorker.UsvDirectory;
+            tb_usv_dir.Text = navigator.FileWorker.UsvExec;
             tb_working_dir.Text = navigator.FileWorker.WorkInitPath;
         }
 
@@ -91,7 +91,9 @@ namespace SuperNavigator
 
         private void btn_Set_USV_Directory_Click(object sender, EventArgs e)
         {
-            navigator.FileWorker.UsvDirectory = ChangeDirectory(navigator.FileWorker.UsvDirectory);
+            if(openFileDialog.ShowDialog() == DialogResult.OK){
+                navigator.FileWorker.UsvExec = openFileDialog.FileName;
+            }
             UpdateFields();
         }
 

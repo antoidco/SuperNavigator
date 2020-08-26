@@ -29,7 +29,7 @@ namespace SuperNavigator.Simulator
         /// <returns>Информация о процессе</returns>
         public async Task<ProcessResult> Analyze()
         {
-            string command = FileWorker.UsvDirectory + "\\USV.exe";
+            string command = FileWorker.UsvExec;
 
             string args = Key.AnalyseData;
 
@@ -65,7 +65,7 @@ namespace SuperNavigator.Simulator
         /// <returns>Код возврата</returns>
         public async Task<int> Maneuver()
         {
-            string command = FileWorker.UsvDirectory + "\\USV.exe";
+            string command = FileWorker.UsvExec;
 
             string args = Key.ManeuverData;
             if (Settings.PredictionType == PredictionType.Linear) args += Key.Noprediction;
@@ -219,7 +219,7 @@ namespace SuperNavigator.Simulator
         /// <returns>ExitCode</returns>
         public async Task<int> CreateLinearTargetsManeuvers()
         {
-            string command = FileWorker.UsvDirectory + "\\USV.exe";
+            string command = FileWorker.UsvExec;
 
             string args = Key.PredictReal + Key.Noprediction + Key.Data;
 

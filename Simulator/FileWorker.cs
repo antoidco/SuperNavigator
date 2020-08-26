@@ -49,7 +49,7 @@ namespace SuperNavigator.Simulator
         /// <summary>
         /// Путь к USV.exe: https://github.com/mangoozt/BKS/
         /// </summary>
-        public string UsvDirectory { get; set; }
+        public string UsvExec { get; set; }
         public List<string> BackupFiles { get; }
 
         public bool WorkStarted => _workStarted;
