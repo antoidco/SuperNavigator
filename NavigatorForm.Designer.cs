@@ -30,6 +30,7 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.btn_Work_Stop = new System.Windows.Forms.Button();
             this.btn_WorkStart = new System.Windows.Forms.Button();
             this.btn_toInit = new System.Windows.Forms.Button();
             this.btn_backup = new System.Windows.Forms.Button();
@@ -55,6 +56,7 @@
             this.btn_follow_route = new System.Windows.Forms.Button();
             this.btn_follow_ongoing = new System.Windows.Forms.Button();
             this.panel_simulate = new System.Windows.Forms.Panel();
+            this.btn_copy = new System.Windows.Forms.Button();
             this.cb_noPrediction = new System.Windows.Forms.CheckBox();
             this.btn_Simulate = new System.Windows.Forms.Button();
             this.rb_base = new System.Windows.Forms.RadioButton();
@@ -66,8 +68,7 @@
             this.tb_working_dir = new System.Windows.Forms.TextBox();
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.btn_Work_Stop = new System.Windows.Forms.Button();
-            this.btn_copy = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -126,6 +127,17 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(178, 115);
             this.panel3.TabIndex = 3;
+            // 
+            // btn_Work_Stop
+            // 
+            this.btn_Work_Stop.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btn_Work_Stop.Location = new System.Drawing.Point(0, 0);
+            this.btn_Work_Stop.Name = "btn_Work_Stop";
+            this.btn_Work_Stop.Size = new System.Drawing.Size(178, 23);
+            this.btn_Work_Stop.TabIndex = 11;
+            this.btn_Work_Stop.Text = "Work Stop";
+            this.btn_Work_Stop.UseVisualStyleBackColor = true;
+            this.btn_Work_Stop.Click += new System.EventHandler(this.btn_Work_Stop_Click);
             // 
             // btn_WorkStart
             // 
@@ -214,7 +226,7 @@
             this.btn_Set_USV_Directory.Name = "btn_Set_USV_Directory";
             this.btn_Set_USV_Directory.Size = new System.Drawing.Size(178, 23);
             this.btn_Set_USV_Directory.TabIndex = 0;
-            this.btn_Set_USV_Directory.Text = "Set USV Directory";
+            this.btn_Set_USV_Directory.Text = "Set USV Exec";
             this.btn_Set_USV_Directory.UseVisualStyleBackColor = true;
             this.btn_Set_USV_Directory.Click += new System.EventHandler(this.btn_Set_USV_Directory_Click);
             // 
@@ -422,6 +434,16 @@
             this.panel_simulate.Size = new System.Drawing.Size(246, 101);
             this.panel_simulate.TabIndex = 10;
             // 
+            // btn_copy
+            // 
+            this.btn_copy.Location = new System.Drawing.Point(113, 68);
+            this.btn_copy.Name = "btn_copy";
+            this.btn_copy.Size = new System.Drawing.Size(98, 23);
+            this.btn_copy.TabIndex = 17;
+            this.btn_copy.Text = "copy real targets";
+            this.btn_copy.UseVisualStyleBackColor = true;
+            this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
+            // 
             // cb_noPrediction
             // 
             this.cb_noPrediction.AutoSize = true;
@@ -523,27 +545,6 @@
             this.tb_usv_dir.Size = new System.Drawing.Size(386, 20);
             this.tb_usv_dir.TabIndex = 0;
             // 
-            // btn_Work_Stop
-            // 
-            this.btn_Work_Stop.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_Work_Stop.Location = new System.Drawing.Point(0, 0);
-            this.btn_Work_Stop.Name = "btn_Work_Stop";
-            this.btn_Work_Stop.Size = new System.Drawing.Size(178, 23);
-            this.btn_Work_Stop.TabIndex = 11;
-            this.btn_Work_Stop.Text = "Work Stop";
-            this.btn_Work_Stop.UseVisualStyleBackColor = true;
-            this.btn_Work_Stop.Click += new System.EventHandler(this.btn_Work_Stop_Click);
-            // 
-            // btn_copy
-            // 
-            this.btn_copy.Location = new System.Drawing.Point(113, 68);
-            this.btn_copy.Name = "btn_copy";
-            this.btn_copy.Size = new System.Drawing.Size(98, 23);
-            this.btn_copy.TabIndex = 17;
-            this.btn_copy.Text = "copy real targets";
-            this.btn_copy.UseVisualStyleBackColor = true;
-            this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
-            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -625,6 +626,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btn_Work_Stop;
         private System.Windows.Forms.Button btn_copy;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
     }
 }
 
