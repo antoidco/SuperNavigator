@@ -104,7 +104,7 @@ namespace SuperNavigator
         {
             string command = "python";
             string args = $"\"{navigator.FileWorker.KtVizDirectory}\\{app_py_filename}\"";
-            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args, true, navigator.FileWorker.WorkInitPath);
+            var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args, false, navigator.FileWorker.WorkInitPath);
             return result.ExitCode == 0;
         }
 
@@ -138,7 +138,8 @@ namespace SuperNavigator
         {
             btn_RunViz.Enabled = false;
             var result = await RunStartKtVizAsync();
-            btn_RunViz.BackColor = result ? Color.Green : Color.Red;
+            if(!result)
+                btn_RunViz.BackColor = Color.RosyBrown;
             btn_RunViz.Enabled = true;
         }
 
