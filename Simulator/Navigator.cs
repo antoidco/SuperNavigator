@@ -174,13 +174,15 @@ namespace SuperNavigator.Simulator
                 result.Output += (await CreateLinearTargetsManeuvers()).ToString();
             }
 
+            bool onRoute = OnRoute();
             while (true)
             {
                 await Analyze();
                 var dangerous = GetAnalyzeReportDangerous();
                 result.Output += $"{nl}danger at t = {time} is: {dangerous}";
-                if (dangerous)
+                if (dangerous || !onRoute)
                 {
+                    onRoute = true;
                     var maneuver_result = await Maneuver();
                     if (maneuver_result == 5)
                     {
