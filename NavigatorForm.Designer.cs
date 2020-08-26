@@ -67,8 +67,8 @@
             this.tb_ktviz_dir = new System.Windows.Forms.TextBox();
             this.tb_working_dir = new System.Windows.Forms.TextBox();
             this.tb_usv_dir = new System.Windows.Forms.TextBox();
-            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.btnOpenWorkDir = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -313,6 +313,7 @@
             this.pb_Viz.Location = new System.Drawing.Point(0, 0);
             this.pb_Viz.Name = "pb_Viz";
             this.pb_Viz.Size = new System.Drawing.Size(431, 178);
+            this.pb_Viz.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pb_Viz.TabIndex = 0;
             this.pb_Viz.TabStop = false;
             this.pb_Viz.SizeChanged += new System.EventHandler(this.pb_Viz_SizeChanged);
@@ -512,6 +513,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnOpenWorkDir);
             this.panel2.Controls.Add(this.tb_ktviz_dir);
             this.panel2.Controls.Add(this.tb_working_dir);
             this.panel2.Controls.Add(this.tb_usv_dir);
@@ -545,6 +547,16 @@
             this.tb_usv_dir.Size = new System.Drawing.Size(386, 20);
             this.tb_usv_dir.TabIndex = 0;
             // 
+            // btnOpenWorkDir
+            // 
+            this.btnOpenWorkDir.Location = new System.Drawing.Point(395, 23);
+            this.btnOpenWorkDir.Name = "btnOpenWorkDir";
+            this.btnOpenWorkDir.Size = new System.Drawing.Size(43, 23);
+            this.btnOpenWorkDir.TabIndex = 3;
+            this.btnOpenWorkDir.Text = "Open";
+            this.btnOpenWorkDir.UseVisualStyleBackColor = true;
+            this.btnOpenWorkDir.Click += new System.EventHandler(this.btnOpenWorkDir_Click);
+            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -572,6 +584,7 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Viz)).EndInit();
             this.panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.track_images)).EndInit();
@@ -595,7 +608,6 @@
         private System.Windows.Forms.TextBox tb_ktviz_dir;
         private System.Windows.Forms.TextBox tb_working_dir;
         private System.Windows.Forms.TextBox tb_usv_dir;
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.Button btn_RunViz;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btn_analyze;
@@ -627,6 +639,7 @@
         private System.Windows.Forms.Button btn_Work_Stop;
         private System.Windows.Forms.Button btn_copy;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Button btnOpenWorkDir;
     }
 }
 
