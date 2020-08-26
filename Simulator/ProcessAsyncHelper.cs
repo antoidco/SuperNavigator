@@ -11,7 +11,7 @@ namespace SuperNavigator.Simulator
     /// </summary>
     public static class ProcessAsyncHelper
     {
-        public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, bool showWindow = false, int timeout = 1000000)
+        public static async Task<ProcessResult> ExecuteShellCommand(string command, string arguments, bool showWindow = false, string workingDir = "", int timeout = 1000000)
         {
             var result = new ProcessResult();
 
@@ -24,6 +24,7 @@ namespace SuperNavigator.Simulator
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.CreateNoWindow = !showWindow;
+                process.StartInfo.WorkingDirectory = workingDir;
 
                 var outputBuilder = new StringBuilder();
                 var outputCloseEvent = new TaskCompletionSource<bool>();
