@@ -110,7 +110,9 @@ namespace SuperNavigator
 
         private void btn_Set_USV_Directory_Click(object sender, EventArgs e)
         {
-            if(openFileDialog.ShowDialog() == DialogResult.OK){
+            openFileDialog.InitialDirectory = System.IO.Path.GetDirectoryName(navigator.FileWorker.UsvExec);
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
                 navigator.FileWorker.UsvExec = openFileDialog.FileName;
             }
             UpdateFields();
@@ -185,9 +187,9 @@ namespace SuperNavigator
                 navigator.FollowOngoing(Convert.ToDouble(tb_timeStep.Text));
                 tb_output.AppendText(System.Environment.NewLine + "Follow maneuver end");
             }
-            catch (Exception exception) 
-            { 
-                Console.WriteLine(exception.Message); 
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
             }
         }
 
@@ -283,7 +285,8 @@ namespace SuperNavigator
                 try
                 {
                     pb_Viz.Image = Helpers.ResizeImage(img, pb_Viz.Width, pb_Viz.Height);
-                } catch (Exception) { }
+                }
+                catch (Exception) { }
                 _showingImage = new Bitmap(img);
             }
         }
