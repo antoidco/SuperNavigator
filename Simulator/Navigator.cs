@@ -70,10 +70,10 @@ namespace SuperNavigator.Simulator
             string args = Key.ManeuverData;
             if (Settings.PredictionType == PredictionType.Linear) args += Key.Noprediction;
 
-            if (File.Exists(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json))
-                args += Key.Ongoing;
-            else
-                args += Key.OngoingRoute;
+//            if (File.Exists(FileWorker.WorkingDirectory + "\\" + FileWorker.ongoing_json))
+//                args += Key.Ongoing;
+//            else
+//                args += Key.OngoingRoute;
 
             var result = await ProcessAsyncHelper.ExecuteShellCommand(command, args);
 
@@ -189,7 +189,7 @@ namespace SuperNavigator.Simulator
                     {
                         result.Output += $"{nl}ongoing maneuver/route is OK";
                     }
-                    else if (maneuver_result != 2)
+                    else if (maneuver_result == 0 || maneuver_result == 1)
                     {
                         result.Output += $"{nl}ongoing maneuver/route is not OK";
                         result.Output += $"{nl}maneuver found!";

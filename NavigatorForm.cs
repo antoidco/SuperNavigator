@@ -219,7 +219,7 @@ namespace SuperNavigator
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
-                tb_output.AppendText(System.Environment.NewLine + "Got an exception" + exception.Message);
+                tb_output.AppendText(System.Environment.NewLine + "Got an exception: " + exception.Message);
             }
             btn_Simulate.Enabled = true;
         }
