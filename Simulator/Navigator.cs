@@ -185,20 +185,20 @@ namespace SuperNavigator.Simulator
                 {
                     onRoute = true;
                     var maneuver_result = await Maneuver();
-                    if (maneuver_result == 5)
+                    /*if (maneuver_result == 5)
                     {
                         result.Output += $"{nl}ongoing maneuver/route is OK";
                     }
-                    else if (maneuver_result == 0 || maneuver_result == 1)
+                    else */if (maneuver_result == 0 || maneuver_result == 1)
                     {
-                        result.Output += $"{nl}ongoing maneuver/route is not OK";
+                        //result.Output += $"{nl}ongoing maneuver/route is not OK";
                         result.Output += $"{nl}maneuver found!";
                         WriteOngoing();
                         FileWorker.SaveManuever(ref result);
                     }
                     else
                     {
-                        result.Output += $"{nl}ongoing maneuver/route is not OK";
+                        //result.Output += $"{nl}ongoing maneuver/route is not OK";
                         result.Output += $"{nl}maneuver not found!{nl}FAILED";
                         break;
                     }
