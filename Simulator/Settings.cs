@@ -5,6 +5,7 @@
         public AlgorithmPrefer AlgorithmPrefer { get; set; }
         public PredictionType PredictionType { get; set; }
         public CalcType CalcType { get; set; }
+        public bool OngoingWhenManeuver { get; set; } = true;
     }
     public enum AlgorithmPrefer
     {
