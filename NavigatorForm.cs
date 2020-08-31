@@ -239,6 +239,12 @@ namespace SuperNavigator
         {
             SetPrefer();
         }
+
+        private void cb_ongoing_CheckedChanged(object sender, EventArgs e)
+        {
+            SetOngoingAccount();
+        }
+
         private void SetPrediction()
         {
             if (cb_noPrediction.Checked) navigator.Settings.PredictionType = PredictionType.Linear;
@@ -248,6 +254,10 @@ namespace SuperNavigator
         {
             if (rb_base.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferBase;
             if (rb_rvo.Checked) navigator.Settings.AlgorithmPrefer = AlgorithmPrefer.PreferRVO;
+        }
+        private void SetOngoingAccount()
+        {
+            navigator.Settings.OngoingWhenManeuver = (cb_ongoing.Checked);
         }
 
         private void startFileWorker(object sender, EventArgs e)
@@ -331,6 +341,5 @@ namespace SuperNavigator
 
             }
         }
-
     }
 }

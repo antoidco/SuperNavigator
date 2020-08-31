@@ -53,6 +53,7 @@
             this.tb_output = new System.Windows.Forms.TextBox();
             this.tabPageViz = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.progressBarViz = new System.Windows.Forms.ProgressBar();
             this.pb_Viz = new System.Windows.Forms.PictureBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.track_images = new System.Windows.Forms.TrackBar();
@@ -71,7 +72,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tb_timeStep = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.progressBarViz = new System.Windows.Forms.ProgressBar();
+            this.cb_ongoing = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -408,6 +409,19 @@
             this.panel4.Size = new System.Drawing.Size(471, 221);
             this.panel4.TabIndex = 2;
             // 
+            // progressBarViz
+            // 
+            this.progressBarViz.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.progressBarViz.Location = new System.Drawing.Point(139, 101);
+            this.progressBarViz.MarqueeAnimationSpeed = 5;
+            this.progressBarViz.Maximum = 20;
+            this.progressBarViz.Name = "progressBarViz";
+            this.progressBarViz.Size = new System.Drawing.Size(181, 23);
+            this.progressBarViz.Step = 1;
+            this.progressBarViz.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBarViz.TabIndex = 2;
+            this.progressBarViz.Visible = false;
+            // 
             // pb_Viz
             // 
             this.pb_Viz.BackColor = System.Drawing.Color.Transparent;
@@ -511,6 +525,7 @@
             // 
             // panel_simulate
             // 
+            this.panel_simulate.Controls.Add(this.cb_ongoing);
             this.panel_simulate.Controls.Add(this.btn_copy);
             this.panel_simulate.Controls.Add(this.cb_noPrediction);
             this.panel_simulate.Controls.Add(this.btn_Simulate);
@@ -527,7 +542,7 @@
             // 
             // btn_copy
             // 
-            this.btn_copy.Location = new System.Drawing.Point(113, 68);
+            this.btn_copy.Location = new System.Drawing.Point(113, 58);
             this.btn_copy.Name = "btn_copy";
             this.btn_copy.Size = new System.Drawing.Size(98, 23);
             this.btn_copy.TabIndex = 17;
@@ -550,7 +565,7 @@
             // 
             // btn_Simulate
             // 
-            this.btn_Simulate.Location = new System.Drawing.Point(113, 42);
+            this.btn_Simulate.Location = new System.Drawing.Point(113, 32);
             this.btn_Simulate.Name = "btn_Simulate";
             this.btn_Simulate.Size = new System.Drawing.Size(98, 24);
             this.btn_Simulate.TabIndex = 13;
@@ -601,18 +616,18 @@
             this.tb_timeStep.TabIndex = 9;
             this.tb_timeStep.Text = "300";
             // 
-            // progressBarViz
+            // cb_ongoing
             // 
-            this.progressBarViz.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.progressBarViz.Location = new System.Drawing.Point(139, 101);
-            this.progressBarViz.MarqueeAnimationSpeed = 5;
-            this.progressBarViz.Maximum = 20;
-            this.progressBarViz.Name = "progressBarViz";
-            this.progressBarViz.Size = new System.Drawing.Size(181, 23);
-            this.progressBarViz.Step = 1;
-            this.progressBarViz.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-            this.progressBarViz.TabIndex = 2;
-            this.progressBarViz.Visible = false;
+            this.cb_ongoing.AutoSize = true;
+            this.cb_ongoing.Checked = true;
+            this.cb_ongoing.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_ongoing.Location = new System.Drawing.Point(9, 83);
+            this.cb_ongoing.Name = "cb_ongoing";
+            this.cb_ongoing.Size = new System.Drawing.Size(149, 17);
+            this.cb_ongoing.TabIndex = 18;
+            this.cb_ongoing.Text = "-ongoing when -maneuver";
+            this.cb_ongoing.UseVisualStyleBackColor = true;
+            this.cb_ongoing.CheckedChanged += new System.EventHandler(this.cb_ongoing_CheckedChanged);
             // 
             // NavigatorForm
             // 
@@ -701,6 +716,7 @@
         private System.Windows.Forms.Label labelExecPath;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.ProgressBar progressBarViz;
+        private System.Windows.Forms.CheckBox cb_ongoing;
     }
 }
 
