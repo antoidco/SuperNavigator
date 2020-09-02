@@ -300,20 +300,6 @@ namespace SuperNavigator
             changeImage(track_images.Value);
         }
 
-        private void btn_copy_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                File.Copy(navigator.FileWorker.WorkInitPath + "\\" + FileWorker.predict_real_json,
-                    navigator.FileWorker.WorkingDirectory + "\\" + FileWorker.predict_real_json);
-                tb_output.AppendText(System.Environment.NewLine + "copy real targets success");
-            }
-            catch (Exception exc)
-            {
-                tb_output.AppendText(System.Environment.NewLine + "copy real targets failed " + exc.Message);
-            }
-        }
-
         private void btnOpenWorkDir_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(navigator.FileWorker.WorkInitPath);

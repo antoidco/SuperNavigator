@@ -64,7 +64,7 @@
             this.btn_follow_route = new System.Windows.Forms.Button();
             this.btn_follow_ongoing = new System.Windows.Forms.Button();
             this.panel_simulate = new System.Windows.Forms.Panel();
-            this.btn_copy = new System.Windows.Forms.Button();
+            this.cb_ongoing = new System.Windows.Forms.CheckBox();
             this.cb_noPrediction = new System.Windows.Forms.CheckBox();
             this.btn_Simulate = new System.Windows.Forms.Button();
             this.rb_base = new System.Windows.Forms.RadioButton();
@@ -72,7 +72,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tb_timeStep = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.cb_ongoing = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -526,7 +525,6 @@
             // panel_simulate
             // 
             this.panel_simulate.Controls.Add(this.cb_ongoing);
-            this.panel_simulate.Controls.Add(this.btn_copy);
             this.panel_simulate.Controls.Add(this.cb_noPrediction);
             this.panel_simulate.Controls.Add(this.btn_Simulate);
             this.panel_simulate.Controls.Add(this.rb_base);
@@ -540,15 +538,18 @@
             this.panel_simulate.Size = new System.Drawing.Size(246, 100);
             this.panel_simulate.TabIndex = 10;
             // 
-            // btn_copy
+            // cb_ongoing
             // 
-            this.btn_copy.Location = new System.Drawing.Point(113, 58);
-            this.btn_copy.Name = "btn_copy";
-            this.btn_copy.Size = new System.Drawing.Size(98, 23);
-            this.btn_copy.TabIndex = 17;
-            this.btn_copy.Text = "copy real targets";
-            this.btn_copy.UseVisualStyleBackColor = true;
-            this.btn_copy.Click += new System.EventHandler(this.btn_copy_Click);
+            this.cb_ongoing.AutoSize = true;
+            this.cb_ongoing.Checked = true;
+            this.cb_ongoing.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_ongoing.Location = new System.Drawing.Point(9, 83);
+            this.cb_ongoing.Name = "cb_ongoing";
+            this.cb_ongoing.Size = new System.Drawing.Size(149, 17);
+            this.cb_ongoing.TabIndex = 18;
+            this.cb_ongoing.Text = "-ongoing when -maneuver";
+            this.cb_ongoing.UseVisualStyleBackColor = true;
+            this.cb_ongoing.CheckedChanged += new System.EventHandler(this.cb_ongoing_CheckedChanged);
             // 
             // cb_noPrediction
             // 
@@ -615,19 +616,6 @@
             this.tb_timeStep.Size = new System.Drawing.Size(75, 20);
             this.tb_timeStep.TabIndex = 9;
             this.tb_timeStep.Text = "300";
-            // 
-            // cb_ongoing
-            // 
-            this.cb_ongoing.AutoSize = true;
-            this.cb_ongoing.Checked = true;
-            this.cb_ongoing.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_ongoing.Location = new System.Drawing.Point(9, 83);
-            this.cb_ongoing.Name = "cb_ongoing";
-            this.cb_ongoing.Size = new System.Drawing.Size(149, 17);
-            this.cb_ongoing.TabIndex = 18;
-            this.cb_ongoing.Text = "-ongoing when -maneuver";
-            this.cb_ongoing.UseVisualStyleBackColor = true;
-            this.cb_ongoing.CheckedChanged += new System.EventHandler(this.cb_ongoing_CheckedChanged);
             // 
             // NavigatorForm
             // 
@@ -708,7 +696,6 @@
         private System.Windows.Forms.TrackBar track_images;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btn_Work_Stop;
-        private System.Windows.Forms.Button btn_copy;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button btnOpenWorkDir;
         private System.Windows.Forms.Label labelKtvizDir;

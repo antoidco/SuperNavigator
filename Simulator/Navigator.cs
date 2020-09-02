@@ -171,9 +171,19 @@ namespace SuperNavigator.Simulator
             // if real targets maneuvers do not exist, create them
             if (!File.Exists($"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}"))
             {
-                result.Output += nl + "real maneuvers do not exist, create them...";
-                result.Output += nl + "Exit code (-1 expected from USV for some reason): ";
-                result.Output += (await CreateLinearTargetsManeuvers()).ToString();
+                // try to find in init directory
+                if (File.Exists($"{FileWorker.WorkInitPath}\\{FileWorker.predict_real_json}"))
+                {
+                    File.Copy($"{FileWorker.WorkInitPath}\\{FileWorker.predict_real_json}",
+                        $"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}");
+                    result.Output += nl + "real maneuvers copied from init directory to working directory";
+                }
+                else
+                {
+                    result.Output += nl + "real maneuvers do not exist, create them...";
+                    result.Output += nl + "Exit code (-1 expected from USV for some reason): ";
+                    result.Output += (await CreateLinearTargetsManeuvers()).ToString();
+                }
             }
 
             bool onRoute = OnRoute();
