@@ -6,6 +6,7 @@
         public PredictionType PredictionType { get; set; }
         public CalcType CalcType { get; set; }
         public bool OngoingWhenManeuver { get; set; } = true;
+        // todo: add time_step as setting
     }
     public enum AlgorithmPrefer
     {

@@ -11,6 +11,7 @@ namespace SuperNavigator.Visuals
     {
         public const string result_filename_png = "result.png";
         public string Output { get; set; }
+        public bool Success { get; set; } = false;
         public List<string> ManeuverPathes { get; set; } = new List<string>();
     }
 }

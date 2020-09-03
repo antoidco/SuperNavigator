@@ -219,6 +219,7 @@ namespace SuperNavigator.Simulator
                 result.Output += $"{nl}following...";
                 if (!Follow(time_step))
                 {
+                    result.Success = true;
                     result.Output += $"{nl}finished{nl}SUCCESS";
                     break;
                 }

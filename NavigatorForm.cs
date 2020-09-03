@@ -328,5 +328,21 @@ namespace SuperNavigator
         {
             SetPrediction();
         }
+
+        private async void btn_auto_test_Click(object sender, EventArgs e)
+        {
+            string folder = "";
+            if (_folderOpenDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            {
+                folder = _folderOpenDialog.FileName;
+            }
+            else
+            {
+                tb_output.AppendText($"{System.Environment.NewLine}no folder selected");
+                return;
+            }
+            var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(tb_timeStep.Text));
+            tb_output.AppendText(result.ToString());
+        }
     }
 }
