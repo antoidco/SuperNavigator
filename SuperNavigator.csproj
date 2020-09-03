@@ -82,6 +82,7 @@
     <Compile Include="Simulator\Path.cs" />
     <Compile Include="Simulator\Position.cs" />
     <Compile Include="Simulator\ProcessAsyncHelper.cs" />
+    <Compile Include="Simulator\Report.cs" />
     <Compile Include="Simulator\Segment.cs" />
     <Compile Include="Simulator\Settings.cs" />
     <Compile Include="Simulator\State.cs" />

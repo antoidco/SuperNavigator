@@ -341,8 +341,10 @@ namespace SuperNavigator
                 tb_output.AppendText($"{System.Environment.NewLine}no folder selected");
                 return;
             }
+            btn_auto_test.Enabled = false;
             var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(tb_timeStep.Text));
             tb_output.AppendText(result.ToString());
+            btn_auto_test.Enabled = true;
         }
     }
 }
