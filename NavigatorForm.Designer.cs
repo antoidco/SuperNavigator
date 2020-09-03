@@ -64,8 +64,11 @@
             this.btn_follow_route = new System.Windows.Forms.Button();
             this.btn_follow_ongoing = new System.Windows.Forms.Button();
             this.panel_simulate = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rb_pred_none = new System.Windows.Forms.RadioButton();
+            this.rb_pred_simple = new System.Windows.Forms.RadioButton();
+            this.rb_pred_full = new System.Windows.Forms.RadioButton();
             this.cb_ongoing = new System.Windows.Forms.CheckBox();
-            this.cb_noPrediction = new System.Windows.Forms.CheckBox();
             this.btn_Simulate = new System.Windows.Forms.Button();
             this.rb_base = new System.Windows.Forms.RadioButton();
             this.rb_rvo = new System.Windows.Forms.RadioButton();
@@ -95,6 +98,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.track_images)).BeginInit();
             this.panel_debug.SuspendLayout();
             this.panel_simulate.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -524,8 +528,8 @@
             // 
             // panel_simulate
             // 
+            this.panel_simulate.Controls.Add(this.panel1);
             this.panel_simulate.Controls.Add(this.cb_ongoing);
-            this.panel_simulate.Controls.Add(this.cb_noPrediction);
             this.panel_simulate.Controls.Add(this.btn_Simulate);
             this.panel_simulate.Controls.Add(this.rb_base);
             this.panel_simulate.Controls.Add(this.rb_rvo);
@@ -538,12 +542,57 @@
             this.panel_simulate.Size = new System.Drawing.Size(246, 100);
             this.panel_simulate.TabIndex = 10;
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rb_pred_none);
+            this.panel1.Controls.Add(this.rb_pred_simple);
+            this.panel1.Controls.Add(this.rb_pred_full);
+            this.panel1.Location = new System.Drawing.Point(9, 27);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(96, 54);
+            this.panel1.TabIndex = 19;
+            // 
+            // rb_pred_none
+            // 
+            this.rb_pred_none.AutoSize = true;
+            this.rb_pred_none.Location = new System.Drawing.Point(3, 37);
+            this.rb_pred_none.Name = "rb_pred_none";
+            this.rb_pred_none.Size = new System.Drawing.Size(86, 17);
+            this.rb_pred_none.TabIndex = 2;
+            this.rb_pred_none.Text = "no prediction";
+            this.rb_pred_none.UseVisualStyleBackColor = true;
+            this.rb_pred_none.CheckedChanged += new System.EventHandler(this.predictionChanged);
+            // 
+            // rb_pred_simple
+            // 
+            this.rb_pred_simple.AutoSize = true;
+            this.rb_pred_simple.Location = new System.Drawing.Point(3, 20);
+            this.rb_pred_simple.Name = "rb_pred_simple";
+            this.rb_pred_simple.Size = new System.Drawing.Size(54, 17);
+            this.rb_pred_simple.TabIndex = 1;
+            this.rb_pred_simple.Text = "simple";
+            this.rb_pred_simple.UseVisualStyleBackColor = true;
+            this.rb_pred_simple.CheckedChanged += new System.EventHandler(this.predictionChanged);
+            // 
+            // rb_pred_full
+            // 
+            this.rb_pred_full.AutoSize = true;
+            this.rb_pred_full.Checked = true;
+            this.rb_pred_full.Location = new System.Drawing.Point(3, 3);
+            this.rb_pred_full.Name = "rb_pred_full";
+            this.rb_pred_full.Size = new System.Drawing.Size(87, 17);
+            this.rb_pred_full.TabIndex = 0;
+            this.rb_pred_full.TabStop = true;
+            this.rb_pred_full.Text = "full prediction";
+            this.rb_pred_full.UseVisualStyleBackColor = true;
+            this.rb_pred_full.CheckedChanged += new System.EventHandler(this.predictionChanged);
+            // 
             // cb_ongoing
             // 
             this.cb_ongoing.AutoSize = true;
             this.cb_ongoing.Checked = true;
             this.cb_ongoing.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_ongoing.Location = new System.Drawing.Point(9, 83);
+            this.cb_ongoing.Location = new System.Drawing.Point(12, 83);
             this.cb_ongoing.Name = "cb_ongoing";
             this.cb_ongoing.Size = new System.Drawing.Size(149, 17);
             this.cb_ongoing.TabIndex = 18;
@@ -551,22 +600,9 @@
             this.cb_ongoing.UseVisualStyleBackColor = true;
             this.cb_ongoing.CheckedChanged += new System.EventHandler(this.cb_ongoing_CheckedChanged);
             // 
-            // cb_noPrediction
-            // 
-            this.cb_noPrediction.AutoSize = true;
-            this.cb_noPrediction.Checked = true;
-            this.cb_noPrediction.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_noPrediction.Location = new System.Drawing.Point(9, 68);
-            this.cb_noPrediction.Name = "cb_noPrediction";
-            this.cb_noPrediction.Size = new System.Drawing.Size(93, 17);
-            this.cb_noPrediction.TabIndex = 16;
-            this.cb_noPrediction.Text = "--no-prediction";
-            this.cb_noPrediction.UseVisualStyleBackColor = true;
-            this.cb_noPrediction.CheckedChanged += new System.EventHandler(this.cb_noPrediction_CheckedChanged);
-            // 
             // btn_Simulate
             // 
-            this.btn_Simulate.Location = new System.Drawing.Point(113, 32);
+            this.btn_Simulate.Location = new System.Drawing.Point(141, 7);
             this.btn_Simulate.Name = "btn_Simulate";
             this.btn_Simulate.Size = new System.Drawing.Size(98, 24);
             this.btn_Simulate.TabIndex = 13;
@@ -578,7 +614,7 @@
             // 
             this.rb_base.AutoSize = true;
             this.rb_base.Checked = true;
-            this.rb_base.Location = new System.Drawing.Point(9, 49);
+            this.rb_base.Location = new System.Drawing.Point(115, 54);
             this.rb_base.Name = "rb_base";
             this.rb_base.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.rb_base.Size = new System.Drawing.Size(79, 17);
@@ -591,7 +627,7 @@
             // rb_rvo
             // 
             this.rb_rvo.AutoSize = true;
-            this.rb_rvo.Location = new System.Drawing.Point(9, 34);
+            this.rb_rvo.Location = new System.Drawing.Point(115, 37);
             this.rb_rvo.Name = "rb_rvo";
             this.rb_rvo.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.rb_rvo.Size = new System.Drawing.Size(78, 17);
@@ -654,6 +690,8 @@
             this.panel_debug.ResumeLayout(false);
             this.panel_simulate.ResumeLayout(false);
             this.panel_simulate.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -686,7 +724,6 @@
         private System.Windows.Forms.Button btn_Simulate;
         private System.Windows.Forms.Button btn_follow_route;
         private System.Windows.Forms.Button btn_realTargets;
-        private System.Windows.Forms.CheckBox cb_noPrediction;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPageViz;
@@ -704,6 +741,10 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.ProgressBar progressBarViz;
         private System.Windows.Forms.CheckBox cb_ongoing;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton rb_pred_none;
+        private System.Windows.Forms.RadioButton rb_pred_simple;
+        private System.Windows.Forms.RadioButton rb_pred_full;
     }
 }
 

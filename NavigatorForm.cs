@@ -230,11 +230,6 @@ namespace SuperNavigator
             tb_output.AppendText(System.Environment.NewLine + "Exit code (-1 expected from USV for some reason): " + result.ToString());
         }
 
-        private void cb_noPrediction_CheckedChanged(object sender, EventArgs e)
-        {
-            SetPrediction();
-        }
-
         private void rb_prefer_CheckedChanged(object sender, EventArgs e)
         {
             SetPrefer();
@@ -247,8 +242,9 @@ namespace SuperNavigator
 
         private void SetPrediction()
         {
-            if (cb_noPrediction.Checked) navigator.Settings.PredictionType = PredictionType.Linear;
-            else navigator.Settings.PredictionType = PredictionType.Full;
+            if (rb_pred_full.Checked) navigator.Settings.PredictionType = PredictionType.Linear;
+            else if (rb_pred_simple.Checked) navigator.Settings.PredictionType = PredictionType.Simple;
+            else navigator.Settings.PredictionType = PredictionType.Linear;
         }
         private void SetPrefer()
         {
@@ -326,6 +322,11 @@ namespace SuperNavigator
                 }
 
             }
+        }
+
+        private void predictionChanged(object sender, EventArgs e)
+        {
+            SetPrediction();
         }
     }
 }

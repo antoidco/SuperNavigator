@@ -69,6 +69,7 @@ namespace SuperNavigator.Simulator
 
             string args = Key.ManeuverData;
             if (Settings.PredictionType == PredictionType.Linear) args += Key.Noprediction;
+            if (Settings.PredictionType == PredictionType.Simple) args += Key.SimplePrediction;
 
             if (Settings.OngoingWhenManeuver)
             {
