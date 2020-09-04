@@ -15,6 +15,7 @@ namespace SuperNavigator.Simulator
         private const string ongoingKey = "--ongoing ";
         private const string nopredictionKey = "--no-prediction ";
         private const string simplePredictionKey = "--simple-prediction ";
+        private const string targetSettingsKey = "--target-settings ";
 
         private FileWorker _fw;
         public Key(FileWorker fileWorker)
@@ -33,10 +34,11 @@ namespace SuperNavigator.Simulator
         public string Route => $"{routeKey}\"{_fw.WorkingDirectory}\\{FileWorker.route_json}\" ";
         public string Ongoing => $"{ongoingKey}\"{_fw.WorkingDirectory}\\{FileWorker.ongoing_json}\" ";
         public string OngoingRoute => $"{ongoingKey}\"{_fw.WorkingDirectory}\\{FileWorker.route_json}\" ";
+        public string TargetSettings => _fw.Target_settings ? $"{targetSettingsKey}\"{_fw.WorkingDirectory}\\{FileWorker.target_settings_json}\" " : "";
         public string Noprediction => nopredictionKey;
         public string SimplePrediction => simplePredictionKey;
 
-        public string Data => $"{Hmi}{Targets}{Settings}{Navdata}{Constraints}{Route}";
+        public string Data => $"{Hmi}{Targets}{Settings}{Navdata}{Constraints}{Route}{TargetSettings}";
         public string ManeuverData => Manuever + Predict + Data;
         public string AnalyseData => Analyse + Data;
     }
