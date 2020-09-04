@@ -182,6 +182,10 @@ namespace SuperNavigator.Simulator
             File.Copy($"{WorkingDirectory}\\{route_json}", $"{saveDirectory}\\{route_json}");
             File.Copy($"{WorkingDirectory}\\{settings_json}", $"{saveDirectory}\\{settings_json}");
             File.Copy($"{WorkingDirectory}\\{constraints_json}", $"{saveDirectory}\\{constraints_json}");
+            if (Target_settings && File.Exists($"{WorkingDirectory}\\{target_settings_json}"))
+            {
+                File.Copy($"{WorkingDirectory}\\{target_settings_json}", $"{saveDirectory}\\{target_settings_json}");
+            }
             // copy results
             File.Copy($"{WorkingDirectory}\\{maneuver_json}", $"{saveDirectory}\\{maneuver_json}");
             File.Copy($"{WorkingDirectory}\\{predict_json}", $"{saveDirectory}\\{predict_json}");
