@@ -185,7 +185,7 @@ namespace SuperNavigator
         {
             try
             {
-                navigator.FollowOngoing(Convert.ToDouble(tb_timeStep.Text));
+                navigator.FollowOngoing(Convert.ToDouble(NUD_timeStep.Value));
                 tb_output.AppendText(System.Environment.NewLine + "Follow maneuver end");
             }
             catch (Exception exception)
@@ -198,7 +198,7 @@ namespace SuperNavigator
         {
             try
             {
-                navigator.FollowRoute(Convert.ToDouble(tb_timeStep.Text));
+                navigator.FollowRoute(Convert.ToDouble(NUD_timeStep.Value));
                 tb_output.AppendText(System.Environment.NewLine + "Follow route end");
             }
             catch (Exception exception)
@@ -212,7 +212,7 @@ namespace SuperNavigator
             btn_Simulate.Enabled = false;
             try
             {
-                var result = await navigator.Simulate(Convert.ToDouble(tb_timeStep.Text));
+                var result = await navigator.Simulate(Convert.ToDouble(NUD_timeStep.Value));
                 tb_output.AppendText(System.Environment.NewLine + result.Output);
                 _currentResult = result;
             }
@@ -342,7 +342,7 @@ namespace SuperNavigator
                 return;
             }
             btn_auto_test.Enabled = false;
-            var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(tb_timeStep.Text));
+            var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(NUD_timeStep.Value));
             tb_output.AppendText(result.ToString());
             btn_auto_test.Enabled = true;
         }

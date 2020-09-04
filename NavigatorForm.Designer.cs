@@ -41,6 +41,16 @@
             this.labelWorkDir = new System.Windows.Forms.Label();
             this.labelExecPath = new System.Windows.Forms.Label();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.cb_ongoing = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.rb_rvo = new System.Windows.Forms.RadioButton();
+            this.rb_base = new System.Windows.Forms.RadioButton();
+            this.btn_auto_test = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rb_pred_none = new System.Windows.Forms.RadioButton();
+            this.rb_pred_simple = new System.Windows.Forms.RadioButton();
+            this.rb_pred_full = new System.Windows.Forms.RadioButton();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btn_WorkStart = new System.Windows.Forms.Button();
             this.btn_Work_Stop = new System.Windows.Forms.Button();
@@ -64,19 +74,9 @@
             this.btn_follow_route = new System.Windows.Forms.Button();
             this.btn_follow_ongoing = new System.Windows.Forms.Button();
             this.panel_simulate = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rb_pred_none = new System.Windows.Forms.RadioButton();
-            this.rb_pred_simple = new System.Windows.Forms.RadioButton();
-            this.rb_pred_full = new System.Windows.Forms.RadioButton();
-            this.cb_ongoing = new System.Windows.Forms.CheckBox();
             this.btn_Simulate = new System.Windows.Forms.Button();
-            this.rb_base = new System.Windows.Forms.RadioButton();
-            this.rb_rvo = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tb_timeStep = new System.Windows.Forms.TextBox();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.btn_auto_test = new System.Windows.Forms.Button();
-            this.panel5 = new System.Windows.Forms.Panel();
+            this.NUD_timeStep = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -86,6 +86,8 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            this.panel5.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -100,8 +102,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.track_images)).BeginInit();
             this.panel_debug.SuspendLayout();
             this.panel_simulate.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_timeStep)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -254,8 +255,8 @@
             // 
             // splitContainer3.Panel1
             // 
+            this.splitContainer3.Panel1.Controls.Add(this.NUD_timeStep);
             this.splitContainer3.Panel1.Controls.Add(this.cb_ongoing);
-            this.splitContainer3.Panel1.Controls.Add(this.tb_timeStep);
             this.splitContainer3.Panel1.Controls.Add(this.label1);
             this.splitContainer3.Panel1.Controls.Add(this.panel5);
             this.splitContainer3.Panel1.Controls.Add(this.btn_auto_test);
@@ -269,6 +270,120 @@
             this.splitContainer3.Size = new System.Drawing.Size(626, 385);
             this.splitContainer3.SplitterDistance = 150;
             this.splitContainer3.TabIndex = 9;
+            // 
+            // cb_ongoing
+            // 
+            this.cb_ongoing.AutoSize = true;
+            this.cb_ongoing.Checked = true;
+            this.cb_ongoing.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_ongoing.Location = new System.Drawing.Point(9, 129);
+            this.cb_ongoing.Name = "cb_ongoing";
+            this.cb_ongoing.Size = new System.Drawing.Size(135, 17);
+            this.cb_ongoing.TabIndex = 18;
+            this.cb_ongoing.Text = "-ongoing for -maneuver";
+            this.cb_ongoing.UseVisualStyleBackColor = true;
+            this.cb_ongoing.CheckedChanged += new System.EventHandler(this.cb_ongoing_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 171);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "timeStep";
+            // 
+            // panel5
+            // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.rb_rvo);
+            this.panel5.Controls.Add(this.rb_base);
+            this.panel5.Location = new System.Drawing.Point(9, 82);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(96, 41);
+            this.panel5.TabIndex = 20;
+            // 
+            // rb_rvo
+            // 
+            this.rb_rvo.AutoSize = true;
+            this.rb_rvo.Location = new System.Drawing.Point(3, 2);
+            this.rb_rvo.Name = "rb_rvo";
+            this.rb_rvo.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rb_rvo.Size = new System.Drawing.Size(78, 17);
+            this.rb_rvo.TabIndex = 11;
+            this.rb_rvo.Text = "prefer RVO";
+            this.rb_rvo.UseVisualStyleBackColor = true;
+            this.rb_rvo.Click += new System.EventHandler(this.rb_prefer_CheckedChanged);
+            // 
+            // rb_base
+            // 
+            this.rb_base.AutoSize = true;
+            this.rb_base.Checked = true;
+            this.rb_base.Location = new System.Drawing.Point(3, 22);
+            this.rb_base.Name = "rb_base";
+            this.rb_base.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.rb_base.Size = new System.Drawing.Size(79, 17);
+            this.rb_base.TabIndex = 12;
+            this.rb_base.TabStop = true;
+            this.rb_base.Text = "prefer Base";
+            this.rb_base.UseVisualStyleBackColor = true;
+            this.rb_base.CheckedChanged += new System.EventHandler(this.rb_prefer_CheckedChanged);
+            // 
+            // btn_auto_test
+            // 
+            this.btn_auto_test.Location = new System.Drawing.Point(9, 198);
+            this.btn_auto_test.Name = "btn_auto_test";
+            this.btn_auto_test.Size = new System.Drawing.Size(128, 23);
+            this.btn_auto_test.TabIndex = 4;
+            this.btn_auto_test.Text = "Auto Test";
+            this.btn_auto_test.UseVisualStyleBackColor = true;
+            this.btn_auto_test.Click += new System.EventHandler(this.btn_auto_test_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.rb_pred_none);
+            this.panel1.Controls.Add(this.rb_pred_simple);
+            this.panel1.Controls.Add(this.rb_pred_full);
+            this.panel1.Location = new System.Drawing.Point(9, 22);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(96, 54);
+            this.panel1.TabIndex = 19;
+            // 
+            // rb_pred_none
+            // 
+            this.rb_pred_none.AutoSize = true;
+            this.rb_pred_none.Location = new System.Drawing.Point(3, 37);
+            this.rb_pred_none.Name = "rb_pred_none";
+            this.rb_pred_none.Size = new System.Drawing.Size(86, 17);
+            this.rb_pred_none.TabIndex = 2;
+            this.rb_pred_none.Text = "no prediction";
+            this.rb_pred_none.UseVisualStyleBackColor = true;
+            this.rb_pred_none.CheckedChanged += new System.EventHandler(this.predictionChanged);
+            // 
+            // rb_pred_simple
+            // 
+            this.rb_pred_simple.AutoSize = true;
+            this.rb_pred_simple.Location = new System.Drawing.Point(3, 20);
+            this.rb_pred_simple.Name = "rb_pred_simple";
+            this.rb_pred_simple.Size = new System.Drawing.Size(54, 17);
+            this.rb_pred_simple.TabIndex = 1;
+            this.rb_pred_simple.Text = "simple";
+            this.rb_pred_simple.UseVisualStyleBackColor = true;
+            this.rb_pred_simple.CheckedChanged += new System.EventHandler(this.predictionChanged);
+            // 
+            // rb_pred_full
+            // 
+            this.rb_pred_full.AutoSize = true;
+            this.rb_pred_full.Checked = true;
+            this.rb_pred_full.Location = new System.Drawing.Point(3, 3);
+            this.rb_pred_full.Name = "rb_pred_full";
+            this.rb_pred_full.Size = new System.Drawing.Size(87, 17);
+            this.rb_pred_full.TabIndex = 0;
+            this.rb_pred_full.TabStop = true;
+            this.rb_pred_full.Text = "full prediction";
+            this.rb_pred_full.UseVisualStyleBackColor = true;
+            this.rb_pred_full.CheckedChanged += new System.EventHandler(this.predictionChanged);
             // 
             // panel3
             // 
@@ -407,7 +522,7 @@
             this.tabPageViz.Location = new System.Drawing.Point(4, 22);
             this.tabPageViz.Name = "tabPageViz";
             this.tabPageViz.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageViz.Size = new System.Drawing.Size(477, 255);
+            this.tabPageViz.Size = new System.Drawing.Size(464, 255);
             this.tabPageViz.TabIndex = 1;
             this.tabPageViz.Text = "Viz";
             this.tabPageViz.UseVisualStyleBackColor = true;
@@ -419,13 +534,13 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(471, 221);
+            this.panel4.Size = new System.Drawing.Size(458, 221);
             this.panel4.TabIndex = 2;
             // 
             // progressBarViz
             // 
             this.progressBarViz.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.progressBarViz.Location = new System.Drawing.Point(139, 101);
+            this.progressBarViz.Location = new System.Drawing.Point(133, 101);
             this.progressBarViz.MarqueeAnimationSpeed = 5;
             this.progressBarViz.Maximum = 20;
             this.progressBarViz.Name = "progressBarViz";
@@ -441,7 +556,7 @@
             this.pb_Viz.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pb_Viz.Location = new System.Drawing.Point(0, 0);
             this.pb_Viz.Name = "pb_Viz";
-            this.pb_Viz.Size = new System.Drawing.Size(471, 221);
+            this.pb_Viz.Size = new System.Drawing.Size(458, 221);
             this.pb_Viz.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pb_Viz.TabIndex = 0;
             this.pb_Viz.TabStop = false;
@@ -452,7 +567,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel6.Location = new System.Drawing.Point(3, 224);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(471, 28);
+            this.panel6.Size = new System.Drawing.Size(458, 28);
             this.panel6.TabIndex = 1;
             // 
             // track_images
@@ -462,7 +577,7 @@
             this.track_images.Location = new System.Drawing.Point(0, 1);
             this.track_images.Maximum = 0;
             this.track_images.Name = "track_images";
-            this.track_images.Size = new System.Drawing.Size(471, 27);
+            this.track_images.Size = new System.Drawing.Size(458, 27);
             this.track_images.TabIndex = 2;
             this.track_images.Visible = false;
             this.track_images.ValueChanged += new System.EventHandler(this.track_images_ValueChanged);
@@ -546,65 +661,6 @@
             this.panel_simulate.Size = new System.Drawing.Size(246, 100);
             this.panel_simulate.TabIndex = 10;
             // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.rb_pred_none);
-            this.panel1.Controls.Add(this.rb_pred_simple);
-            this.panel1.Controls.Add(this.rb_pred_full);
-            this.panel1.Location = new System.Drawing.Point(9, 22);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(96, 54);
-            this.panel1.TabIndex = 19;
-            // 
-            // rb_pred_none
-            // 
-            this.rb_pred_none.AutoSize = true;
-            this.rb_pred_none.Location = new System.Drawing.Point(3, 37);
-            this.rb_pred_none.Name = "rb_pred_none";
-            this.rb_pred_none.Size = new System.Drawing.Size(86, 17);
-            this.rb_pred_none.TabIndex = 2;
-            this.rb_pred_none.Text = "no prediction";
-            this.rb_pred_none.UseVisualStyleBackColor = true;
-            this.rb_pred_none.CheckedChanged += new System.EventHandler(this.predictionChanged);
-            // 
-            // rb_pred_simple
-            // 
-            this.rb_pred_simple.AutoSize = true;
-            this.rb_pred_simple.Location = new System.Drawing.Point(3, 20);
-            this.rb_pred_simple.Name = "rb_pred_simple";
-            this.rb_pred_simple.Size = new System.Drawing.Size(54, 17);
-            this.rb_pred_simple.TabIndex = 1;
-            this.rb_pred_simple.Text = "simple";
-            this.rb_pred_simple.UseVisualStyleBackColor = true;
-            this.rb_pred_simple.CheckedChanged += new System.EventHandler(this.predictionChanged);
-            // 
-            // rb_pred_full
-            // 
-            this.rb_pred_full.AutoSize = true;
-            this.rb_pred_full.Checked = true;
-            this.rb_pred_full.Location = new System.Drawing.Point(3, 3);
-            this.rb_pred_full.Name = "rb_pred_full";
-            this.rb_pred_full.Size = new System.Drawing.Size(87, 17);
-            this.rb_pred_full.TabIndex = 0;
-            this.rb_pred_full.TabStop = true;
-            this.rb_pred_full.Text = "full prediction";
-            this.rb_pred_full.UseVisualStyleBackColor = true;
-            this.rb_pred_full.CheckedChanged += new System.EventHandler(this.predictionChanged);
-            // 
-            // cb_ongoing
-            // 
-            this.cb_ongoing.AutoSize = true;
-            this.cb_ongoing.Checked = true;
-            this.cb_ongoing.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_ongoing.Location = new System.Drawing.Point(9, 129);
-            this.cb_ongoing.Name = "cb_ongoing";
-            this.cb_ongoing.Size = new System.Drawing.Size(135, 17);
-            this.cb_ongoing.TabIndex = 18;
-            this.cb_ongoing.Text = "-ongoing for -maneuver";
-            this.cb_ongoing.UseVisualStyleBackColor = true;
-            this.cb_ongoing.CheckedChanged += new System.EventHandler(this.cb_ongoing_CheckedChanged);
-            // 
             // btn_Simulate
             // 
             this.btn_Simulate.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -616,68 +672,27 @@
             this.btn_Simulate.UseVisualStyleBackColor = true;
             this.btn_Simulate.Click += new System.EventHandler(this.btn_simulate_Click);
             // 
-            // rb_base
+            // NUD_timeStep
             // 
-            this.rb_base.AutoSize = true;
-            this.rb_base.Checked = true;
-            this.rb_base.Location = new System.Drawing.Point(3, 22);
-            this.rb_base.Name = "rb_base";
-            this.rb_base.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.rb_base.Size = new System.Drawing.Size(79, 17);
-            this.rb_base.TabIndex = 12;
-            this.rb_base.TabStop = true;
-            this.rb_base.Text = "prefer Base";
-            this.rb_base.UseVisualStyleBackColor = true;
-            this.rb_base.CheckedChanged += new System.EventHandler(this.rb_prefer_CheckedChanged);
-            // 
-            // rb_rvo
-            // 
-            this.rb_rvo.AutoSize = true;
-            this.rb_rvo.Location = new System.Drawing.Point(3, 2);
-            this.rb_rvo.Name = "rb_rvo";
-            this.rb_rvo.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.rb_rvo.Size = new System.Drawing.Size(78, 17);
-            this.rb_rvo.TabIndex = 11;
-            this.rb_rvo.Text = "prefer RVO";
-            this.rb_rvo.UseVisualStyleBackColor = true;
-            this.rb_rvo.Click += new System.EventHandler(this.rb_prefer_CheckedChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 149);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(48, 13);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "timeStep";
-            // 
-            // tb_timeStep
-            // 
-            this.tb_timeStep.Location = new System.Drawing.Point(57, 146);
-            this.tb_timeStep.Name = "tb_timeStep";
-            this.tb_timeStep.Size = new System.Drawing.Size(75, 20);
-            this.tb_timeStep.TabIndex = 9;
-            this.tb_timeStep.Text = "300";
-            // 
-            // btn_auto_test
-            // 
-            this.btn_auto_test.Location = new System.Drawing.Point(11, 182);
-            this.btn_auto_test.Name = "btn_auto_test";
-            this.btn_auto_test.Size = new System.Drawing.Size(128, 23);
-            this.btn_auto_test.TabIndex = 4;
-            this.btn_auto_test.Text = "Auto Test";
-            this.btn_auto_test.UseVisualStyleBackColor = true;
-            this.btn_auto_test.Click += new System.EventHandler(this.btn_auto_test_Click);
-            // 
-            // panel5
-            // 
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.rb_rvo);
-            this.panel5.Controls.Add(this.rb_base);
-            this.panel5.Location = new System.Drawing.Point(9, 82);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(96, 41);
-            this.panel5.TabIndex = 20;
+            this.NUD_timeStep.Location = new System.Drawing.Point(60, 169);
+            this.NUD_timeStep.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.NUD_timeStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NUD_timeStep.Name = "NUD_timeStep";
+            this.NUD_timeStep.Size = new System.Drawing.Size(75, 20);
+            this.NUD_timeStep.TabIndex = 22;
+            this.NUD_timeStep.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
             // 
             // NavigatorForm
             // 
@@ -700,6 +715,10 @@
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
+            this.panel5.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
@@ -715,10 +734,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.track_images)).EndInit();
             this.panel_debug.ResumeLayout(false);
             this.panel_simulate.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel5.ResumeLayout(false);
-            this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_timeStep)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -742,7 +758,6 @@
         private System.Windows.Forms.Button btn_toInit;
         private System.Windows.Forms.Button btn_backup;
         private System.Windows.Forms.Button btn_follow_ongoing;
-        private System.Windows.Forms.TextBox tb_timeStep;
         private System.Windows.Forms.Panel panel_debug;
         private System.Windows.Forms.Panel panel_simulate;
         private System.Windows.Forms.RadioButton rb_base;
@@ -774,6 +789,7 @@
         private System.Windows.Forms.RadioButton rb_pred_full;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button btn_auto_test;
+        private System.Windows.Forms.NumericUpDown NUD_timeStep;
     }
 }
 
