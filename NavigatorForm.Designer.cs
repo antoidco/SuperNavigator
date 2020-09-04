@@ -77,6 +77,7 @@
             this.btn_Simulate = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.NUD_timeStep = new System.Windows.Forms.NumericUpDown();
+            this.cb_targetSettings = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -255,6 +256,7 @@
             // 
             // splitContainer3.Panel1
             // 
+            this.splitContainer3.Panel1.Controls.Add(this.cb_targetSettings);
             this.splitContainer3.Panel1.Controls.Add(this.NUD_timeStep);
             this.splitContainer3.Panel1.Controls.Add(this.cb_ongoing);
             this.splitContainer3.Panel1.Controls.Add(this.label1);
@@ -694,6 +696,18 @@
             0,
             0});
             // 
+            // cb_targetSettings
+            // 
+            this.cb_targetSettings.AutoSize = true;
+            this.cb_targetSettings.Checked = true;
+            this.cb_targetSettings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_targetSettings.Location = new System.Drawing.Point(9, 148);
+            this.cb_targetSettings.Name = "cb_targetSettings";
+            this.cb_targetSettings.Size = new System.Drawing.Size(92, 17);
+            this.cb_targetSettings.TabIndex = 23;
+            this.cb_targetSettings.Text = "target-settings";
+            this.cb_targetSettings.UseVisualStyleBackColor = true;
+            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -790,6 +804,7 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button btn_auto_test;
         private System.Windows.Forms.NumericUpDown NUD_timeStep;
+        private System.Windows.Forms.CheckBox cb_targetSettings;
     }
 }
 

@@ -258,9 +258,10 @@ namespace SuperNavigator
 
         private void startFileWorker(object sender, EventArgs e)
         {
-            navigator.FileWorker.Start();
+            navigator.FileWorker.Start(cb_targetSettings.Checked);
             if (navigator.FileWorker.WorkStarted)
             {
+                cb_targetSettings.Enabled = false;
                 panel_simulate.Enabled = true;
                 panel_debug.Enabled = true;
                 tb_output.AppendText(System.Environment.NewLine + "Work started, new folder created");
@@ -271,6 +272,7 @@ namespace SuperNavigator
             navigator.FileWorker.Stop();
             if (!navigator.FileWorker.WorkStarted)
             {
+                cb_targetSettings.Enabled = true;
                 panel_simulate.Enabled = false;
                 panel_debug.Enabled = false;
                 tb_output.AppendText(System.Environment.NewLine + "Work stopped");
@@ -342,7 +344,7 @@ namespace SuperNavigator
                 return;
             }
             btn_auto_test.Enabled = false;
-            var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(NUD_timeStep.Value));
+            var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(NUD_timeStep.Value), cb_targetSettings.Checked);
             tb_output.AppendText(result.ToString());
             btn_auto_test.Enabled = true;
         }

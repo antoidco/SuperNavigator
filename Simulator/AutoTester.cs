@@ -9,7 +9,7 @@ namespace SuperNavigator.Simulator
 {
     public static class AutoTester
     {
-        public static async Task<string> RunAsync(Navigator navigator, string folder, double time_step)
+        public static async Task<string> RunAsync(Navigator navigator, string folder, double time_step, bool use_target_settings)
         {
             var report = new Report();
             string output = "";
@@ -20,7 +20,7 @@ namespace SuperNavigator.Simulator
                 if (!File.Exists($"{dir}\\{FileWorker.nav_data_json}")) continue;
                 string FolderName = new DirectoryInfo(dir).Name;
                 navigator.FileWorker.WorkInitPath = dir;
-                navigator.FileWorker.Start();
+                navigator.FileWorker.Start(use_target_settings);
                 var result = await navigator.Simulate(time_step);
                 output += $"{Environment.NewLine}Scenario {FolderName}";
                 output += result.Output;

@@ -63,7 +63,7 @@ namespace SuperNavigator.Simulator
             BackupFiles = new List<string> { targets_json, nav_data_json };
         }
 
-        public void Start()
+        public void Start(bool use_target_settings)
         {
             if (_workStarted) return;
             try
@@ -76,7 +76,7 @@ namespace SuperNavigator.Simulator
                 File.Copy($"{WorkInitPath}\\{route_json}", $"{WorkingDirectory}\\{route_json}");
                 File.Copy($"{WorkInitPath}\\{settings_json}", $"{WorkingDirectory}\\{settings_json}");
                 File.Copy($"{WorkInitPath}\\{constraints_json}", $"{WorkingDirectory}\\{constraints_json}");
-                if (File.Exists($"{WorkInitPath}\\{target_settings_json}"))
+                if (use_target_settings && File.Exists($"{WorkInitPath}\\{target_settings_json}"))
                 {
                     Target_settings = true;
                     File.Copy($"{WorkInitPath}\\{target_settings_json}", $"{WorkingDirectory}\\{target_settings_json}");
