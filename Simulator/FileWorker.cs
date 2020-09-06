@@ -19,12 +19,14 @@ namespace SuperNavigator.Simulator
         public const string predict_json = "target-maneuvers.json";
         public const string predict_real_json = "real-target-maneuvers.json";
         public const string ongoing_json = "ongoing.json";
+        public const string target_settings_json = "target-settings.json";
 
 
         const string _backup = "_backup";
         const string _init = "_init";
         private bool _workStarted;
         private string _workInitPath;
+        public bool Target_settings { get; private set; } = false;
 
         /// <summary>
         /// Директория запускаемого приложения
@@ -53,7 +55,7 @@ namespace SuperNavigator.Simulator
         public List<string> BackupFiles { get; }
 
         public bool WorkStarted => _workStarted;
-       
+
 
         public FileWorker(string appDir)
         {
@@ -61,19 +63,26 @@ namespace SuperNavigator.Simulator
             BackupFiles = new List<string> { targets_json, nav_data_json };
         }
 
-        public void Start()
+        public void Start(bool use_target_settings)
         {
             if (_workStarted) return;
             try
             {
-                WorkingDirectory = WorkInitPath + $"\\{System.DateTime.Now.ToString("yyyy_dd_MM_HH_mm_ss")}";
-                System.IO.Directory.CreateDirectory(WorkingDirectory);
+                WorkingDirectory = WorkInitPath + $"\\{DateTime.Now.ToString("yyyy_dd_MM_HH_mm_ss")}";
+                Directory.CreateDirectory(WorkingDirectory);
                 File.Copy($"{WorkInitPath}\\{nav_data_json}", $"{WorkingDirectory}\\{nav_data_json}");
                 File.Copy($"{WorkInitPath}\\{targets_json}", $"{WorkingDirectory}\\{targets_json}");
                 File.Copy($"{WorkInitPath}\\{hydrometeo_json}", $"{WorkingDirectory}\\{hydrometeo_json}");
                 File.Copy($"{WorkInitPath}\\{route_json}", $"{WorkingDirectory}\\{route_json}");
                 File.Copy($"{WorkInitPath}\\{settings_json}", $"{WorkingDirectory}\\{settings_json}");
                 File.Copy($"{WorkInitPath}\\{constraints_json}", $"{WorkingDirectory}\\{constraints_json}");
+                if (use_target_settings && File.Exists($"{WorkInitPath}\\{target_settings_json}"))
+                {
+                    Target_settings = true;
+                    File.Copy($"{WorkInitPath}\\{target_settings_json}", $"{WorkingDirectory}\\{target_settings_json}");
+                }
+                else
+                    Target_settings = false;
             }
             catch (FileNotFoundException e)
             {
@@ -102,7 +111,7 @@ namespace SuperNavigator.Simulator
             foreach (var item in BackupFiles)
             {
                 string filename = $"{WorkingDirectory}\\{item}";
-                if (File.Exists(filename + _init) && File.Exists(filename)) 
+                if (File.Exists(filename + _init) && File.Exists(filename))
                     File.Replace(filename + _init, filename, filename + _backup);
             }
         }
@@ -120,7 +129,6 @@ namespace SuperNavigator.Simulator
         public JObject GetManuever(AlgorithmPrefer prefer)
         {
             var objArr = JArray.Parse(File.ReadAllText(WorkingDirectory + "\\" + FileWorker.maneuver_json));
-            Path path = new Path();
             if (objArr.Count > 1)
             {
                 foreach (var solution in objArr)
@@ -165,8 +173,8 @@ namespace SuperNavigator.Simulator
         /// <param name="result">Результат для визуализации</param>
         public void SaveManuever(ref Result result)
         {
-            string saveDirectory = $"{WorkingDirectory}\\{result.ManeuverPathes.Count.ToString()}";
-            System.IO.Directory.CreateDirectory(saveDirectory);
+            string saveDirectory = $"{WorkingDirectory}\\{result.ManeuverPathes.Count}";
+            Directory.CreateDirectory(saveDirectory);
             // copy data
             File.Copy($"{WorkingDirectory}\\{nav_data_json}", $"{saveDirectory}\\{nav_data_json}");
             File.Copy($"{WorkingDirectory}\\{targets_json}", $"{saveDirectory}\\{targets_json}");
@@ -174,6 +182,10 @@ namespace SuperNavigator.Simulator
             File.Copy($"{WorkingDirectory}\\{route_json}", $"{saveDirectory}\\{route_json}");
             File.Copy($"{WorkingDirectory}\\{settings_json}", $"{saveDirectory}\\{settings_json}");
             File.Copy($"{WorkingDirectory}\\{constraints_json}", $"{saveDirectory}\\{constraints_json}");
+            if (Target_settings && File.Exists($"{WorkingDirectory}\\{target_settings_json}"))
+            {
+                File.Copy($"{WorkingDirectory}\\{target_settings_json}", $"{saveDirectory}\\{target_settings_json}");
+            }
             // copy results
             File.Copy($"{WorkingDirectory}\\{maneuver_json}", $"{saveDirectory}\\{maneuver_json}");
             File.Copy($"{WorkingDirectory}\\{predict_json}", $"{saveDirectory}\\{predict_json}");
