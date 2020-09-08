@@ -27,7 +27,7 @@ namespace SuperNavigator.Simulator
         /// Если существует ongoing маневр - анализирует обстановку, учитывая его
         /// </summary>
         /// <returns>Информация о процессе</returns>
-        public async Task<ProcessResult> Analyze()
+        public async Task<ProcessResult> AnalyzeAsync()
         {
             string command = FileWorker.UsvExec;
 
@@ -63,7 +63,7 @@ namespace SuperNavigator.Simulator
         /// Запускает алгоритм построения маневра по файлам рабочей директории
         /// </summary>
         /// <returns>Код возврата</returns>
-        public async Task<int> Maneuver()
+        public async Task<int> ManeuverAsync()
         {
             string command = FileWorker.UsvExec;
 
@@ -156,14 +156,17 @@ namespace SuperNavigator.Simulator
         /// принимается решение о будущих действиях своего судна.
         /// </summary>
         /// <param name="time_step">Шаг по времени, секунды</param>
+        /// <param name="progress"></param>
         /// <returns>Результат для визуализации</returns>
-        public async Task<Result> Simulate(double time_step)
+        public async Task<Result> SimulateAsync(double time_step, IProgress<string> progress = null)
         {
             var result = new Result();
             FileWorker.ClearOngoing();
 
-            _superManeuver = new Path();
-            _superManeuver.start_time = (long)getCurrentTime();
+            _superManeuver = new Path
+            {
+                start_time = (long)getCurrentTime()
+            };
 
             result.Output = "";
             string nl = System.Environment.NewLine;
@@ -177,50 +180,50 @@ namespace SuperNavigator.Simulator
                 {
                     File.Copy($"{FileWorker.WorkInitPath}\\{FileWorker.predict_real_json}",
                         $"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}");
-                    result.Output += nl + "real maneuvers copied from init directory to working directory";
+                    progress?.Report("real maneuvers copied from init directory to working directory");
                 }
                 else
                 {
-                    result.Output += nl + "real maneuvers do not exist, create them...";
-                    result.Output += nl + "Exit code (-1 expected from USV for some reason): ";
-                    result.Output += (await CreateLinearTargetsManeuvers()).ToString();
+                    progress?.Report("real maneuvers do not exist, create them...");
+                    progress?.Report("Exit code (-1 expected from USV for some reason): ");
+                    progress?.Report((await CreateLinearTargetsManeuversAsync()).ToString());
                 }
             }
 
             bool onRoute = OnRoute();
-            result.Output += $"{nl}{(onRoute ? "On route" : "Not on route")}";
+            progress?.Report($"{(onRoute ? "On route" : "Not on route")}");
             while (true)
             {
-                await Analyze();
+                await AnalyzeAsync();
                 var dangerous = GetAnalyzeReportDangerous();
-                result.Output += $"{nl}danger at t = {time} is: {dangerous}";
+                progress?.Report($"danger at t = {time} is: {dangerous}");
                 if (dangerous || !onRoute)
                 {
                     onRoute = true;
-                    var maneuver_result = await Maneuver();
+                    var maneuver_result = await ManeuverAsync();
                     if (maneuver_result == 5)
                     {
-                        result.Output += $"{nl}ongoing maneuver/route is OK";
+                        progress?.Report("ongoing maneuver/route is OK");
                     }
                     else if (maneuver_result == 0 || maneuver_result == 1)
                     {
-                        result.Output += $"{nl}ongoing maneuver/route is not OK";
-                        result.Output += $"{nl}maneuver found!";
+                        progress?.Report("ongoing maneuver/route is not OK");
+                        progress?.Report("maneuver found!");
                         WriteOngoing();
                         FileWorker.SaveManuever(ref result);
                     }
                     else
                     {
-                        result.Output += $"{nl}ongoing maneuver/route is not OK";
-                        result.Output += $"{nl}maneuver not found!{nl}FAILED";
+                        progress?.Report("ongoing maneuver/route is not OK");
+                        progress?.Report($"maneuver not found!{nl}FAILED");
                         break;
                     }
                 }
-                result.Output += $"{nl}following...";
+                progress?.Report($"{nl}following...");
                 if (!Follow(time_step))
                 {
                     result.Success = true;
-                    result.Output += $"{nl}finished{nl}SUCCESS";
+                    progress?.Report($"finished{nl}SUCCESS");
                     break;
                 }
                 time += time_step;
@@ -234,7 +237,7 @@ namespace SuperNavigator.Simulator
         /// Генерирует файл с реальными маневрами целей линейно экстраполируя текущие параметры движения
         /// </summary>
         /// <returns>ExitCode</returns>
-        public async Task<int> CreateLinearTargetsManeuvers()
+        public async Task<int> CreateLinearTargetsManeuversAsync()
         {
             string command = FileWorker.UsvExec;
 

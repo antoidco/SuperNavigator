@@ -63,33 +63,37 @@ namespace SuperNavigator.Simulator
             BackupFiles = new List<string> { targets_json, nav_data_json };
         }
 
-        public void Start(bool use_target_settings)
+        public string Start(bool use_target_settings)
         {
-            if (_workStarted) return;
-            try
+            if (!_workStarted)
             {
-                WorkingDirectory = WorkInitPath + $"\\{DateTime.Now.ToString("yyyy_dd_MM_HH_mm_ss")}";
-                Directory.CreateDirectory(WorkingDirectory);
-                File.Copy($"{WorkInitPath}\\{nav_data_json}", $"{WorkingDirectory}\\{nav_data_json}");
-                File.Copy($"{WorkInitPath}\\{targets_json}", $"{WorkingDirectory}\\{targets_json}");
-                File.Copy($"{WorkInitPath}\\{hydrometeo_json}", $"{WorkingDirectory}\\{hydrometeo_json}");
-                File.Copy($"{WorkInitPath}\\{route_json}", $"{WorkingDirectory}\\{route_json}");
-                File.Copy($"{WorkInitPath}\\{settings_json}", $"{WorkingDirectory}\\{settings_json}");
-                File.Copy($"{WorkInitPath}\\{constraints_json}", $"{WorkingDirectory}\\{constraints_json}");
-                if (use_target_settings && File.Exists($"{WorkInitPath}\\{target_settings_json}"))
+                try
                 {
-                    Target_settings = true;
-                    File.Copy($"{WorkInitPath}\\{target_settings_json}", $"{WorkingDirectory}\\{target_settings_json}");
+                    WorkingDirectory = WorkInitPath + $"\\{DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss")}";
+                    Directory.CreateDirectory(WorkingDirectory);
+                    File.Copy($"{WorkInitPath}\\{nav_data_json}", $"{WorkingDirectory}\\{nav_data_json}");
+                    File.Copy($"{WorkInitPath}\\{targets_json}", $"{WorkingDirectory}\\{targets_json}");
+                    File.Copy($"{WorkInitPath}\\{hydrometeo_json}", $"{WorkingDirectory}\\{hydrometeo_json}");
+                    File.Copy($"{WorkInitPath}\\{route_json}", $"{WorkingDirectory}\\{route_json}");
+                    File.Copy($"{WorkInitPath}\\{settings_json}", $"{WorkingDirectory}\\{settings_json}");
+                    File.Copy($"{WorkInitPath}\\{constraints_json}", $"{WorkingDirectory}\\{constraints_json}");
+                    if (use_target_settings && File.Exists($"{WorkInitPath}\\{target_settings_json}"))
+                    {
+                        Target_settings = true;
+                        File.Copy($"{WorkInitPath}\\{target_settings_json}", $"{WorkingDirectory}\\{target_settings_json}");
+                    }
+                    else
+                        Target_settings = false;
                 }
-                else
-                    Target_settings = false;
+                catch (FileNotFoundException e)
+                {
+                    throw new FileNotFoundException("Not enough data in initial working directory: " + e.Message);
+                }
+                _workStarted = true;
             }
-            catch (FileNotFoundException e)
-            {
-                throw new FileNotFoundException("Not enough data in initial working directory: " + e.Message);
-            }
-            _workStarted = true;
+            return WorkingDirectory;
         }
+
         public void Stop()
         {
             _workStarted = false;

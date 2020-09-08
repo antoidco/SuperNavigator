@@ -19,12 +19,19 @@ namespace SuperNavigator
         private Navigator navigator;
         private KTVizPicture kTVizPicture;
         private Result _currentResult;
-        private Image _showingImage;
         private CommonOpenFileDialog _folderOpenDialog;
+
+        private readonly Progress<string> progress;
         public NavigatorForm()
         {
             InitializeComponent();
 
+            // Init progress for logging
+            progress = new Progress<string>(update =>
+            {
+                tb_output.AppendText(Environment.NewLine);
+                tb_output.AppendText(update);
+            });
             // get app location
             string applicationLocation = System.Reflection.Assembly.GetEntryAssembly().Location;
             navigator = new Navigator(System.IO.Path.GetDirectoryName(applicationLocation));
@@ -152,7 +159,7 @@ namespace SuperNavigator
         {
             btn_analyze.Enabled = false;
             // Analyze result
-            var result = await navigator.Analyze();
+            var result = await navigator.AnalyzeAsync();
             if (result.Output != null) tb_output.AppendText(System.Environment.NewLine + result.Output);
 
             // Check analyze report
@@ -164,7 +171,7 @@ namespace SuperNavigator
         {
             btn_maneuver.Enabled = false;
             // Maneuver result
-            var result = await navigator.Maneuver();
+            var result = await navigator.ManeuverAsync();
 
             // Check maneuver result
             tb_output.AppendText(System.Environment.NewLine + "EXIT CODE:" + result.ToString());
@@ -212,7 +219,7 @@ namespace SuperNavigator
             btn_Simulate.Enabled = false;
             try
             {
-                var result = await navigator.Simulate(Convert.ToDouble(NUD_timeStep.Value));
+                var result = await navigator.SimulateAsync(Convert.ToDouble(NUD_timeStep.Value), progress);
                 tb_output.AppendText(System.Environment.NewLine + result.Output);
                 _currentResult = result;
             }
@@ -226,7 +233,7 @@ namespace SuperNavigator
 
         private async void btn_realTargets_Click(object sender, EventArgs e)
         {
-            var result = await navigator.CreateLinearTargetsManeuvers();
+            var result = await navigator.CreateLinearTargetsManeuversAsync();
             tb_output.AppendText(System.Environment.NewLine + "Exit code (-1 expected from USV for some reason): " + result.ToString());
         }
 
@@ -258,13 +265,13 @@ namespace SuperNavigator
 
         private void startFileWorker(object sender, EventArgs e)
         {
-            navigator.FileWorker.Start(cb_targetSettings.Checked);
+            var working_directory = navigator.FileWorker.Start(cb_targetSettings.Checked);
             if (navigator.FileWorker.WorkStarted)
             {
                 cb_targetSettings.Enabled = false;
                 panel_simulate.Enabled = true;
                 panel_debug.Enabled = true;
-                tb_output.AppendText(System.Environment.NewLine + "Work started, new folder created");
+                tb_output.AppendText(System.Environment.NewLine + $"Work started, new folder '{working_directory}' created");
             }
         }
         private void btn_Work_Stop_Click(object sender, EventArgs e)
@@ -289,7 +296,6 @@ namespace SuperNavigator
                     pb_Viz.Image = img;
                 }
                 catch (Exception) { }
-                _showingImage = new Bitmap(img);
             }
         }
 
@@ -344,7 +350,7 @@ namespace SuperNavigator
                 return;
             }
             btn_auto_test.Enabled = false;
-            var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(NUD_timeStep.Value), cb_targetSettings.Checked);
+            var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(NUD_timeStep.Value), cb_targetSettings.Checked, progress);
             tb_output.AppendText(result.ToString());
             btn_auto_test.Enabled = true;
         }
