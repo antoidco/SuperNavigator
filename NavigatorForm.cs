@@ -339,6 +339,7 @@ namespace SuperNavigator
 
         private async void btn_auto_test_Click(object sender, EventArgs e)
         {
+            string old_workinit_path = navigator.FileWorker.WorkInitPath;
             string folder = "";
             if (_folderOpenDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
@@ -352,6 +353,8 @@ namespace SuperNavigator
             btn_auto_test.Enabled = false;
             var result = await AutoTester.RunAsync(navigator, folder, Convert.ToDouble(NUD_timeStep.Value), cb_targetSettings.Checked, progress);
             tb_output.AppendText(result.ToString());
+            // return working directory to init path
+            navigator.FileWorker.WorkInitPath = old_workinit_path;
             btn_auto_test.Enabled = true;
         }
     }
