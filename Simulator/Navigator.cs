@@ -219,7 +219,7 @@ namespace SuperNavigator.Simulator
                         break;
                     }
                 }
-                progress?.Report($"{nl}following...");
+                progress?.Report("following...");
                 if (!Follow(time_step))
                 {
                     result.Success = true;
@@ -275,11 +275,13 @@ namespace SuperNavigator.Simulator
             var obj = JObject.Parse(File.ReadAllText(ship_file));
 
             // update super maneuver
-            var shipPosition = new Position();
-            shipPosition.course = obj["COG"].Value<double>();
-            shipPosition.lat = obj["lat"].Value<double>();
-            shipPosition.lon = obj["lon"].Value<double>();
-            shipPosition.speed = obj["SOG"].Value<double>();
+            var shipPosition = new Position
+            {
+                course = obj["COG"].Value<double>(),
+                lat = obj["lat"].Value<double>(),
+                lon = obj["lon"].Value<double>(),
+                speed = obj["SOG"].Value<double>()
+            };
             _superManeuver.items.Add(
                 new Segment
                 {
