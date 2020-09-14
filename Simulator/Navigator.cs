@@ -45,18 +45,25 @@ namespace SuperNavigator.Simulator
         /// <returns>true, если опасна</returns>
         public bool GetAnalyzeReportDangerous()
         {
-            var obj = JObject.Parse(File.ReadAllText(FileWorker.WorkingDirectory + "\\" + FileWorker.analyse_json));
-            var statuses = obj["target_statuses"];
-
-            foreach (var status in statuses)
+            try
             {
-                if (status["danger_level"].Value<int>() == 2)
-                {
-                    return true;
-                }
-            }
+                var obj = JObject.Parse(File.ReadAllText(FileWorker.WorkingDirectory + "\\" + FileWorker.analyse_json));
+                var statuses = obj["target_statuses"];
 
-            return false;
+                foreach (var status in statuses)
+                {
+                    if (status["danger_level"].Value<int>() == 2)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            catch (FileNotFoundException)
+            {
+                throw new Exception("No analyze report file");
+            }
         }
 
         /// <summary>
@@ -161,75 +168,84 @@ namespace SuperNavigator.Simulator
         public async Task<Result> SimulateAsync(double time_step, IProgress<string> progress = null)
         {
             var result = new Result();
-            FileWorker.ClearOngoing();
-
-            _superManeuver = new Path
+            try
             {
-                start_time = (long)getCurrentTime()
-            };
+                FileWorker.ClearOngoing();
 
-            result.Output = "";
-            string nl = System.Environment.NewLine;
-            double time = 0;
+                _superManeuver = new Path
+                {
+                    start_time = (long)getCurrentTime()
+                };
 
-            // if real targets maneuvers do not exist, create them
-            if (!File.Exists($"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}"))
-            {
-                // try to find in init directory
-                if (File.Exists($"{FileWorker.WorkInitPath}\\{FileWorker.predict_real_json}"))
-                {
-                    File.Copy($"{FileWorker.WorkInitPath}\\{FileWorker.predict_real_json}",
-                        $"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}");
-                    progress?.Report("real maneuvers copied from init directory to working directory");
-                }
-                else
-                {
-                    progress?.Report("real maneuvers do not exist, create them...");
-                    progress?.Report("Exit code (-1 expected from USV for some reason): ");
-                    progress?.Report((await CreateLinearTargetsManeuversAsync()).ToString());
-                }
-            }
+                result.Output = "";
+                string nl = System.Environment.NewLine;
+                double time = 0;
 
-            bool onRoute = OnRoute();
-            progress?.Report($"{(onRoute ? "On route" : "Not on route")}");
-            while (true)
-            {
-                await AnalyzeAsync();
-                var dangerous = GetAnalyzeReportDangerous();
-                progress?.Report($"danger at t = {time} is: {dangerous}");
-                if (dangerous || !onRoute)
+                // if real targets maneuvers do not exist, create them
+                if (!File.Exists($"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}"))
                 {
-                    onRoute = true;
-                    var maneuver_result = await ManeuverAsync();
-                    if (maneuver_result == 5)
+                    // try to find in init directory
+                    if (File.Exists($"{FileWorker.WorkInitPath}\\{FileWorker.predict_real_json}"))
                     {
-                        progress?.Report("ongoing maneuver/route is OK");
-                    }
-                    else if (maneuver_result == 0 || maneuver_result == 1)
-                    {
-                        progress?.Report("ongoing maneuver/route is not OK");
-                        progress?.Report("maneuver found!");
-                        WriteOngoing();
-                        FileWorker.SaveManuever(ref result);
+                        File.Copy($"{FileWorker.WorkInitPath}\\{FileWorker.predict_real_json}",
+                            $"{FileWorker.WorkingDirectory}\\{FileWorker.predict_real_json}");
+                        progress?.Report("real maneuvers copied from init directory to working directory");
                     }
                     else
                     {
-                        progress?.Report("ongoing maneuver/route is not OK");
-                        progress?.Report($"maneuver not found!{nl}FAILED");
-                        break;
+                        progress?.Report("real maneuvers do not exist, create them...");
+                        progress?.Report("Exit code (-1 expected from USV for some reason): ");
+                        progress?.Report((await CreateLinearTargetsManeuversAsync()).ToString());
                     }
                 }
-                progress?.Report("following...");
-                if (!Follow(time_step))
-                {
-                    result.Success = true;
-                    progress?.Report($"finished{nl}SUCCESS");
-                    break;
-                }
-                time += time_step;
-            }
 
-            _superManeuver.WriteToFileAsSolution($"{FileWorker.WorkInitPath}\\{FileWorker.maneuver_json}");
+                bool onRoute = OnRoute();
+                progress?.Report($"{(onRoute ? "On route" : "Not on route")}");
+                while (true)
+                {
+                    await AnalyzeAsync();
+                    var dangerous = GetAnalyzeReportDangerous();
+                    progress?.Report($"danger at t = {time} is: {dangerous}");
+                    if (dangerous || !onRoute)
+                    {
+                        onRoute = true;
+                        var maneuver_result = await ManeuverAsync();
+                        if (maneuver_result == 5)
+                        {
+                            progress?.Report("ongoing maneuver/route is OK");
+                        }
+                        else if (maneuver_result == 0 || maneuver_result == 1)
+                        {
+                            progress?.Report("ongoing maneuver/route is not OK");
+                            progress?.Report("maneuver found!");
+                            WriteOngoing();
+                            FileWorker.SaveManuever(ref result);
+                        }
+                        else
+                        {
+                            progress?.Report("ongoing maneuver/route is not OK");
+                            progress?.Report($"maneuver not found!{nl}FAILED");
+                            break;
+                        }
+                    }
+                    progress?.Report("following...");
+                    if (!Follow(time_step))
+                    {
+                        result.Success = true;
+                        progress?.Report($"finished{nl}SUCCESS");
+                        break;
+                    }
+                    time += time_step;
+                }
+
+                _superManeuver.WriteToFileAsSolution($"{FileWorker.WorkInitPath}\\{FileWorker.maneuver_json}");
+
+            }
+            catch (Exception e)
+            {
+                progress?.Report($"Got an exception: {e.Message}");
+                result.Success = false;
+            }
             return result;
         }
 
