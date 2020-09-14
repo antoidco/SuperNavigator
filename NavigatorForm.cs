@@ -98,14 +98,25 @@ namespace SuperNavigator
 
         private string ChangeDirectory(string prevValue)
         {
-            _folderOpenDialog.InitialDirectory = prevValue;
-            _folderOpenDialog.DefaultDirectory = prevValue;
-
-            if (_folderOpenDialog.ShowDialog() == CommonFileDialogResult.Ok)
+            try
             {
-                return _folderOpenDialog.FileName;
+                _folderOpenDialog.InitialDirectory = prevValue;
+                _folderOpenDialog.DefaultDirectory = prevValue;
+
+                if (_folderOpenDialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    return _folderOpenDialog.FileName;
+                }
+                return prevValue;
             }
-            return prevValue;
+            catch (Exception) // for some reason CommonFileDialog can fail to load
+            {
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                {
+                    return folderBrowserDialog.SelectedPath;
+                }
+                return prevValue;
+            }
         }
         private async Task<bool> RunStartKtVizAsync()
         {

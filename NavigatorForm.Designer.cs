@@ -41,6 +41,8 @@
             this.labelWorkDir = new System.Windows.Forms.Label();
             this.labelExecPath = new System.Windows.Forms.Label();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.cb_targetSettings = new System.Windows.Forms.CheckBox();
+            this.NUD_timeStep = new System.Windows.Forms.NumericUpDown();
             this.cb_ongoing = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -76,8 +78,7 @@
             this.panel_simulate = new System.Windows.Forms.Panel();
             this.btn_Simulate = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.NUD_timeStep = new System.Windows.Forms.NumericUpDown();
-            this.cb_targetSettings = new System.Windows.Forms.CheckBox();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -87,6 +88,7 @@
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_timeStep)).BeginInit();
             this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -103,7 +105,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.track_images)).BeginInit();
             this.panel_debug.SuspendLayout();
             this.panel_simulate.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_timeStep)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -272,6 +273,40 @@
             this.splitContainer3.Size = new System.Drawing.Size(626, 385);
             this.splitContainer3.SplitterDistance = 150;
             this.splitContainer3.TabIndex = 9;
+            // 
+            // cb_targetSettings
+            // 
+            this.cb_targetSettings.AutoSize = true;
+            this.cb_targetSettings.Checked = true;
+            this.cb_targetSettings.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_targetSettings.Location = new System.Drawing.Point(9, 148);
+            this.cb_targetSettings.Name = "cb_targetSettings";
+            this.cb_targetSettings.Size = new System.Drawing.Size(92, 17);
+            this.cb_targetSettings.TabIndex = 23;
+            this.cb_targetSettings.Text = "target-settings";
+            this.cb_targetSettings.UseVisualStyleBackColor = true;
+            // 
+            // NUD_timeStep
+            // 
+            this.NUD_timeStep.Location = new System.Drawing.Point(60, 169);
+            this.NUD_timeStep.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.NUD_timeStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.NUD_timeStep.Name = "NUD_timeStep";
+            this.NUD_timeStep.Size = new System.Drawing.Size(75, 20);
+            this.NUD_timeStep.TabIndex = 22;
+            this.NUD_timeStep.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
             // 
             // cb_ongoing
             // 
@@ -674,40 +709,6 @@
             this.btn_Simulate.UseVisualStyleBackColor = true;
             this.btn_Simulate.Click += new System.EventHandler(this.btn_simulate_Click);
             // 
-            // NUD_timeStep
-            // 
-            this.NUD_timeStep.Location = new System.Drawing.Point(60, 169);
-            this.NUD_timeStep.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.NUD_timeStep.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.NUD_timeStep.Name = "NUD_timeStep";
-            this.NUD_timeStep.Size = new System.Drawing.Size(75, 20);
-            this.NUD_timeStep.TabIndex = 22;
-            this.NUD_timeStep.Value = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            // 
-            // cb_targetSettings
-            // 
-            this.cb_targetSettings.AutoSize = true;
-            this.cb_targetSettings.Checked = true;
-            this.cb_targetSettings.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_targetSettings.Location = new System.Drawing.Point(9, 148);
-            this.cb_targetSettings.Name = "cb_targetSettings";
-            this.cb_targetSettings.Size = new System.Drawing.Size(92, 17);
-            this.cb_targetSettings.TabIndex = 23;
-            this.cb_targetSettings.Text = "target-settings";
-            this.cb_targetSettings.UseVisualStyleBackColor = true;
-            // 
             // NavigatorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -729,6 +730,7 @@
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.NUD_timeStep)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -748,7 +750,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.track_images)).EndInit();
             this.panel_debug.ResumeLayout(false);
             this.panel_simulate.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_timeStep)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -805,6 +806,7 @@
         private System.Windows.Forms.Button btn_auto_test;
         private System.Windows.Forms.NumericUpDown NUD_timeStep;
         private System.Windows.Forms.CheckBox cb_targetSettings;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
     }
 }
 
