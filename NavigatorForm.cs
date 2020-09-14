@@ -16,10 +16,10 @@ namespace SuperNavigator
         const string settings_filename = "settings.json";
         const string app_py_filename = "app.py";
         const string bks_pic_py_filename = "bks-pic.py";
-        private Navigator navigator;
+        private readonly Navigator navigator;
         private KTVizPicture kTVizPicture;
         private Result _currentResult;
-        private CommonOpenFileDialog _folderOpenDialog;
+        private readonly CommonOpenFileDialog _folderOpenDialog;
 
         private readonly Progress<string> progress;
         public NavigatorForm()
@@ -79,10 +79,12 @@ namespace SuperNavigator
         }
         private void SaveSettings()
         {
-            JObject obj = new JObject();
-            obj.Add("KtVizDirectory", navigator.FileWorker.KtVizDirectory);
-            obj.Add("UsvExec", navigator.FileWorker.UsvExec);
-            obj.Add("WorkingDirectory", navigator.FileWorker.WorkInitPath);
+            JObject obj = new JObject
+            {
+                { "KtVizDirectory", navigator.FileWorker.KtVizDirectory },
+                { "UsvExec", navigator.FileWorker.UsvExec },
+                { "WorkingDirectory", navigator.FileWorker.WorkInitPath }
+            };
             using (StreamWriter file = File.CreateText(navigator.FileWorker.AppDirectory + "\\" + settings_filename))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -351,7 +353,7 @@ namespace SuperNavigator
         private async void btn_auto_test_Click(object sender, EventArgs e)
         {
             string old_workinit_path = navigator.FileWorker.WorkInitPath;
-            string folder = "";
+            string folder;
             if (_folderOpenDialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 folder = _folderOpenDialog.FileName;
