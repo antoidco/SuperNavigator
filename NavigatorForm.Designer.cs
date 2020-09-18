@@ -303,7 +303,7 @@
             this.NUD_timeStep.Size = new System.Drawing.Size(75, 20);
             this.NUD_timeStep.TabIndex = 22;
             this.NUD_timeStep.Value = new decimal(new int[] {
-            300,
+            60,
             0,
             0,
             0});
@@ -343,11 +343,13 @@
             // rb_rvo
             // 
             this.rb_rvo.AutoSize = true;
+            this.rb_rvo.Checked = true;
             this.rb_rvo.Location = new System.Drawing.Point(3, 2);
             this.rb_rvo.Name = "rb_rvo";
             this.rb_rvo.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.rb_rvo.Size = new System.Drawing.Size(78, 17);
             this.rb_rvo.TabIndex = 11;
+            this.rb_rvo.TabStop = true;
             this.rb_rvo.Text = "prefer RVO";
             this.rb_rvo.UseVisualStyleBackColor = true;
             this.rb_rvo.Click += new System.EventHandler(this.rb_prefer_CheckedChanged);
@@ -355,13 +357,11 @@
             // rb_base
             // 
             this.rb_base.AutoSize = true;
-            this.rb_base.Checked = true;
             this.rb_base.Location = new System.Drawing.Point(3, 22);
             this.rb_base.Name = "rb_base";
             this.rb_base.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.rb_base.Size = new System.Drawing.Size(79, 17);
             this.rb_base.TabIndex = 12;
-            this.rb_base.TabStop = true;
             this.rb_base.Text = "prefer Base";
             this.rb_base.UseVisualStyleBackColor = true;
             this.rb_base.CheckedChanged += new System.EventHandler(this.rb_prefer_CheckedChanged);
@@ -401,10 +401,12 @@
             // rb_pred_simple
             // 
             this.rb_pred_simple.AutoSize = true;
+            this.rb_pred_simple.Checked = true;
             this.rb_pred_simple.Location = new System.Drawing.Point(3, 20);
             this.rb_pred_simple.Name = "rb_pred_simple";
             this.rb_pred_simple.Size = new System.Drawing.Size(54, 17);
             this.rb_pred_simple.TabIndex = 1;
+            this.rb_pred_simple.TabStop = true;
             this.rb_pred_simple.Text = "simple";
             this.rb_pred_simple.UseVisualStyleBackColor = true;
             this.rb_pred_simple.CheckedChanged += new System.EventHandler(this.predictionChanged);
@@ -412,12 +414,10 @@
             // rb_pred_full
             // 
             this.rb_pred_full.AutoSize = true;
-            this.rb_pred_full.Checked = true;
             this.rb_pred_full.Location = new System.Drawing.Point(3, 3);
             this.rb_pred_full.Name = "rb_pred_full";
             this.rb_pred_full.Size = new System.Drawing.Size(87, 17);
             this.rb_pred_full.TabIndex = 0;
-            this.rb_pred_full.TabStop = true;
             this.rb_pred_full.Text = "full prediction";
             this.rb_pred_full.UseVisualStyleBackColor = true;
             this.rb_pred_full.CheckedChanged += new System.EventHandler(this.predictionChanged);
