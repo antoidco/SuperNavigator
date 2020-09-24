@@ -262,7 +262,7 @@ namespace SuperNavigator
 
         private void SetPrediction()
         {
-            if (rb_pred_full.Checked) navigator.Settings.PredictionType = PredictionType.Linear;
+            if (rb_pred_full.Checked) navigator.Settings.PredictionType = PredictionType.Full;
             else if (rb_pred_simple.Checked) navigator.Settings.PredictionType = PredictionType.Simple;
             else navigator.Settings.PredictionType = PredictionType.Linear;
         }
