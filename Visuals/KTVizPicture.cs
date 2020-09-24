@@ -10,8 +10,8 @@ namespace SuperNavigator.Visuals
     public class KTVizPicture
     {
         public List<Image> Images { get; set; }
-        private string _picGenerationPy;
-        private string _maneuverFileName;
+        private readonly string _picGenerationPy;
+        private readonly string _maneuverFileName;
         private const string pngName = "result.png";
         public KTVizPicture(string picGenerationPy, string maneuverFileName)
         {
