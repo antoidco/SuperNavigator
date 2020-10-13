@@ -203,13 +203,15 @@ namespace SuperNavigator.Simulator
                 progress?.Report($"{(onRoute ? "On route" : "Not on route")}");
                 while (true)
                 {
-                    await AnalyzeAsync();
+                    var analyze_result = await AnalyzeAsync();
+                    progress?.Report($"Analyze return code: {analyze_result.ExitCode}");
                     var dangerous = GetAnalyzeReportDangerous();
                     progress?.Report($"danger at t = {time} is: {dangerous}");
                     if (dangerous || !onRoute)
                     {
                         onRoute = true;
                         var maneuver_result = await ManeuverAsync();
+                        progress?.Report($"Maneuver return code: {maneuver_result}");
                         if (maneuver_result == 5)
                         {
                             progress?.Report("ongoing maneuver/route is OK");
